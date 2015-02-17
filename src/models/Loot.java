@@ -3,6 +3,8 @@
  */
 package models;
 
+import game.Player;
+
 /**
  * @author josh
  *
