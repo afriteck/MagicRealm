@@ -2,9 +2,6 @@ package gui;
 
 
 
-import game.CharacterContainer;
-import game.Player;
-import game.Things;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -27,6 +24,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultCaret;
+
+import models.CharacterContainer;
+import models.Player;
+import models.Things;
+
 import java.awt.Component;
 import java.util.LinkedList;
 import java.awt.event.MouseAdapter;
