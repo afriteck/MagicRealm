@@ -54,7 +54,8 @@ public class Gui extends JFrame implements MouseListener {
 	 private boolean startGame = false;
 	 
 	 private int clicked = 0;
-
+	 int player1Roll = 0;
+	 
 
 
 	 
@@ -259,6 +260,12 @@ public void actionPerformed(ActionEvent e) {
     	
     lastRoll = Dice(); 
     lastRoll2 = Dice(); 
+    
+    player1Roll = currentPlayer.getPlayerDie().getDieRoll(currentPlayer.getDieBool(), lastRoll, lastRoll2);
+    
+    txt.append("\n----------------------------------\n" + currentPlayer.getName() +" rolled : " + player1Roll); 
+
+    
     txt.append("\n----------------------------------\nDie1 rolled a: " + lastRoll); 
     txt.append("\n----------------------------------\nDie2 rolled a: " + lastRoll2); 
    

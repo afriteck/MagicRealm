@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 import javax.swing.JTextArea;
 
+import models.Dice;
+
 public class Player {
 
 	    private String playerName;
@@ -12,6 +14,10 @@ public class Player {
 	    private String url;
 	    private int gold;   // amount of gold that the player possesses. 
 	    private LinkedList<Things> characterStack;    // the players stack
+	    private Dice playerDie;
+	    private boolean dieBool = false;
+	    
+		//protected Object getPlayerDie;
 
 	    
 	    
@@ -21,14 +27,18 @@ public class Player {
 	        playerName = name;
 	        setIncome(i);
 	        setPlayerCharacters(t);
-	        url = u;    
+	        url = u;   
+	        
 	    }
 
 	    public Player(String name){
 	        playerName = name;
+	        playerDie = new Dice();
 	    }
 
 	    public Player(){
+	        playerDie = new Dice();
+
 	    }
 
 
@@ -43,7 +53,10 @@ public class Player {
 	         
 	    }
 	     
-	     
+	    public Dice getPlayerDie(){ 
+	    	return playerDie;
+	    }
+	    
 	    public String getName() { return playerName; }
 	     
 	    public void setName(String playerName){
@@ -58,6 +71,7 @@ public class Player {
 	        this.income = income;
 	    }
 	         
+	    
 	     
 	    public LinkedList<Things> getPlayerCharacters() {
 	        return characterStack;
@@ -98,7 +112,15 @@ public class Player {
 	        setGold(getGold());
 	         
 	    }
-	     
+	    public boolean getDieBool(){ 
+	    	return dieBool;
+	    }
+	    
+	    public void setDieBool(boolean foo){
+	    	
+	    	dieBool = foo;
+	    }
+	    
 	    // toString() method for the player object
 	     
 	    public void toString(JTextArea t){

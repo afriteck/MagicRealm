@@ -13,10 +13,9 @@ public class Dice {
 	int dieRoll1;
 	int dieRoll2;
 	
-    public int getDieRoll(boolean oneDie){
-    	Random rand = new Random();
-	    dieRoll1 = rand.nextInt(6) + 1;
-	    dieRoll2 = rand.nextInt(6) + 1;
+    public int getDieRoll(boolean oneDie, int lastRoll1, int lastRoll2){
+	    dieRoll1 = lastRoll1;
+	    dieRoll2 = lastRoll2;
 	    if(oneDie==true){dieRoll2=0;}
         return Math.max(dieRoll1, dieRoll2);
     }
