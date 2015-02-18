@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import models.Clearing;
 import models.Tiles;
-
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;

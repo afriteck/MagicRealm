@@ -3,10 +3,8 @@
  */
 package gameLogic;
 
-import java.util.Random;
-
 /**
- * @author josh
+ * @author joshwhite
  *
  */
 public class Dice {

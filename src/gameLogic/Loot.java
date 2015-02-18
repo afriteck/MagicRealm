@@ -6,12 +6,12 @@ package gameLogic;
 import models.Player;
 
 /**
- * @author josh
+ * @author joshwhite
  *
  */
 public class Loot {
 
-	public void lootAction(Player player, LootEnum loot, Treasure treasure){
+	public void lootAction(Player player, LootEnum loot){
 		//implementation
 		if(loot == LootEnum.TAKE_1ST){
 			//implementation

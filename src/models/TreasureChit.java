@@ -4,7 +4,7 @@
 package models;
 
 /**
- * @author josh
+ * @author joshwhite
  *
  */
 public class TreasureChit {

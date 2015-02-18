@@ -3,8 +3,6 @@
  */
 package models;
 
-import gameLogic.Treasure;
-
 import java.util.ArrayList;
 
 /**
@@ -16,7 +14,7 @@ public class Clearing {
 	private int clearingNumber;
 	private int xposition;
 	private int yposition;
-	private Treasure treasureChits;
+	private ArrayList<TreasureChit> treasureChits;
 	private ArrayList<MonsterChit> monsterChits;
 	private ArrayList<SoundChit> soundChits;
 	private ArrayList<WarningChit> warningChits;
@@ -25,7 +23,7 @@ public class Clearing {
 		setClearingNumber(number);
 		setXposition((int) xpos);
 		setYposition((int) ypos);
-		treasureChits = new Treasure();
+		treasureChits = new ArrayList<TreasureChit>();
 		monsterChits = new ArrayList<MonsterChit>();
 		soundChits = new ArrayList<SoundChit>();
 		warningChits = new ArrayList<WarningChit>();

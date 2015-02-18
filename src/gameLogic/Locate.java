@@ -6,7 +6,7 @@ package gameLogic;
 import models.Player;
 
 /**
- * @author josh
+ * @author joshwhite
  *
  */
 public class Locate {

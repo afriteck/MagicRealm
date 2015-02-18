@@ -4,7 +4,7 @@
 package gameLogic;
 
 /**
- * @author josh
+ * @author joshwhite
  *
  */
 public enum PeerEnum {
