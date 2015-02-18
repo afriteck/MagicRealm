@@ -18,8 +18,16 @@ public class Weapons {
 
 	public DamageEnum getDamage(){
 		checkReady();
-		if(!ready) return damage;
-		else return readyDamage;
+		if(!ready) {
+			setDamage(damage);
+			return damage;
+		
+		}
+		else {
+			setDamage(readyDamage);
+			return readyDamage;
+		
+		}
 	}
 
 public int getSpeed(){
@@ -43,6 +51,10 @@ public void setOwner(Things theowner){
 
 }
 
+public Things getOwner()
+{
+	return owner;
+}
 public void setDamage(DamageEnum dam){
 	this.damage = dam;
 }
