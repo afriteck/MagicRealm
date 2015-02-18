@@ -21,10 +21,10 @@ public class Clearing {
 	private ArrayList<SoundChit> soundChits;
 	private ArrayList<WarningChit> warningChits;
 
-	public Clearing(int number, int xpos, int ypos){
+	public Clearing(int number, long xpos, long ypos){
 		setClearingNumber(number);
-		setXposition(xpos);
-		setYposition(ypos);
+		setXposition((int) xpos);
+		setYposition((int) ypos);
 		treasureChits = new Treasure();
 		monsterChits = new ArrayList<MonsterChit>();
 		soundChits = new ArrayList<SoundChit>();
@@ -53,5 +53,9 @@ public class Clearing {
 
 	public void setYposition(int yposition) {
 		this.yposition = yposition;
+	}
+	
+	public String toString(){
+		return "Clearing Number: " + clearingNumber + " X position: " + xposition + " Y Position: " + yposition + "\n";
 	}
 }

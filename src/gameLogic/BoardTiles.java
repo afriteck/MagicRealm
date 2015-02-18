@@ -29,4 +29,14 @@ public class BoardTiles {
 	public void removeTile(Tiles foo, int index){
 		tiles.remove(index);
 	}
+	
+	public String toString() {
+		String strToReturn = "";
+		
+		for(int i = 0; i < tiles.size(); i++) {
+			strToReturn += tiles.get(i).toString() + "\n";
+		}
+		
+		return strToReturn;
+	}
 }

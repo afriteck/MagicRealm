@@ -79,4 +79,15 @@ public class Tiles {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
+	
+	public String toString() {
+		String strToReturn = "Tile Name: " + tileName + " at file path: " + filePath + " Clearings in tile: \n";
+
+		for(int i = 0; i < tileClearings.size(); i++) {
+			strToReturn += tileClearings.get(i);
+		}
+		
+		return strToReturn;
+		
+	}
 }
