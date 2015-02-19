@@ -29,6 +29,9 @@ public class Clearing {
 		warningChits = new ArrayList<WarningChit>();
 	}
 
+	public Clearing(){
+		
+	}
 	public int getClearingNumber() {
 		return clearingNumber;
 	}

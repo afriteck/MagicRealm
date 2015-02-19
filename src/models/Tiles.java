@@ -32,7 +32,13 @@ public class Tiles {
 		setClearings(clearings);
 	}
 
+	public Tiles(String name){
+		setName(name);
+	}
 
+	public Tiles(){
+		
+	}
 	public String getName() {
 		return tileName;
 	}
