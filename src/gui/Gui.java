@@ -25,8 +25,14 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultCaret;
 
+import models.Amazon;
+import models.BlackKnight;
+import models.Captain;
 import models.CharacterContainer;
+import models.Dwarf;
+import models.Elf;
 import models.Player;
+import models.Swordsman;
 import models.Things;
 
 import java.awt.Component;
@@ -841,33 +847,112 @@ public void recruitCharacter(Player p, MouseEvent e){
     
     getRecruitThing(e); 
 
-    if(p == player1){
-    	Things p1character = new Things();
-    	p1character.setName(((Component) e.getSource()).getName());
-        p1characters.add(p1character); 
-    selected = false;
-    for(int i = 0 ; i < p1characters.size(); i++){
-    System.out.println(player1.getName() + " Chose " + p1characters.get(i).getName() + "\n");
-    
-    }
-    }
-    else if(p == player2){
-        selected = true;
-        Things p2character = new Things();
-    	p2character.setName(((Component) e.getSource()).getName());
-        p2characters.add(p2character); 
-        for(int i = 0 ; i < p1characters.size(); i++){
-            System.out.println(player2.getName() + " Chose " + p2characters.get(i).getName() + "\n");
-            
-            }
-    }
+    checkCharacter(p, e);
      getNextPlayer(currentPlayer);
 
 
 }
  
+public void showMessage(Things ths, Player p){
+	 txt.append(p.getName() + " Chose " + ths.getName() + "\n" + ths.getName() + " has the following weapons \n" + ths.getWeapons().getName() + "\n" + ths.getWeapons().getName() + " has a length of " + ths.getWeapons().getLength()+"\n the weapon has a speed of " + ths.getWeapons().getSpeed() + "\n");		    
+	    txt.append(ths.getName() + " has the following armors \n");
+		for(int j = 0 ; j < ths.getArsenalSize(); j++)
+		    txt.append(ths.getCharacterArmory().get(j).getName() + "\n");
+}
+
+
+public void checkCharacter(Player p, MouseEvent e){   //check the character clicked and make a new instance of that character
+	
+	String name = ((Component) e.getSource()).getName();
+	
+	if(p == player1){
+	    selected = false;		//we know the players are not done selection
+		if(name == "Amazon"){
+	    	Things p1character = new Amazon();
+	        p1characters.add(p1character); 
+	        showMessage(p1character, player1);
+		}
+		
+		else if(name == "Captain"){
+			Things p1character = new Captain();
+	        p1characters.add(p1character); 
+	        showMessage(p1character, player1);
+		}
+		
+		else if(name == "Dwarf"){
+			Things p1character = new Dwarf();
+	        p1characters.add(p1character); 
+	        showMessage(p1character, player1);
+		}
+	
+		else if(name == "Elf"){
+			Things p1character = new Elf();
+	        p1characters.add(p1character); 
+	        showMessage(p1character, player1);
+
+		}
+		
+		else if(name == "BlackKnight"){
+			Things p1character = new BlackKnight();
+	        p1characters.add(p1character); 
+	        showMessage(p1character, player1);
+		}
+		else if(name == "SwordsMan"){
+			Things p1character = new Swordsman();
+	        p1characters.add(p1character); 
+	        showMessage(p1character, player1);
+		}
+		
+	}
+	
+	if(p == player2){
+	    selected = true;			//we now know that p2 is done selecting so, selecion phase is over	
+		if(name == "Amazon"){
+	    	Things p2character = new Amazon();
+	        p2characters.add(p2character); 
+	        showMessage(p2character, player2);
+
+		}
+		
+		else if(name == "Captain"){
+			Things p2character = new Captain();
+	        p2characters.add(p2character); 
+	        showMessage(p2character, player2);
+		}
+		
+		else if(name == "Dwarf"){
+			Things p2character = new Dwarf();
+	        p2characters.add(p2character); 
+	        showMessage(p2character, player2);
+		}
+	
+		else if(name == "Elf"){
+			Things p2character = new Elf();
+	        p2characters.add(p2character); 
+	        showMessage(p2character, player2);
+		}
+		
+		else if(name == "BlackKnight"){
+			Things p2character = new BlackKnight();
+	        p2characters.add(p2character); 
+	        showMessage(p2character, player2);
+		}
+		else if(name == "SwordsMan"){
+			Things p2character = new Swordsman();
+	        p2characters.add(p2character); 
+	        showMessage(p2character, player2);
+		}		
+		
+		
+	
+	
+	}
+	
+	
+}
+
  
-public void toggleDie1(){
+public void toggleDie1(){	// change the die1 face any time the die is clicked
 
 	if (clicked ==1){
 		die1.setIcon(img[1]);
