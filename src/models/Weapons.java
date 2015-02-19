@@ -3,6 +3,7 @@ package models;
 public class Weapons {
 
 	private DamageEnum damage;
+	private String name;
 	private int speed;
 	private int sharpness;
 	private Things owner;
@@ -10,21 +11,23 @@ public class Weapons {
 	private int readySpeed;
 	private int readySharpness;
 	private int weaponLength;
-	boolean missile = false;
-	int hands;
-	int price;
+	private boolean missile = false;
+	private int hands;
+	private int price;
+	
 	private DamageEnum readyDamage;
 
 
 	public DamageEnum getDamage(){
+		//damage = new DamageEnum();
 		checkReady();
 		if(!ready) {
-			setDamage(damage);
+			//setDamage(damage);
 			return damage;
 		
 		}
 		else {
-			setDamage(readyDamage);
+			//setDamage(readyDamage);
 			return readyDamage;
 		
 		}
@@ -44,17 +47,14 @@ public int getSharpness(){
 	else return readySharpness;
 }
 
-public void setOwner(Things theowner){
-	owner = new Things();
-	this.owner = theowner;
-	owner.setName(theowner.getName());
-
+public String getName(){
+	return name;
 }
 
-public Things getOwner()
-{
-	return owner;
+public void setName(String myname){
+	this.name = myname;
 }
+
 public void setDamage(DamageEnum dam){
 	this.damage = dam;
 }
@@ -72,6 +72,11 @@ public void setReadySpeed(int rdspd){
 	
 	this.readySpeed = rdspd; 
 }
+
+public void setReadyDamage(DamageEnum rddmg){
+	
+	this.readyDamage = rddmg; 
+}
 public void setReady(boolean ready){
 	this.ready = ready;
 }
@@ -82,6 +87,37 @@ public void setSharpness(int sharp){
 
 public void setReadySharpness(int sharp){
 	this.readySharpness = sharp;
+}
+
+public int getLength(){
+
+		return weaponLength;
+}
+
+
+public int getHands(){
+
+	return hands;
+}
+
+public int getPrice(){
+
+	return price;
+}
+
+public void setHands(int hnd){
+	this.hands = hnd;
+}
+
+public void setPrice(int prc){
+	this.price = prc;
+}
+public void setLength(int len){
+	this.weaponLength = len;
+}
+
+public void setMissile(boolean foo){
+	missile = foo;
 }
 
 public void checkReady(){

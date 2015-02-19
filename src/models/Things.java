@@ -2,14 +2,14 @@ package models;
 
 import java.util.LinkedList;
 
-public class Things {
+public class Things implements Move, Fight{
 
 
-	private String name;
+	private static String name;
 	private int gold;
 	private Weapons myweapon;
-	private CharacterArmour myArmour;
-    private LinkedList<CharacterArmour> myArsenal;    // the chatacters arsenal
+	private Armor myArmor;
+    private LinkedList<Armor> myArsenal;    // the chatacters arsenal
     private LinkedList<Things> friends;
     private LinkedList<Things> enemies;
     private int speed;
@@ -17,7 +17,7 @@ public class Things {
 
 
 
-	public String getName(){
+	public static String getName(){
 		return name;
 	}
 
@@ -41,10 +41,15 @@ public void setWeapon(Weapons weapon){
 	this.myweapon = weapon;
 }
 
-public CharacterArmour getArmour(){
-	return myArmour;
+public Armor getArmour(){
+	return myArmor;
 }
-public LinkedList<CharacterArmour> getCharacterArmoury() {
+
+public void setAmor(Armor am){
+	
+	this.myArmor = am;
+}
+public LinkedList<Armor> getCharacterArmory() {
     return myArsenal;
 }
 
@@ -64,12 +69,18 @@ public void setEnemies(LinkedList<Things> characterEnemies) {
     this.enemies = characterEnemies;
 }
 
-public void setPlayerArmoury(LinkedList<CharacterArmour> characterArsenal) {
+public void setPlayerArmoury(LinkedList<Armor> characterArsenal) {
     this.myArsenal = characterArsenal;
 }
 
 public int getSpeed(){
 	return speed;
+}
+
+public void addArmor(Armor arm){
+
+	getCharacterArmory().add(arm);
+	
 }
 
 public void setSpeed(int spd){
