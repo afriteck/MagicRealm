@@ -13,7 +13,7 @@ import org.json.simple.parser.JSONParser;
 
 public class BoardTest {
 
-	public static void main(String[] args) {
+	public BoardTiles initializeTiles() {
 		JSONParser parser = new JSONParser();
 		long xPos, yPos;
 		ArrayList<Clearing> clearingList = null;
@@ -52,5 +52,6 @@ public class BoardTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return bt;
 	}
 }
