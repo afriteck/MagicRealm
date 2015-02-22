@@ -13,16 +13,14 @@ public class Tiles {
 
 	private String tileName;
 	private String filePath;
-	private int xposition;
-	private int yposition;
+	private int theta;
 	private ArrayList<Clearing> tileClearings;
 	
 	
-	public Tiles(String name, String fPath, int xpos, int ypos, ArrayList<Clearing> clearings){
+	public Tiles(String name, String fPath, int rotation, ArrayList<Clearing> clearings){
 		setName(name);
 		setFilePath(fPath);
-		setXposition(xpos);
-		setYposition(ypos);
+		setTheta(rotation);
 		setClearings(clearings);
 	}
 	
@@ -46,26 +44,6 @@ public class Tiles {
 
 	public void setName(String tileName) {
 		this.tileName = tileName;
-	}
-
-
-	public int getXposition() {
-		return xposition;
-	}
-
-
-	public void setXposition(int xposition) {
-		this.xposition = xposition;
-	}
-
-
-	public int getYposition() {
-		return yposition;
-	}
-
-
-	public void setYposition(int yposition) {
-		this.yposition = yposition;
 	}
 
 
@@ -95,5 +73,13 @@ public class Tiles {
 		
 		return strToReturn;
 		
+	}
+
+	public int getTheta() {
+		return theta;
+	}
+
+	public void setTheta(int rotation) {
+		this.theta = rotation;
 	}
 }

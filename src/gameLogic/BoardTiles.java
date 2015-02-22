@@ -20,7 +20,7 @@ public class BoardTiles {
 		tiles = new ArrayList<Tiles>();
 	}
 	
-	public ArrayList<Tiles> getTiles(){ return tiles; }
+	public ArrayList<Tiles> getAllTiles(){ return tiles; }
 	
 	public void addTile(Tiles foo){
 		tiles.add(foo);
@@ -38,5 +38,37 @@ public class BoardTiles {
 		}
 		
 		return strToReturn;
+	}
+
+	public String getFileName(int i) {
+		// TODO Auto-generated method stub
+		if(i<tiles.size()){
+			return tiles.get(i).getFilePath();
+		}else{
+			return null;
+		}
+	}
+	
+	public Tiles getTile(String name) {
+		// TODO Auto-generated method stub
+		Tiles wantedTile = null;
+		for(int i=0; i<tiles.size(); i++){
+			if(tiles.get(i).getName().equals(name)){wantedTile = tiles.get(i);}
+		}
+		if(wantedTile != null){
+			return wantedTile;
+		}else{
+			System.out.println("Error. That is not a valid tile!");
+			return wantedTile;
+		}
+	}
+
+	public Tiles getTile(int i) {
+		// TODO Auto-generated method stub
+		if(i<tiles.size()){
+			return tiles.get(i);
+		}else{
+			return null;
+		}
 	}
 }
