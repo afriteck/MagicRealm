@@ -51,7 +51,14 @@ public class Tiles {
 	public ArrayList<Clearing> getClearings() {
 		return tileClearings;
 	}
-
+	
+	public Clearing getClearingByNum(int num){
+		for(int i=0; i< tileClearings.size(); i++){
+			if(tileClearings.get(i).getClearingNumber() == num)
+				return tileClearings.get(i);
+		}
+		return null;
+	}
 
 	public void setClearings(ArrayList<Clearing> tileClearings) {
 		this.tileClearings = tileClearings;

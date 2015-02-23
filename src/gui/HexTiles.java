@@ -9,6 +9,8 @@ package gui;
  */
 
 import gameLogic.BoardTiles;
+import gameLogic.Iteration1Board;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -20,6 +22,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import models.Dwellings;
+import models.Tiles;
  
 public class HexTiles extends JPanel {
     /**
@@ -33,16 +38,25 @@ public class HexTiles extends JPanel {
     double MIN_DIST = 0;
     boolean showIndex  = false;
     //boolean tipHigh      = false;
-    boolean scaleDown    = false;
+    boolean zoomOut    = true;
     static boolean debug = true;   // main method switch -d
     boolean firstTime    = true;
-    HexCell[] cells;
+    static HexCell[] cells;
     double scale = 3/4.0;
     BoardTiles bt = new BoardTiles();
     
     public HexTiles(BoardTiles bd){
     	this.bt = bd;
     }
+    
+    public HexCell getHexCell(int i){
+    	return cells[i];
+    }
+    
+    public static void placeTile(int hexIndex, Tiles tile, int rotation){
+		tile.setTheta(rotation);
+		cells[hexIndex].setTile(tile);
+	}
 
 	protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -51,12 +65,12 @@ public class HexTiles extends JPanel {
                             RenderingHints.VALUE_ANTIALIAS_ON);
         double w = getWidth();
         double h = getHeight();
-        double R = Math.min(w,h)/8;
+        double R = Math.min(w,h)/7;
         MIN_DIST = R/4;
         if(debug && firstTime)
             System.out.printf("w = %.1f  h = %.1f  R = %.1f%n", w, h, R);
         double delta = (1.0 - scale)/2;
-        if(scaleDown) {
+        if(zoomOut) {
             // Draw everything smaller to see all the cells.
             g2.translate(delta*w, delta*h);
             g2.scale(scale, scale);
@@ -66,7 +80,7 @@ public class HexTiles extends JPanel {
         if(cells == null) {
             initHexCells(w, h, R, r);
         }
-        if(scaleDown) {
+        if(zoomOut) {
             g2.setPaint(Color.green.darker());
             //g2.draw(r);
             g2.setPaint(Color.blue);
@@ -76,7 +90,7 @@ public class HexTiles extends JPanel {
         for(int i = 0; i < cells.length; i++) {
             cells[i].draw(g2);            
         }
-        if(scaleDown) {
+        if(zoomOut) {
             g2.translate(-delta*w, -delta*h);
             g2.scale(1.0/scale, 1.0/scale);
         }
@@ -159,6 +173,9 @@ public class HexTiles extends JPanel {
             //cells[i] = new HexCell(id, p, s, showIndex, theta, adjacentIds, bt.getTile(i));
             cells[i] = new HexCell(id, p, s, showIndex, theta, adjacentIds);
         }
+        Iteration1Board.it1Board(bt);
+        
+        /*
         //cells[0].setImg(Toolkit.getDefaultToolkit().getImage(HexTiles.class.getResource("/" + cells[0].tilehex.getFilePath())));
         cells[0].setTile(bt.getTile("OAK WOODS"));
         cells[0].tilehex.setTheta(60);
@@ -181,7 +198,7 @@ public class HexTiles extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+        */
     }
     
  
@@ -289,8 +306,8 @@ public class HexTiles extends JPanel {
     }
  
     private JPanel getControls() {
-        String[] ids = { "Show Index", /*"tip high",*/ "scale down" };
-        boolean[] state = { showIndex, /*tipHigh,*/ scaleDown };
+        String[] ids = {/* "Show Index", "tip high",*/ "zoom out" };
+        boolean[] state = {/* showIndex, tipHigh,*/ zoomOut };
         ActionListener al = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String id = e.getActionCommand();
@@ -305,8 +322,8 @@ public class HexTiles extends JPanel {
                     if(id.equals("tip high")) {
                         tipHigh = selected;
                     }*/
-                    if(id.equals("scale down")) {
-                        scaleDown = selected;
+                    if(id.equals("zoom out")) {
+                        zoomOut = selected;
                     }
                     reset();
                 }
@@ -350,7 +367,7 @@ public class HexTiles extends JPanel {
         test.addComponentListener(test.resizeMonitor);
     }
  
-    private void reset() {
+    public void reset() {
         cells = null;
         firstTime = true;
         repaint();
@@ -359,7 +376,7 @@ public class HexTiles extends JPanel {
     private MouseListener switcher = new MouseAdapter() {
         public void mousePressed(MouseEvent e) {
             Point p = e.getPoint();
-            if(scaleDown) {
+            if(zoomOut) {
                 double cx = getWidth()/2.0;
                 double cy = getHeight()/2.0;
                 double x = cx + (p.x - cx)/scale;

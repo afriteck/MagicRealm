@@ -19,6 +19,7 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 
 import models.Tiles;
+import models.WarningChit;
 
 /**
  * @author joshwhite
@@ -75,6 +76,14 @@ public class HexCell {
     
     public void setTile(Tiles tile){
     	tilehex = tile;
+    	try {
+        	URL url = BoardTest.class.getResource("/" + tilehex.getFilePath());
+			this.tileimg = ImageIO.read(new File(url.getPath()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
     
     public void rotateTile() {
@@ -97,7 +106,7 @@ public class HexCell {
 	        g2d.drawImage(tileimg, 0, 0, null);
 
             tileimg = rotated;
-            System.out.println("rotated " + angle);
+            //System.out.println("rotated " + angle);
             g2d.dispose();
     	}
     }
@@ -109,7 +118,9 @@ public class HexCell {
             g2.drawString(id, (float)(center.x+3), (float)(center.y+3));
             g2.setPaint(Color.black);
         }
+        //g2.draw(shape);
         if(tilehex != null){g2.draw(shape);
+        
         /*
         BufferedImage scaled = new BufferedImage(tileimg.getWidth() / 2, tileimg.getHeight() / 2, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = scaled.createGraphics();
@@ -157,6 +168,28 @@ public class HexCell {
 		        Shape cl = null;
 		        BufferedImage chitimg = null;
 		        for(int i=0; i<tilehex.getClearings().size(); i++){
+		        	if(tilehex.getClearings().get(i).getMonsterChits().size()>0){
+		        		URL url = BoardTest.class.getResource("/monsters/" + tilehex.getClearings().get(i).getMonsterChits().get(0).getImgFilePath());
+	        			try {
+							chitimg = ImageIO.read(new File(url.getPath()));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		        	}
+		        		//System.out.println("adding warning chit pictures to board");
+		        	/*
+		        		if(tilehex.getWarnings() !=null){
+		        			URL url = BoardTest.class.getResource("/monsters/" + tilehex.getWarnings().getUrl());
+		        			try {
+								chitimg = ImageIO.read(new File(url.getPath()));
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+		        		}*/
+		        		
+		        	
 		        	//g2d.draw(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition()), (tilehex.getClearings().get(i).getYposition()), 80, 80));
 		        	//chitimg = ImageIO.read(new File("/Z:/eclipse-Juno-Workspace/MagicRealm/src/" + tilehex.getClearings().get(i).getSoundChits().get(i).getFilePath()));
 		        	cl = at.createTransformedShape(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition() - 40), (tilehex.getClearings().get(i).getYposition() - 40), 80, 80));
@@ -167,7 +200,7 @@ public class HexCell {
 		        g2.drawImage(rotated, shape.getBounds().x, shape.getBounds().y, shape.getBounds().width, shape.getBounds().height, null);
 		        //g2.draw(c1);
 	            //tileimg = rotated;
-	            System.out.println("rotated " + angle);
+	            //System.out.println("rotated " + angle);
 	            g2d.dispose();
 	    	}
 	        //g2.drawImage(tileimg, shape.getBounds().x, shape.getBounds().y, shape.getBounds().width, shape.getBounds().height, null);
@@ -178,10 +211,11 @@ public class HexCell {
         //g2.setTransform(saveTransform);
         
         if(isSelected) {
-        	System.out.println(tilehex);
+        	System.out.println(tilehex.getName());
         	toggleSelection();
         }
     }
+    
  
     public void setShowIndex(boolean show) { showIndex = show; }
  

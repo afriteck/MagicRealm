@@ -19,7 +19,7 @@ public class Clearing {
 	private ArrayList<TreasureChit> treasureChits;
 	private ArrayList<Monster> monsterChits;
 	private ArrayList<SoundChit> soundChits;
-	private ArrayList<WarningChit> warningChits;
+	private Dwellings dwelling;
 	
 	
 	
@@ -31,12 +31,13 @@ public class Clearing {
 		setTreasureChits(new ArrayList<TreasureChit>());
 		setMonsterChits(new ArrayList<Monster>());
 		setSoundChits(new ArrayList<SoundChit>());
-		setWarningChits(new ArrayList<WarningChit>());
+		
 	}
 
 	public Clearing(){
 		
 	}
+	
 	public int getClearingNumber() {
 		return clearingNumber;
 	}
@@ -80,6 +81,10 @@ public class Clearing {
 	public void setMonsterChits(ArrayList<Monster> monsterChits) {
 		this.monsterChits = monsterChits;
 	}
+	
+	public void addMonster(Monster monster){
+		monsterChits.add(monster);
+	}
 
 	public ArrayList<SoundChit> getSoundChits() {
 		return soundChits;
@@ -89,11 +94,11 @@ public class Clearing {
 		this.soundChits = soundChits;
 	}
 
-	public ArrayList<WarningChit> getWarningChits() {
-		return warningChits;
+	public Dwellings getDwelling() {
+		return dwelling;
 	}
 
-	public void setWarningChits(ArrayList<WarningChit> warningChits) {
-		this.warningChits = warningChits;
+	public void setDwelling(Dwellings dwelling) {
+		this.dwelling = dwelling;
 	}
 }
