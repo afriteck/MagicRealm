@@ -15,6 +15,7 @@ public class Tiles {
 	private String filePath;
 	private int theta;
 	private ArrayList<Clearing> tileClearings;
+	private WarningChit warnings;
 	
 	
 	public Tiles(String name, String fPath, int rotation, ArrayList<Clearing> clearings){
@@ -81,5 +82,13 @@ public class Tiles {
 
 	public void setTheta(int rotation) {
 		this.theta = rotation;
+	}
+
+	public WarningChit getWarnings() {
+		return warnings;
+	}
+
+	public void setWarnings(WarningChit warnings) {
+		this.warnings = warnings;
 	}
 }

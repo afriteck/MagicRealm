@@ -9,8 +9,6 @@ package gui;
  */
 
 import gameLogic.BoardTiles;
-import gameLogic.LocateEnum;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.*;
@@ -448,7 +446,7 @@ class HexCell {
     public void draw(Graphics2D g2) {
         if(showIndex) {
             g2.setPaint(Color.red);
-            //g2.fill(new Ellipse2D.Double(center.x-1.5, center.y-1.5, 4, 4));
+            g2.fill(new Ellipse2D.Double(center.x-1.5, center.y-1.5, 4, 4));
             g2.drawString(id, (float)(center.x+3), (float)(center.y+3));
             g2.setPaint(Color.black);
         }
@@ -497,10 +495,13 @@ class HexCell {
 		        g2d.setTransform(at);
 		        
 		        g2d.drawImage(tileimg, 0, 0, null);
-		        
+		        Shape cl = null;
+		        BufferedImage chitimg = null;
 		        for(int i=0; i<tilehex.getClearings().size(); i++){
-		        	g2d.draw(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition()), (tilehex.getClearings().get(i).getYposition()), 80, 80));
-		        	//clearingList.add(new Point2D.Double((tilehex.getClearings().get(i).getXposition() - 40), (tilehex.getClearings().get(i).getYposition() - 40)));
+		        	//g2d.draw(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition()), (tilehex.getClearings().get(i).getYposition()), 80, 80));
+		        	//chitimg = ImageIO.read(new File("/Z:/eclipse-Juno-Workspace/MagicRealm/src/" + tilehex.getClearings().get(i).getSoundChits().get(i).getFilePath()));
+		        	cl = at.createTransformedShape(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition() - 40), (tilehex.getClearings().get(i).getYposition() - 40), 80, 80));
+		        	g2d.drawImage(chitimg, tilehex.getClearings().get(i).getXposition() - 40, tilehex.getClearings().get(i).getYposition() - 40, cl.getBounds().width, cl.getBounds().height, null);
 		        }
 
 		        //g2d.draw(new Ellipse2D.Double(center.x-1.5, center.y-1.5, 30, 30));
@@ -518,35 +519,7 @@ class HexCell {
         //g2.setTransform(saveTransform);
         
         if(isSelected) {
-            // Show that we know who our neighbors are and where they live.
-            Font font = g2.getFont();
-            FontRenderContext frc = g2.getFontRenderContext();
-            LineMetrics lm = font.getLineMetrics("0", frc);
-            float sh = lm.getAscent() + lm.getDescent();
-            Rectangle r = shape.getBounds();
-            int R = Math.max(r.width, r.height)/2;
-            double thetaInc = 2*Math.PI/HexTiles.SIDES;
-            double theta = start;
-            double lastX = 0, lastY = 0;
-            for(int i = 0; i <= neighbors.length; i++) {
-                double x = center.x + R*Math.cos(theta);
-                double y = center.y + R*Math.sin(theta);
-                if(i > 0 && neighbors[i-1] != null) {
-                    float midx = (float)(x - (x - lastX)/2);
-                    float midy = (float)(y - (y - lastY)/2);
-                    double phi = Math.atan2(midy-center.y, midx-center.x);
-                    String s = neighbors[i-1];
-                    double sw = font.getStringBounds(s, frc).getWidth();
-                    double diag = Math.sqrt(sw*sw + sh*sh)/2;
-                    float sx = (float)(midx - diag*Math.cos(phi) - sw/2);
-                    float sy = (float)(midy - diag*Math.sin(phi)) +
-                                       lm.getDescent();
-                    g2.drawString(s, sx, sy);
-                }
-                lastX = x;
-                lastY = y;
-                theta += thetaInc;
-            }
+        	System.out.println();
         }
     }
  
