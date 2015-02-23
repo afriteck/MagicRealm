@@ -14,19 +14,24 @@ public class Clearing {
 	private int clearingNumber;
 	private int xposition;
 	private int yposition;
+	
+	
 	private ArrayList<TreasureChit> treasureChits;
-	private ArrayList<MonsterChit> monsterChits;
+	private ArrayList<Monster> monsterChits;
 	private ArrayList<SoundChit> soundChits;
 	private ArrayList<WarningChit> warningChits;
+	
+	
+	
 
 	public Clearing(int number, long xpos, long ypos){
 		setClearingNumber(number);
 		setXposition((int) xpos);
 		setYposition((int) ypos);
-		treasureChits = new ArrayList<TreasureChit>();
-		monsterChits = new ArrayList<MonsterChit>();
-		soundChits = new ArrayList<SoundChit>();
-		warningChits = new ArrayList<WarningChit>();
+		setTreasureChits(new ArrayList<TreasureChit>());
+		setMonsterChits(new ArrayList<Monster>());
+		setSoundChits(new ArrayList<SoundChit>());
+		setWarningChits(new ArrayList<WarningChit>());
 	}
 
 	public Clearing(){
@@ -58,5 +63,37 @@ public class Clearing {
 	
 	public String toString(){
 		return "Clearing Number: " + clearingNumber + " X position: " + xposition + " Y Position: " + yposition + "\n";
+	}
+
+	public ArrayList<TreasureChit> getTreasureChits() {
+		return treasureChits;
+	}
+
+	public void setTreasureChits(ArrayList<TreasureChit> treasureChits) {
+		this.treasureChits = treasureChits;
+	}
+
+	public ArrayList<Monster> getMonsterChits() {
+		return monsterChits;
+	}
+
+	public void setMonsterChits(ArrayList<Monster> monsterChits) {
+		this.monsterChits = monsterChits;
+	}
+
+	public ArrayList<SoundChit> getSoundChits() {
+		return soundChits;
+	}
+
+	public void setSoundChits(ArrayList<SoundChit> soundChits) {
+		this.soundChits = soundChits;
+	}
+
+	public ArrayList<WarningChit> getWarningChits() {
+		return warningChits;
+	}
+
+	public void setWarningChits(ArrayList<WarningChit> warningChits) {
+		this.warningChits = warningChits;
 	}
 }
