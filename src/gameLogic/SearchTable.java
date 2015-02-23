@@ -7,7 +7,7 @@ package gameLogic;
  * @author joshwhite
  *
  */
-public class MovementTable {
+public class SearchTable {
 	
 	LocateEnum locate;
 	PeerEnum peer;

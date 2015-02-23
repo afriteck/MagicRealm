@@ -13,6 +13,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
@@ -48,7 +49,8 @@ public class HexCell {
         this.neighbors = neighbors;
         this.tilehex = tile;
         try {
-			this.tileimg = ImageIO.read(new File("/Z:/eclipse-Juno-Workspace/MagicRealm/src/" + tilehex.getFilePath()));
+        	URL url = BoardTest.class.getResource("/" + tilehex.getFilePath());
+			this.tileimg = ImageIO.read(new File(url.getPath()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

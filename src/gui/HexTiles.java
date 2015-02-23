@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import java.util.List;
 
@@ -163,7 +164,8 @@ public class HexTiles extends JPanel {
         cells[0].tilehex.setTheta(60);
         //System.out.println("/" + cells[0].tilehex.getName());
         try {
-			cells[0].setImg(ImageIO.read(new File("/Z:/eclipse-Juno-Workspace/MagicRealm/src/" + cells[0].tilehex.getFilePath())));
+        	URL url = BoardTest.class.getResource("/" + cells[0].tilehex.getFilePath());
+			cells[0].setImg(ImageIO.read(new File(url.getPath())));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -173,7 +175,8 @@ public class HexTiles extends JPanel {
         cells[2].tilehex.setTheta(180);
         //System.out.println("/" + cells[0].tilehex.getName());
         try {
-			cells[2].setImg(ImageIO.read(new File("/Z:/eclipse-Juno-Workspace/MagicRealm/src/" + cells[2].tilehex.getFilePath())));
+        	URL url = BoardTest.class.getResource("/" + cells[2].tilehex.getFilePath());
+			cells[2].setImg(ImageIO.read(new File(url.getPath())));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -322,7 +325,7 @@ public class HexTiles extends JPanel {
     public static void main(String[] args) {
         if(args.length > 0)
             debug = args[0].equals("-d");
-        HexTiles test = new HexTiles();
+        HexTiles test = new HexTiles(BoardTest.initializeTiles());
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(test);

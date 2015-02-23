@@ -3,6 +3,7 @@ package gui;
 import gameLogic.BoardTiles;
 
 import java.io.FileReader;
+import java.net.URL;
 import java.util.ArrayList;
 
 import models.Clearing;
@@ -13,6 +14,8 @@ import org.json.simple.parser.JSONParser;
 
 public class BoardTest {
 
+	//private BoardTiles bt = new BoardTiles();
+	
 	public static BoardTiles initializeTiles() {
 		JSONParser parser = new JSONParser();
 		long xPos, yPos;
@@ -20,9 +23,12 @@ public class BoardTest {
 		Clearing currClearing;
 		Tiles tile = null;
 		BoardTiles bt = new BoardTiles();
+		
 				
 		try {
-			JSONArray a = (JSONArray) parser.parse(new FileReader("Z:/3004/3004A1/Magic Realm/src/res/data.json"));
+			//System.out.println(BoardTest.class.getResource("/res/data.json"));
+			URL url = BoardTest.class.getResource("/res/data.json");
+			JSONArray a = (JSONArray) parser.parse(new FileReader(url.getPath()));
 			
 			for(Object o : a) {
 				JSONObject currTile = (JSONObject) o;
