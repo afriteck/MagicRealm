@@ -11,27 +11,24 @@ package gui;
 import gameLogic.BoardTiles;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.font.*;
 import java.awt.geom.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import models.Clearing;
-import models.Tiles;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
  
 public class HexTiles extends JPanel {
-    final static int SIDES = 6;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8567918989120001764L;
+	/**
+	 * 
+	 */
+	final static int SIDES = 6;
     double MIN_DIST = 0;
     boolean showIndex  = false;
     //boolean tipHigh      = false;
@@ -41,8 +38,12 @@ public class HexTiles extends JPanel {
     HexCell[] cells;
     double scale = 3/4.0;
     BoardTiles bt = new BoardTiles();
- 
-    protected void paintComponent(Graphics g) {
+    
+    public HexTiles(BoardTiles bd){
+    	this.bt = bd;
+    }
+
+	protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -103,7 +104,7 @@ public class HexTiles extends JPanel {
         cells = new HexCell[list.size()];
         // For HexCell to find the side that starts at zero degrees.
         double theta = /*tipHigh ? -Math.PI/6 :*/ 0;
-        
+        /*
         JSONParser parser = new JSONParser();
 		long xPos, yPos;
 		ArrayList<Clearing> clearingList = null;
@@ -138,7 +139,7 @@ public class HexTiles extends JPanel {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		//System.out.println(bt);
         for(int i = 0; i < list.size(); i++) {
             String id = String.valueOf(i);
@@ -317,11 +318,24 @@ public class HexTiles extends JPanel {
         }
         return panel;
     }
- 
+ /*
     public static void main(String[] args) {
         if(args.length > 0)
             debug = args[0].equals("-d");
         HexTiles test = new HexTiles();
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.add(test);
+        f.add(test.getControls(), "Last");
+        f.pack();
+        f.setLocation(100,100);
+        f.setVisible(true);
+        test.addMouseListener(test.switcher);
+        test.addComponentListener(test.resizeMonitor);
+    }
+    */
+    public static void initGameBoard(BoardTiles bd) {
+        HexTiles test = new HexTiles(bd);
         JFrame f = new JFrame();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(test);
@@ -365,7 +379,7 @@ public class HexTiles extends JPanel {
         }
     };
 }
- 
+/* 
 class HexCell {
     String id;
     Point2D.Double center;
@@ -477,7 +491,7 @@ class HexCell {
 		        case 300:  g2.rotate(Math.toRadians(300));
 		        default: 
 			}
-        }*/
+        }
         //rotateTile();
 	        if(tilehex != null && tileimg != null){
 	    		double angle = tilehex.getTheta();
@@ -519,7 +533,8 @@ class HexCell {
         //g2.setTransform(saveTransform);
         
         if(isSelected) {
-        	System.out.println();
+        	System.out.println(tilehex);
+        	toggleSelection();
         }
     }
  
@@ -536,3 +551,4 @@ class HexCell {
                         Arrays.toString(neighbors) + "]";
     }
 }
+*/
