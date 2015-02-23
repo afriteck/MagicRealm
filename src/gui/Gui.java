@@ -3,6 +3,8 @@ package gui;
 
 
 
+import gameLogic.BoardTiles;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
@@ -31,13 +33,18 @@ import models.Captain;
 import models.CharacterContainer;
 import models.Dwarf;
 import models.Elf;
+import models.GuiActivities;
 import models.Player;
 import models.Swordsman;
 import models.Things;
+import models.Tiles;
 
 import java.awt.Component;
 import java.util.LinkedList;
 import java.awt.event.MouseAdapter;
+import javax.swing.JRadioButton;
+import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
 
 public class Gui extends JFrame implements MouseListener {
 
@@ -46,10 +53,16 @@ public class Gui extends JFrame implements MouseListener {
 	private JTextArea txt = new JTextArea ("Welcome to Magic Realm! ");
 	private JLabel[] Die1Label, Die2Label;
 	
-	private JButton rollButton, selectButton, backButton;
+	private JButton rollButton, selectButton, backButton,move,hide,search,trade,rest;
 	private JButton p1button, p2button;         // player turn indicators
     private int turn = 1;       // for the player character selection phase
+    private int activityCounter = 5;       // for the player character selection phase
+    
+    
+    static GuiActivities gm;
+    public static BoardTiles boardt;
 
+    
 	 private int lastRoll = 0;       // the last roll
 	 private int lastRoll2 = 0;
 	 private boolean rolled = false;
@@ -61,10 +74,12 @@ public class Gui extends JFrame implements MouseListener {
 	 private boolean donePlayerRound = false;
 	 private boolean startGame = false;
 	 
+	 private boolean hideAct,moveAct,searchAct,tradeAct, restAct,doneMove;
+	 
 	 private int clicked = 0;
 	 int player1Roll = 0;
 	 
-
+	 LinkedList<String>  choiceOrder = new LinkedList<String>();
 
 	 
 	 private CharacterContainer characters = new CharacterContainer();  // bag of things
@@ -75,6 +90,9 @@ public class Gui extends JFrame implements MouseListener {
 	 
 	 private LinkedList<Things> p1characters = new LinkedList<Things>(), p2characters = new LinkedList<Things>(),
 	            p3characters = new LinkedList<Things>(), p4characters = new LinkedList<Things>();
+	 
+	 Things p1character;
+	 Things p2character;
 	 
 	 
 	 Player player1 = new Player();
@@ -99,6 +117,7 @@ public class Gui extends JFrame implements MouseListener {
 	 
 	 final LinkedList<JLabel> characterLabels = new LinkedList<JLabel>();
 	private JFrame frame;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -107,7 +126,12 @@ public class Gui extends JFrame implements MouseListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					boardt = new BoardTiles(); 
+					boardt = BoardTest.initializeTiles();
+					gm = new GuiActivities(boardt);
 					Gui window = new Gui();
+					HexTiles.initGameBoard(boardt);
+					
 					//window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -235,6 +259,213 @@ RollButton.setIcon(img[0]);
 RollButton.setVisible(false);
 getContentPane().add(RollButton);
 
+
+
+ move = new JButton("MOVE");
+move.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		
+		activityCounter--;
+int n;
+		//GuiActivities gm = new GuiActivities();
+		
+		gm.activity(currentPlayer, e, activityCounter);
+		gm.requestMove();
+		choiceOrder.add("MOVE");
+		n = activityCounter;
+		//n--;
+		gm.activity(currentPlayer, e, n);
+		//gm.requestMove();
+
+		if(activityCounter == 1){
+		move.setVisible(false);
+        hide.setVisible(false);
+        search.setVisible(false);
+         rest.setVisible(false);
+         trade.setVisible(false);
+		
+         activityCounter = 5;
+         //activityCounter--;
+         getNextPlayer(currentPlayer);
+ 		gm.activity(currentPlayer, e, activityCounter);
+ 		move.setVisible(true);
+        hide.setVisible(true);
+        search.setVisible(true);
+         rest.setVisible(true);
+         trade.setVisible(true);
+		}
+
+	}
+});
+buttonGroup.add(move);
+move.setBounds(1460, 227, 80, 23);
+contentPane.add(move);
+move.setVisible(false);
+
+ hide = new JButton("HIDE");
+hide.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		activityCounter--;
+
+		//GuiActivities gm = new GuiActivities();
+		
+		gm.activity(currentPlayer, e, activityCounter);
+		choiceOrder.add("HIDE");
+		
+		if(currentPlayer == player1){
+		gm.requestHide(p1character);
+		}
+		else {
+			gm.requestHide(p2character);
+		}
+		if(activityCounter == 1){
+		move.setVisible(false);
+        hide.setVisible(false);
+        search.setVisible(false);
+         rest.setVisible(false);
+         trade.setVisible(false);
+		
+         activityCounter = 5;
+         getNextPlayer(currentPlayer);
+ 		gm.activity(currentPlayer, e, activityCounter);
+ 		move.setVisible(true);
+        hide.setVisible(true);
+        search.setVisible(true);
+         rest.setVisible(true);
+         trade.setVisible(true);
+		
+		
+		
+		
+		}
+	}
+});
+buttonGroup.add(hide);
+hide.setBounds(1460, 261, 80, 23);
+contentPane.add(hide);
+hide.setVisible(false);
+
+ trade = new JButton("TRADE");
+trade.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		activityCounter--;
+
+		//GuiActivities gm = new GuiActivities();
+		
+		gm.activity(currentPlayer, e, activityCounter);
+		
+		choiceOrder.add("TRADE");
+
+		
+		if(activityCounter == 1){
+		move.setVisible(false);
+        hide.setVisible(false);
+        search.setVisible(false);
+         rest.setVisible(false);
+         trade.setVisible(false);
+		
+		
+         activityCounter = 5;
+         getNextPlayer(currentPlayer);
+ 		gm.activity(currentPlayer, e, activityCounter);
+ 		move.setVisible(true);
+        hide.setVisible(true);
+        search.setVisible(true);
+         rest.setVisible(true);
+         trade.setVisible(true);
+		
+		}
+	}
+});
+buttonGroup.add(trade);
+trade.setBounds(1460, 295, 80, 23);
+contentPane.add(trade);
+trade.setVisible(false);
+
+
+ search = new JButton("SEARCH");
+buttonGroup.add(search);
+search.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		activityCounter--;
+
+		//GuiActivities gm = new GuiActivities();
+		
+		gm.activity(currentPlayer, e, activityCounter);
+		
+		choiceOrder.add("SEARCH");
+
+		
+		if(activityCounter == 1){
+		move.setVisible(false);
+        hide.setVisible(false);
+        search.setVisible(false);
+         rest.setVisible(false);
+         trade.setVisible(false);
+		
+		
+         activityCounter = 5;
+         getNextPlayer(currentPlayer);
+ 		gm.activity(currentPlayer, e, activityCounter);
+ 		move.setVisible(true);
+        hide.setVisible(true);
+        search.setVisible(true);
+         rest.setVisible(true);
+         trade.setVisible(true);
+		
+		
+		
+		}
+	}
+});
+search.setBounds(1460, 329, 89, 23);
+contentPane.add(search);
+search.setVisible(false);
+
+ rest = new JButton("REST");
+rest.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		activityCounter--;
+
+		//GuiActivities gm = new GuiActivities();
+		
+		gm.activity(currentPlayer, e, activityCounter);
+		
+		choiceOrder.add("REST");
+
+		
+		if(activityCounter == 1){
+		move.setVisible(false);
+        hide.setVisible(false);
+        search.setVisible(false);
+         rest.setVisible(false);
+         trade.setVisible(false);
+		
+		
+         activityCounter = 5;
+         getNextPlayer(currentPlayer);
+ 		gm.activity(currentPlayer, e, activityCounter);
+ 		move.setVisible(true);
+        hide.setVisible(true);
+        search.setVisible(true);
+         rest.setVisible(true);
+         trade.setVisible(true);
+		
+		
+		
+		}
+	}
+});
+buttonGroup.add(rest);
+rest.setBounds(1460, 363, 80, 23);
+contentPane.add(rest);
+rest.setVisible(false);
+
+
+
+
+
+
 die1 = new JButton();
 die1.setBounds(140, 47, 68, 66);                               // bounds for button 
 die1.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));  
@@ -332,10 +563,11 @@ btnNewButton.addActionListener(new ActionListener() {
          btnNewButton.setVisible(false);
         }
         else{
+        	
         	cheatMode = false;
         	randomMode = true;
             txt.append("\n---------------------------------- You are now in normal mode!!\n  CLICK ON ROLL BUTTON TO ROLL \n");
-           
+           gm.addWarningChits();
             //set up the game for random mode.
             
             btnNewButton.setVisible(false);     //disable the start new game button until we figure out a way to reset the game.
@@ -355,9 +587,8 @@ btnNewButton.addActionListener(new ActionListener() {
 
         txt.append("\n----------------------------------\nPlease choose your characters \n"); 
         
-        characterSelectionPhase = true;
         currentPlayer = player1;
-        
+      
           
     }
 });
@@ -386,11 +617,6 @@ scroll.setSize(300, 300);
 scroll.setLocation(1550, 227);
 contentPane.add(scroll);
 
-//JScrollPane frameScroll = new JScrollPane (frame, 
-//JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//frameScroll.setSize(300, 300);
-//frameScroll.setLocation(1500, 27);
-//contentPane.add(frameScroll);
 
 die1.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent arg0) {
@@ -633,48 +859,6 @@ BlackKnightIcon.setVisible(false);
 contentPane.add(BlackKnightIcon);
 
 
-
-/*
-selectButton = new JButton("select");
-selectButton.addActionListener(new ActionListener() {
-    public void actionPerformed(ActionEvent arg0) {
-       
-    	int dialogButton = JOptionPane.YES_NO_OPTION;
-    	int dialogResult = JOptionPane.showConfirmDialog (null, "ARE YOU SURE YOU WANT TO SELECT THIS CHARACTER?","Alert",dialogButton);
-        if (dialogResult == JOptionPane.YES_OPTION){  
-            //cheatMode = true;
-            selected = true;
-        	txt.append("\n---------------------------------- THIS CHARACTER HAS BEEN SELECTED....yay!!\n");
-            AmazonIcon.setVisible(false);
-            CaptainIcon.setVisible(false);
-            BlackKnightIcon.setVisible(false);
-            ElfIcon.setVisible(false);
-            DwarfIcon.setVisible(false);
-            SwordsManIcon.setVisible(false);
-            selectButton.setVisible(false);
-            backButton.setVisible(false);
-        }
-        else{
-        	selected = false;
-            AmazonIcon.setVisible(false);
-            CaptainIcon.setVisible(false);
-            BlackKnightIcon.setVisible(false);
-            ElfIcon.setVisible(false);
-            DwarfIcon.setVisible(false);
-            SwordsManIcon.setVisible(false);
-            selectButton.setVisible(false);
-            backButton.setVisible(false);
-        	JOptionPane.showMessageDialog(getContentPane(), "PLEASE SELECT A CHARACTER.");
-        	
-        }
-        }
-    });
-
-selectButton.setBounds(600, 807, 89, 23);
-selectButton.setVisible(false);
-contentPane.add(selectButton);
-
-	*/
 backButton = new JButton("Back");
 backButton.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent arg0) {
@@ -696,6 +880,9 @@ backButton.setBounds(800, 907, 100, 23);
 backButton.setIcon (new ImageIcon(Gui.class.getResource("/actions/backarrow.gif")));
 backButton.setVisible(false);
 contentPane.add(backButton);
+
+
+
 	
 	
 	
@@ -767,7 +954,7 @@ public void selectPlayerCharacter(Player p, int t, MouseEvent e){
 	
 	   if (p == player1) { 
             if (t == 1) {
-            	Things p1character = new Things();
+            	 p1character = new Things();
             	p1character.setName(((Component) e.getSource()).getName());
             p1characters.add(p1character);
 
@@ -777,7 +964,7 @@ public void selectPlayerCharacter(Player p, int t, MouseEvent e){
         
           if (p == player2){
             if (t == 1) {
-            	Things p2character = new Things();
+            	 p2character = new Things();
             	p2character.setName(((Component) e.getSource()).getName());
             p1characters.add(p2character);
             donePlayerRound = true;          
@@ -849,6 +1036,7 @@ public void recruitCharacter(Player p, MouseEvent e){
 
     checkCharacter(p, e);
      getNextPlayer(currentPlayer);
+     
 
 
 }
@@ -868,37 +1056,37 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	if(p == player1){
 	    selected = false;		//we know the players are not done selection
 		if(name == "Amazon"){
-	    	Things p1character = new Amazon();
+	    	 p1character = new Amazon();
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
 		}
 		
 		else if(name == "Captain"){
-			Things p1character = new Captain();
+			 p1character = new Captain();
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
 		}
 		
 		else if(name == "Dwarf"){
-			Things p1character = new Dwarf();
+			 p1character = new Dwarf();
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
 		}
 	
 		else if(name == "Elf"){
-			Things p1character = new Elf();
+			 p1character = new Elf();
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
 
 		}
 		
 		else if(name == "BlackKnight"){
-			Things p1character = new BlackKnight();
+			 p1character = new BlackKnight();
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
 		}
 		else if(name == "SwordsMan"){
-			Things p1character = new Swordsman();
+			 p1character = new Swordsman();
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
 		}
@@ -908,37 +1096,37 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	if(p == player2){
 	    selected = true;			//we now know that p2 is done selecting so, selecion phase is over	
 		if(name == "Amazon"){
-	    	Things p2character = new Amazon();
+	    	 p2character = new Amazon();
 	        p2characters.add(p2character); 
 	        showMessage(p2character, player2);
 
 		}
 		
 		else if(name == "Captain"){
-			Things p2character = new Captain();
+			 p2character = new Captain();
 	        p2characters.add(p2character); 
 	        showMessage(p2character, player2);
 		}
 		
 		else if(name == "Dwarf"){
-			Things p2character = new Dwarf();
+			 p2character = new Dwarf();
 	        p2characters.add(p2character); 
 	        showMessage(p2character, player2);
 		}
 	
 		else if(name == "Elf"){
-			Things p2character = new Elf();
+			 p2character = new Elf();
 	        p2characters.add(p2character); 
 	        showMessage(p2character, player2);
 		}
 		
 		else if(name == "BlackKnight"){
-			Things p2character = new BlackKnight();
+			 p2character = new BlackKnight();
 	        p2characters.add(p2character); 
 	        showMessage(p2character, player2);
 		}
 		else if(name == "SwordsMan"){
-			Things p2character = new Swordsman();
+			 p2character = new Swordsman();
 	        p2characters.add(p2character); 
 	        showMessage(p2character, player2);
 		}		
@@ -950,6 +1138,7 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	
 	
 }
+
 
  
 public void toggleDie1(){	// change the die1 face any time the die is clicked
@@ -1029,6 +1218,50 @@ public void toggleDie2(){
 }
 //}
 
+
+public void moveActivity(Player p, ActionEvent e){
+	if(!moveAct){
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+    	int dialogResult = JOptionPane.showConfirmDialog (null, "ARE YOU SURE YOU WANT TO DO THIS ACTIVITY FOR THE DAY?","Alert",dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION){  
+            moveAct = true;
+
+            txt.append("\n---------------------------------- WHERE WOULD YOU LIKE TO MOVE!!\n");
+        }
+        else{
+        	moveAct = false;
+        	JOptionPane.showMessageDialog(getContentPane(), "PLEASE CHOOSE YOUR ACTIVITIES FOR THE DAY.");
+
+        }
+		}
+		else if (activityCounter == 0){ JOptionPane.showMessageDialog(getContentPane(), "YOU HAVE USED ALL YOUR REQUIRED ACTIVITIES FOR THE DAY.");
+		moveAct = false;
+}	//getNextPlayer(currentPlayer);
+			//movePlayer(currentPlayer, e);
+	
+	if(moveAct & p == player2 & activityCounter == 0){
+		moveAct = false;
+	    doneMove = true;
+	    	txt.append("done activity choosing");
+        	JOptionPane.showMessageDialog(getContentPane(), "we are done here.");
+            move.setVisible(false);
+            hide.setVisible(false);
+            search.setVisible(false);
+            rest.setVisible(false);
+            trade.setVisible(false);
+}
+else{
+	doneMove = false;
+}
+
+}
+
+public void movePlayer(Player p, ActionEvent e){
+	 moveActivity(p, e);
+	
+	
+}
+
 public void checkSelected(Player p, MouseEvent e){
 	
 			if(!selected){
@@ -1066,10 +1299,22 @@ public void checkSelected(Player p, MouseEvent e){
 
 			}
 
-		
+		if(selected & p == player2){
+			    characterSelectionPhase = true;
+			    	txt.append("done selection!! ya!!!");
+		        	JOptionPane.showMessageDialog(getContentPane(), "PLEASE CHOOSE YOUR 4 ACTIVITIES FOR THE DAY.");
+		            txt.append("\n----------------------------------\nPlease click on the 4 activities you would want to do today \n"); 
+		            move.setVisible(true);
+		            hide.setVisible(true);
+		            search.setVisible(true);
+		            rest.setVisible(true);
+		            trade.setVisible(true);
+		}
+		else{
+			characterSelectionPhase = false;
+		}
 	
-	
+
+
 }
-
-
 }

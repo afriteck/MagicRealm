@@ -20,6 +20,10 @@ public class BoardTiles {
 		tiles = new ArrayList<Tiles>();
 	}
 	
+	public int size(){
+		return tiles.size();
+	}
+	
 	public ArrayList<Tiles> getAllTiles(){ return tiles; }
 	
 	public void addTile(Tiles foo){
@@ -56,6 +60,7 @@ public class BoardTiles {
 			if(tiles.get(i).getName().equals(name)){wantedTile = tiles.get(i);}
 		}
 		if(wantedTile != null){
+			//System.out.println(wantedTile.getName());
 			return wantedTile;
 		}else{
 			System.out.println("Error. That is not a valid tile!");

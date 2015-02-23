@@ -66,7 +66,7 @@ public class Tiles {
 	}
 	
 	public String toString() {
-		String strToReturn = "Tile Name: " + tileName + " at file path: " + filePath + " Clearings in tile: \n";
+		String strToReturn = "Tile Name: " + tileName + "\nat file path: " + filePath + "\nWarningChits: " + warnings.getName() + "\nClearings in tile: \n";
 
 		for(int i = 0; i < tileClearings.size(); i++) {
 			strToReturn += tileClearings.get(i);

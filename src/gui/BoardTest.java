@@ -26,7 +26,7 @@ public class BoardTest {
 		
 				
 		try {
-			//System.out.println(BoardTest.class.getResource("/res/data.json"));
+			System.out.println(BoardTest.class.getResource("/res/data.json"));
 			URL url = BoardTest.class.getResource("/res/data.json");
 			JSONArray a = (JSONArray) parser.parse(new FileReader(url.getPath()));
 			
