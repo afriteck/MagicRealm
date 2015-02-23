@@ -13,7 +13,7 @@ import org.json.simple.parser.JSONParser;
 
 public class BoardTest {
 
-	public BoardTiles initializeTiles() {
+	public static BoardTiles initializeTiles() {
 		JSONParser parser = new JSONParser();
 		long xPos, yPos;
 		ArrayList<Clearing> clearingList = null;
@@ -22,7 +22,7 @@ public class BoardTest {
 		BoardTiles bt = new BoardTiles();
 				
 		try {
-			JSONArray a = (JSONArray) parser.parse(new FileReader("Z:/eclipse-Juno-Workspace/Magic Realm/src/res/data.json"));
+			JSONArray a = (JSONArray) parser.parse(new FileReader("Z:/3004/3004A1/Magic Realm/src/res/data.json"));
 			
 			for(Object o : a) {
 				JSONObject currTile = (JSONObject) o;
@@ -48,7 +48,7 @@ public class BoardTest {
 				bt.addTile(tile);
 			}
 			
-			System.out.println(bt);
+			//System.out.println(bt);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
