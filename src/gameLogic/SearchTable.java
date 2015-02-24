@@ -9,12 +9,12 @@ package gameLogic;
  */
 public class SearchTable {
 	
-	LocateEnum locate;
+	static LocateEnum locate;
 	PeerEnum peer;
 	MagicSightEnum magicsight;
 	LootEnum loot;
 	
-	public LocateEnum getLocateAction(int roll) {
+	public  LocateEnum getLocateAction(int roll) {
 		switch (roll) {
 			case 1:  locate = LocateEnum.CHOICE;
 	        case 2:  locate = LocateEnum.PASSAGES_AND_CLUES;

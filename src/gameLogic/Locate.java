@@ -11,39 +11,41 @@ import models.Player;
  */
 public class Locate {
 
-	public void choice(Player player){
-		// choice implementation
+	public static void choice(Player player){
+System.out.println("got it");	}
+	
+	public static void passages_and_clues(Player player){
+		//implementation
+		System.out.println("got it");
 	}
 	
-	public void passages_and_clues(Player player){
+	public static void passages(Player player){
 		//implementation
+		System.out.println("got it");
 	}
 	
-	public void passages(Player player){
+	public static void discover_chits(Player player){
 		//implementation
+		System.out.println("got it");
 	}
 	
-	public void discover_chits(Player player){
+	public static void locateAction(Player player, int myroll){
 		//implementation
-	}
-	
-	public void locateAction(Player player, LocateEnum locate){
-		//implementation
-		if(locate == LocateEnum.CHOICE){
+		if(myroll == 1){
 			//implementation
 			choice(player);
-		}else if(locate == LocateEnum.PASSAGES_AND_CLUES){
+		}else if(myroll == 2){
 			//implementation
 			passages_and_clues(player);
-		}else if(locate == LocateEnum.PASSAGES){
+		}else if(myroll == 3){
 			//implementation
 			passages(player);
-		}else if(locate == LocateEnum.DISCOVER_CHITS){
+		}else if(myroll == 4){
 			//implementation
 			discover_chits(player);
-		}else if(locate == LocateEnum.NOTHING){
+		}else if(myroll == 5){
 			//implementation
-		}else if(locate == LocateEnum.NOTHING){
+		}else if(myroll == 6){
 			//implementation
 		}else{
 			System.out.println("Error, did not recieve valid Enum");

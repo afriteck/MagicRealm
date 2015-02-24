@@ -4,6 +4,8 @@ package gui;
 
 
 import gameLogic.BoardTiles;
+import gameLogic.Locate;
+import gameLogic.SearchTable;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -607,8 +609,8 @@ public void actionPerformed(ActionEvent e) {
         die2.setVisible(true);
     	
     	
-    lastRoll = Dice(); 
-    lastRoll2 = Dice(); 
+    lastRoll = roll(); 
+    lastRoll2 = roll(); 
     
     player1Roll = currentPlayer.getPlayerDie().getDieRoll(currentPlayer.getDieBool(), lastRoll, lastRoll2);
     
@@ -1005,7 +1007,7 @@ protected int getActivityCounter() {
 		return activityCounter--;
 	}
 
-public static int Dice(){                                       // Dice Function - returns # 
+public static int roll(){                                       // Dice Function - returns # 
         
         return (int)(6.0 * Math.random()) + 1;   
 }
@@ -1174,7 +1176,6 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	    	 p1character = new Amazon();
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
-			boardt.getTile("BAD VALLEY").getClearingByNum(5).setPlayerHere(true);
 
 		}
 		
@@ -1207,6 +1208,8 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
 		}
+		boardt.getTile("BAD VALLEY").getClearingByNum(5).setPlayerHere(true);
+
 	}
 	
 	if(p == player2){
@@ -1246,7 +1249,7 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	        p2characters.add(p2character); 
 	        showMessage(p2character, player2);
 		}		
-		//HexTiles.placeCharacter("BAD VALLEY", 5);
+		boardt.getTile("BAD VALLEY").getClearingByNum(5).setPlayerHere(true);
 		
 	
 	
@@ -1392,6 +1395,19 @@ public void playGame(){
 		//getContentPane().add(locate);
 		
 		locate = new JButton("LOCATE");
+
+		locate.addActionListener(new ActionListener() {                 //Button Listener/* 
+    @Override
+public void actionPerformed(ActionEvent e) { 
+    	
+    	txt.append("PLEASE ROLL A DIE");
+        player1Roll = Math.max(roll(), roll());
+
+    	System.out.println(player1Roll);
+    	Locate.locateAction(player1, player1Roll);
+
+    }  
+    }); 
 		locate.setBounds(1430, 329, 109, 23);
 		locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
 		//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
@@ -1403,8 +1419,8 @@ public void playGame(){
 		
 		peer = new JButton("PEER");
 		peer.setBounds(1460, 295, 80, 23);
-		peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-		peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		//peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+		//peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
 		peer.setSelected(true);
 		peer.setVisible(true);
 		contentPane.add(peer);
@@ -1412,11 +1428,11 @@ public void playGame(){
 		
 		loot = new JButton("LOOT");
 		loot.setBounds(1460, 261, 80, 23);
-		loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-		loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		//loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+		//loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
 		loot.setSelected(true);
 		loot.setVisible(true);
-		contentPane.add(peer);
+		contentPane.add(loot);
 
 		
 		//searchButtons = gm.requestSearch();

@@ -214,7 +214,7 @@ public class HexCell {
         //g2.setTransform(saveTransform);
         
         if(isSelected) {
-        	System.out.println(tilehex);
+        	//System.out.println(tilehex);
         	toggleSelection();
         }
     }

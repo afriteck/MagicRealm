@@ -204,7 +204,15 @@ public void requestMove(){
 		String input = TileName.getText().toString().trim();
 		bd.getTile(input);
 		moveTiles.add(bd.getTile(input));
-		System.out.println(bd.getTile(input).getName());		
+		System.out.println(bd.getTile(input).getName());
+		
+		bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).setPlayerHere(true);
+
+		
+		
+		
+		
+		
 		  if (TileName.getText().equals("h") && Clearing.getText().equals("h")) {	
 	        System.out.println("Login successful");
 	    } else {
