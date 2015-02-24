@@ -294,40 +294,32 @@ move.addActionListener(new ActionListener() {
 			trade.setVisible(false);
 			
 			playGame();
-			//getNextPlayer(currentPlayer);
-			//playGame();
 
-			//moveAct = true;
-			//System.out.println(hm);
-
-		
 		}
 		
-		if(currentPlayer == player2){
-			gm.activity(p2choiceOrder, e, getActivityCounter());
-		}else{
+		//if(currentPlayer == player2){
+			//gm.activity(p2choiceOrder, e, getActivityCounter());
+		//}else{
 			gm.activity(p1choiceOrder, e, getActivityCounter());
-		}
-			 //gm.activity(p1choiceOrder, e, getActivityCounter());
+		//}
 	
-			System.out.println(p1choiceOrder);
+			//System.out.println(p1choiceOrder);
 
 if(activityCounter < 1){
 	getNextPlayer(currentPlayer);
 	activityCounter = 5;
-	if(currentPlayer == player2){
+	//if(currentPlayer == player2){
 		gm.activity(p2choiceOrder, e, getActivityCounter());
-	}else{
-		gm.activity(p1choiceOrder, e, getActivityCounter());
-	}
-	//activityCounter--;
+	//}else{
+		//gm.activity(p1choiceOrder, e, getActivityCounter());
+	//}
 	System.out.println(p2choiceOrder);
 
-	//getNextPlayer(currentPlayer)
 	moveAct = true;
 	System.out.println(activityCounter);
 
 }
+//getNextPlayer(currentPlayer);
 
          
     	 
@@ -361,12 +353,9 @@ hide.addActionListener(new ActionListener() {
 			search.setVisible(false);
 			 rest.setVisible(false);
 			trade.setVisible(false);
-			//getNextPlayer(currentPlayer);
-		//moveAct = true;
-			//System.out.println(hm);
+		
 			playGame();
-			//getNextPlayer(currentPlayer);
-			//playGame();
+		
 
 		
 		}
@@ -376,7 +365,6 @@ hide.addActionListener(new ActionListener() {
 		}else{
 			gm.activity(p1choiceOrder, e, getActivityCounter());
 		}
-			 //gm.activity(p1choiceOrder, e, getActivityCounter());
 	
 			System.out.println(p1choiceOrder);
 
@@ -388,10 +376,8 @@ if(activityCounter < 1){
 	}else{
 		gm.activity(p1choiceOrder, e, getActivityCounter());
 	}
-	//activityCounter--;
 	System.out.println(p2choiceOrder);
 
-	//getNextPlayer(currentPlayer)
 	moveAct = true;
 	System.out.println(activityCounter);
 
@@ -416,13 +402,10 @@ trade.addActionListener(new ActionListener() {
 			search.setVisible(false);
 			 rest.setVisible(false);
 			trade.setVisible(false);
-			//getNextPlayer(currentPlayer);
-		//moveAct = true;
-			//System.out.println(hm);
+		
 
 			playGame();
-			//getNextPlayer(currentPlayer);
-			//playGame();
+			
 
 		}
 		
@@ -431,7 +414,6 @@ trade.addActionListener(new ActionListener() {
 		}else{
 			gm.activity(p1choiceOrder, e, getActivityCounter());
 		}
-			 //gm.activity(p1choiceOrder, e, getActivityCounter());
 	
 			System.out.println(p1choiceOrder);
 
@@ -443,10 +425,7 @@ if(activityCounter < 1){
 	}else{
 		gm.activity(p1choiceOrder, e, getActivityCounter());
 	}
-	//activityCounter--;
 	System.out.println(p2choiceOrder);
-
-	//getNextPlayer(currentPlayer)
 	moveAct = true;
 	System.out.println(activityCounter);
 
@@ -474,13 +453,9 @@ search.addActionListener(new ActionListener() {
 			search.setVisible(false);
 			 rest.setVisible(false);
 			trade.setVisible(false);
-			//getNextPlayer(currentPlayer);
-		//moveAct = true;
-			//System.out.println(hm);
 
 			playGame();
-			//getNextPlayer(currentPlayer);
-			//playGame();
+		
 
 		}
 		
@@ -489,7 +464,6 @@ search.addActionListener(new ActionListener() {
 		}else{
 			gm.activity(p1choiceOrder, e, getActivityCounter());
 		}
-			 //gm.activity(p1choiceOrder, e, getActivityCounter());
 	
 			System.out.println(p1choiceOrder);
 
@@ -501,10 +475,8 @@ if(activityCounter < 1){
 	}else{
 		gm.activity(p1choiceOrder, e, getActivityCounter());
 	}
-	//activityCounter--;
 	System.out.println(p2choiceOrder);
 
-	//getNextPlayer(currentPlayer)
 	moveAct = true;
 	System.out.println(activityCounter);
 
@@ -527,13 +499,9 @@ rest.addActionListener(new ActionListener() {
 			search.setVisible(false);
 			 rest.setVisible(false);
 			trade.setVisible(false);
-		//moveAct = true;
-			//System.out.println(hm);
-
+	
 			playGame();
-			//getNextPlayer(currentPlayer);
-			//playGame();
-
+		
 		}
 		
 		if(currentPlayer == player2){
@@ -541,7 +509,6 @@ rest.addActionListener(new ActionListener() {
 		}else{
 			gm.activity(p1choiceOrder, e, getActivityCounter());
 		}
-			 //gm.activity(p1choiceOrder, e, getActivityCounter());
 	
 			System.out.println(p1choiceOrder);
 
@@ -553,10 +520,8 @@ if(activityCounter < 1){
 	}else{
 		gm.activity(p1choiceOrder, e, getActivityCounter());
 	}
-	//activityCounter--;
 	System.out.println(p2choiceOrder);
 
-	//getNextPlayer(currentPlayer)
 	moveAct = true;
 	System.out.println(activityCounter);
 
@@ -1401,8 +1366,10 @@ public void setLastRoll2(int t){
 }
 
 public void playGame(){
-	for(int i = 0; i < p1choiceOrder.size(); i++){
-	if(p1choiceOrder.get(i) == "SEARCH"){
+	//for(int i = 0; i < p1choiceOrder.size(); i++){
+	getNextPlayer(currentPlayer);
+
+	if(p1choiceOrder.get(0) == "SEARCH"){
 		
 		searchButtons = new LinkedList<JButton>(); 
 		searchButtons.add(peer);
@@ -1472,28 +1439,294 @@ public void actionPerformed(ActionEvent e) {
 		//searchButtons = gm.requestSearch();
 		
 	}
-	else if(p1choiceOrder.get(i)== "HIDE"){
+	else if(p1choiceOrder.get(0)== "HIDE"){
 		gm.requestHide(p1character);
 		txt.append(p1character.getName() + " is now hidden from everybody \n");
 	}
 	
-	else if(p1choiceOrder.get(i)== "MOVE"){
+	else if(p1choiceOrder.get(0)== "MOVE"){
 		gm.requestMove();
 	}
 
-	else if (p1choiceOrder.get(i) == "TRADE"){
+	else if (p1choiceOrder.get(0) == "TRADE"){
 		txt.append("NOT IMPEMENTED YET");
 	}
+	
+
+
+
+
+if(p1choiceOrder.get(1) == "SEARCH"){
+		
+		searchButtons = new LinkedList<JButton>(); 
+		searchButtons.add(peer);
+		searchButtons.add(loot);
+		searchButtons.add(locate);
+		
+		//getContentPane().add(peer);
+		//getContentPane().add(loot);
+		//getContentPane().add(locate);
+		
+		locate = new JButton("LOCATE");
+
+		locate.addActionListener(new ActionListener() {                 //Button Listener/* 
+    @Override
+public void actionPerformed(ActionEvent e) { 
+    	
+    	txt.append("PLEASE ROLL A DIE");
+        player1Roll = Math.max(roll(), roll());
+
+    	System.out.println(getPlayer1Roll());
+    	Locate.locateAction(currentPlayer, player1Roll);
+
+    }  
+    }); 
+		locate.setBounds(1430, 329, 109, 23);
+		locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
+		//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		locate.setSelected(true);
+		locate.setVisible(true);
+		//Gui.getContentPane().add(locate);
+		contentPane.add(locate);
+
+		
+		peer = new JButton("PEER");
+		
+		peer.addActionListener(new ActionListener() {                 //Button Listener/* 
+		    @Override
+		public void actionPerformed(ActionEvent e) { 
+		    	
+		    
+		    }  
+		    }); 
+		peer.setBounds(1460, 295, 80, 23);
+		//peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+		//peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		peer.setSelected(true);
+		peer.setVisible(true);
+		contentPane.add(peer);
+		
+		
+		loot = new JButton("LOOT");
+		loot.addActionListener(new ActionListener() {                 //Button Listener/* 
+		    @Override
+		public void actionPerformed(ActionEvent e) { 
+		    	
+		    
+		    }  
+		    }); 
+		loot.setBounds(1460, 261, 80, 23);
+		//loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+		//loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		loot.setSelected(true);
+		loot.setVisible(true);
+		contentPane.add(loot);
+
+		
+		//searchButtons = gm.requestSearch();
+		
 	}
+	else if(p1choiceOrder.get(1)== "HIDE"){
+		gm.requestHide(p1character);
+		txt.append(p1character.getName() + " is now hidden from everybody \n");
+	}
+	
+	else if(p1choiceOrder.get(1)== "MOVE"){
+		gm.requestMove();
+	}
+
+	else if (p1choiceOrder.get(1) == "TRADE"){
+		txt.append("NOT IMPEMENTED YET");
+	}
+	
+	
+	
+
+
+
+if(p1choiceOrder.get(2) == "SEARCH"){
+	
+	searchButtons = new LinkedList<JButton>(); 
+	searchButtons.add(peer);
+	searchButtons.add(loot);
+	searchButtons.add(locate);
+	
+	//getContentPane().add(peer);
+	//getContentPane().add(loot);
+	//getContentPane().add(locate);
+	
+	locate = new JButton("LOCATE");
+
+	locate.addActionListener(new ActionListener() {                 //Button Listener/* 
+@Override
+public void actionPerformed(ActionEvent e) { 
+	
+	txt.append("PLEASE ROLL A DIE");
+    player1Roll = Math.max(roll(), roll());
+
+	System.out.println(getPlayer1Roll());
+	Locate.locateAction(currentPlayer, player1Roll);
+
+}  
+}); 
+	locate.setBounds(1430, 329, 109, 23);
+	locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
+	//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+	locate.setSelected(true);
+	locate.setVisible(true);
+	//Gui.getContentPane().add(locate);
+	contentPane.add(locate);
+
+	
+	peer = new JButton("PEER");
+	
+	peer.addActionListener(new ActionListener() {                 //Button Listener/* 
+	    @Override
+	public void actionPerformed(ActionEvent e) { 
+	    	
+	    
+	    }  
+	    }); 
+	peer.setBounds(1460, 295, 80, 23);
+	//peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+	//peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+	peer.setSelected(true);
+	peer.setVisible(true);
+	contentPane.add(peer);
+	
+	
+	loot = new JButton("LOOT");
+	loot.addActionListener(new ActionListener() {                 //Button Listener/* 
+	    @Override
+	public void actionPerformed(ActionEvent e) { 
+	    	
+	    
+	    }  
+	    }); 
+	loot.setBounds(1460, 261, 80, 23);
+	//loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+	//loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+	loot.setSelected(true);
+	loot.setVisible(true);
+	contentPane.add(loot);
+
+	
+	//searchButtons = gm.requestSearch();
+	
+}
+else if(p1choiceOrder.get(2)== "HIDE"){
+	gm.requestHide(p1character);
+	txt.append(p1character.getName() + " is now hidden from everybody \n");
+}
+
+else if(p1choiceOrder.get(2)== "MOVE"){
+	gm.requestMove();
+}
+
+else if (p1choiceOrder.get(2) == "TRADE"){
+	txt.append("NOT IMPEMENTED YET");
+}
+
+
+
+
+if(p1choiceOrder.get(3) == "SEARCH"){
+	
+	searchButtons = new LinkedList<JButton>(); 
+	searchButtons.add(peer);
+	searchButtons.add(loot);
+	searchButtons.add(locate);
+	
+	//getContentPane().add(peer);
+	//getContentPane().add(loot);
+	//getContentPane().add(locate);
+	
+	locate = new JButton("LOCATE");
+
+	locate.addActionListener(new ActionListener() {                 //Button Listener/* 
+@Override
+public void actionPerformed(ActionEvent e) { 
+	
+	txt.append("PLEASE ROLL A DIE");
+    player1Roll = Math.max(roll(), roll());
+
+	System.out.println(getPlayer1Roll());
+	Locate.locateAction(currentPlayer, player1Roll);
+
+}  
+}); 
+	locate.setBounds(1430, 329, 109, 23);
+	locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
+	//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+	locate.setSelected(true);
+	locate.setVisible(true);
+	//Gui.getContentPane().add(locate);
+	contentPane.add(locate);
+
+	
+	peer = new JButton("PEER");
+	
+	peer.addActionListener(new ActionListener() {                 //Button Listener/* 
+	    @Override
+	public void actionPerformed(ActionEvent e) { 
+	    	
+	    
+	    }  
+	    }); 
+	peer.setBounds(1460, 295, 80, 23);
+	//peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+	//peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+	peer.setSelected(true);
+	peer.setVisible(true);
+	contentPane.add(peer);
+	
+	
+	loot = new JButton("LOOT");
+	loot.addActionListener(new ActionListener() {                 //Button Listener/* 
+	    @Override
+	public void actionPerformed(ActionEvent e) { 
+	    	
+	    
+	    }  
+	    }); 
+	loot.setBounds(1460, 261, 80, 23);
+	//loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+	//loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+	loot.setSelected(true);
+	loot.setVisible(true);
+	contentPane.add(loot);
+
+	
+	//searchButtons = gm.requestSearch();
+	
+}
+else if(p1choiceOrder.get(3)== "HIDE"){
+	gm.requestHide(p1character);
+	txt.append(p1character.getName() + " is now hidden from everybody \n");
+}
+
+else if(p1choiceOrder.get(3)== "MOVE"){
+	gm.requestMove();
+}
+
+else if (p1choiceOrder.get(3) == "TRADE"){
+	txt.append("NOT IMPEMENTED YET");
+}
+
+
+
+
+//}
 	
 	
 	
 	
 	
 	//getNextPlayer(currentPlayer);
-	/*
-	for(int i = 0; i < p2choiceOrder.size(); i++){
-		if(p2choiceOrder.get(i) == "SEARCH"){
+	
+	//for(int i = 0; i < p2choiceOrder.size(); i++){
+
+	else if( p2choiceOrder.get(0) == "SEARCH"){
 			
 			searchButtons = new LinkedList<JButton>(); 
 			searchButtons.add(peer);
@@ -1563,19 +1796,19 @@ public void actionPerformed(ActionEvent e) {
 			//searchButtons = gm.requestSearch();
 			
 		}
-		else if(p2choiceOrder.get(i)== "HIDE"){
+		else if(p2choiceOrder.get(0)== "HIDE"){
 			gm.requestHide(p1character);
 		}
 		
-		else if(p2choiceOrder.get(i)== "MOVE"){
+		else if(p2choiceOrder.get(0)== "MOVE"){
 			gm.requestMove();
 		}
 
-		else if (p2choiceOrder.get(i) == "TRADE"){
+		else if (p2choiceOrder.get(0) == "TRADE"){
 			txt.append("NOT IMPEMENTED YET");
 		}
-		}
-	*/
+		//}
+	
 	
 }
 
