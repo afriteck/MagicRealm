@@ -40,6 +40,7 @@ import models.Things;
 import models.Tiles;
 
 import java.awt.Component;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.awt.event.MouseAdapter;
 import javax.swing.JRadioButton;
@@ -55,9 +56,16 @@ public class Gui extends JFrame implements MouseListener {
 	
 	private JButton rollButton, selectButton, backButton,move,hide,search,trade,rest;
 	private JButton p1button, p2button;         // player turn indicators
-    private int turn = 1;       // for the player character selection phase
-    private int activityCounter = 5;       // for the player character selection phase
+    private int turn = 0;       // for the player character selection phase
+    private int activityCounter = 4;       // for the player character selection phase
     
+    private JButton peer = new JButton("PEER");
+    private JButton loot = new JButton("LOOT");
+    private JButton locate = new JButton("LOCATE");
+    
+    
+	 LinkedList<JButton> searchButtons;
+	 
     
     static GuiActivities gm;
     public static BoardTiles boardt;
@@ -74,12 +82,19 @@ public class Gui extends JFrame implements MouseListener {
 	 private boolean donePlayerRound = false;
 	 private boolean startGame = false;
 	 
-	 private boolean hideAct,moveAct,searchAct,tradeAct, restAct,doneMove;
+	 private boolean hideAct,moveAct,searchAct,tradeAct, restAct,doneMove, birdsong;
 	 
 	 private int clicked = 0;
 	 int player1Roll = 0;
 	 
-	 LinkedList<String>  choiceOrder = new LinkedList<String>();
+	 LinkedList<String>  p1choiceOrder = new LinkedList<String>();
+	 LinkedList<String>  p2choiceOrder = new LinkedList<String>();
+
+	 String playerOrder;
+	
+	 HashMap<Player, LinkedList<String>> hm = new HashMap<Player, LinkedList<String>>();
+		//HashMap<Player, LinkedList<String>> hm ;
+
 
 	 
 	 private CharacterContainer characters = new CharacterContainer();  // bag of things
@@ -183,7 +198,7 @@ public class Gui extends JFrame implements MouseListener {
         setTitle(" MAGIC REALM ");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1880, 1000);
+        setBounds(0, 0, 1920, 1080);
         contentPane = new JPanel(){ 
          
          /**
@@ -264,37 +279,76 @@ getContentPane().add(RollButton);
  move = new JButton("MOVE");
 move.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		
-		activityCounter--;
-int n;
-		//GuiActivities gm = new GuiActivities();
-		
-		gm.activity(currentPlayer, e, activityCounter);
-		gm.requestMove();
-		choiceOrder.add("MOVE");
-		n = activityCounter;
-		//n--;
-		gm.activity(currentPlayer, e, n);
-		//gm.requestMove();
+		//System.out.println(hm.get(currentPlayer));
+		turn++;
+	
+		if(turn > 8){
+			
+			move.setVisible(false);
+			hide.setVisible(false);
+			search.setVisible(false);
+			 rest.setVisible(false);
+			trade.setVisible(false);
+			
+			playGame();
+			//getNextPlayer(currentPlayer);
+		//moveAct = true;
+			//System.out.println(hm);
 
-		if(activityCounter == 1){
-		move.setVisible(false);
-        hide.setVisible(false);
-        search.setVisible(false);
-         rest.setVisible(false);
-         trade.setVisible(false);
 		
-         activityCounter = 5;
-         //activityCounter--;
-         getNextPlayer(currentPlayer);
- 		gm.activity(currentPlayer, e, activityCounter);
- 		move.setVisible(true);
-        hide.setVisible(true);
-        search.setVisible(true);
-         rest.setVisible(true);
-         trade.setVisible(true);
 		}
+		
+		if(currentPlayer == player2){
+			gm.activity(p2choiceOrder, e, getActivityCounter());
+		}else{
+			gm.activity(p1choiceOrder, e, getActivityCounter());
+		}
+			 //gm.activity(p1choiceOrder, e, getActivityCounter());
+	
+			System.out.println(p1choiceOrder);
 
+if(activityCounter < 1){
+	getNextPlayer(currentPlayer);
+	activityCounter = 5;
+	if(currentPlayer == player2){
+		gm.activity(p2choiceOrder, e, getActivityCounter());
+	}else{
+		gm.activity(p1choiceOrder, e, getActivityCounter());
+	}
+	//activityCounter--;
+	System.out.println(p2choiceOrder);
+
+	//getNextPlayer(currentPlayer)
+	moveAct = true;
+	System.out.println(activityCounter);
+
+}
+	
+		//}
+//getNextPlayer(currentPlayer);
+	
+	
+//if(getActivityCounter()== 0)
+	//getNextPlayer(currentPlayer);
+//move.setVisible(false);
+//hide.setVisible(false);
+//search.setVisible(false);
+ //rest.setVisible(false);
+// trade.setVisible(false);
+// birdsong = true;
+         
+    	 
+		if(currentPlayer == player2){
+			
+			
+    	}
+        
+    	 else {
+    		
+
+    		 
+    		 
+    	 }
 	}
 });
 buttonGroup.add(move);
@@ -305,39 +359,49 @@ move.setVisible(false);
  hide = new JButton("HIDE");
 hide.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		activityCounter--;
+		turn++;
+		
+		if(turn > 8){
+			
+			move.setVisible(false);
+			hide.setVisible(false);
+			search.setVisible(false);
+			 rest.setVisible(false);
+			trade.setVisible(false);
+			//getNextPlayer(currentPlayer);
+		//moveAct = true;
+			//System.out.println(hm);
+			playGame();
 
-		//GuiActivities gm = new GuiActivities();
-		
-		gm.activity(currentPlayer, e, activityCounter);
-		choiceOrder.add("HIDE");
-		
-		if(currentPlayer == player1){
-		gm.requestHide(p1character);
-		}
-		else {
-			gm.requestHide(p2character);
-		}
-		if(activityCounter == 1){
-		move.setVisible(false);
-        hide.setVisible(false);
-        search.setVisible(false);
-         rest.setVisible(false);
-         trade.setVisible(false);
-		
-         activityCounter = 5;
-         getNextPlayer(currentPlayer);
- 		gm.activity(currentPlayer, e, activityCounter);
- 		move.setVisible(true);
-        hide.setVisible(true);
-        search.setVisible(true);
-         rest.setVisible(true);
-         trade.setVisible(true);
-		
-		
-		
 		
 		}
+		
+		if(currentPlayer == player2){
+			gm.activity(p2choiceOrder, e, getActivityCounter());
+		}else{
+			gm.activity(p1choiceOrder, e, getActivityCounter());
+		}
+			 //gm.activity(p1choiceOrder, e, getActivityCounter());
+	
+			System.out.println(p1choiceOrder);
+
+if(activityCounter < 1){
+	getNextPlayer(currentPlayer);
+	activityCounter = 5;
+	if(currentPlayer == player2){
+		gm.activity(p2choiceOrder, e, getActivityCounter());
+	}else{
+		gm.activity(p1choiceOrder, e, getActivityCounter());
+	}
+	//activityCounter--;
+	System.out.println(p2choiceOrder);
+
+	//getNextPlayer(currentPlayer)
+	moveAct = true;
+	System.out.println(activityCounter);
+
+}
+	
 	}
 });
 buttonGroup.add(hide);
@@ -348,33 +412,50 @@ hide.setVisible(false);
  trade = new JButton("TRADE");
 trade.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		activityCounter--;
+		turn++;
+		
+		if(turn > 8){
+			
+			move.setVisible(false);
+			hide.setVisible(false);
+			search.setVisible(false);
+			 rest.setVisible(false);
+			trade.setVisible(false);
+			//getNextPlayer(currentPlayer);
+		//moveAct = true;
+			//System.out.println(hm);
 
-		//GuiActivities gm = new GuiActivities();
-		
-		gm.activity(currentPlayer, e, activityCounter);
-		
-		choiceOrder.add("TRADE");
+			playGame();
 
-		
-		if(activityCounter == 1){
-		move.setVisible(false);
-        hide.setVisible(false);
-        search.setVisible(false);
-         rest.setVisible(false);
-         trade.setVisible(false);
-		
-		
-         activityCounter = 5;
-         getNextPlayer(currentPlayer);
- 		gm.activity(currentPlayer, e, activityCounter);
- 		move.setVisible(true);
-        hide.setVisible(true);
-        search.setVisible(true);
-         rest.setVisible(true);
-         trade.setVisible(true);
-		
 		}
+		
+		if(currentPlayer == player2){
+			gm.activity(p2choiceOrder, e, getActivityCounter());
+		}else{
+			gm.activity(p1choiceOrder, e, getActivityCounter());
+		}
+			 //gm.activity(p1choiceOrder, e, getActivityCounter());
+	
+			System.out.println(p1choiceOrder);
+
+if(activityCounter < 1){
+	getNextPlayer(currentPlayer);
+	activityCounter = 5;
+	if(currentPlayer == player2){
+		gm.activity(p2choiceOrder, e, getActivityCounter());
+	}else{
+		gm.activity(p1choiceOrder, e, getActivityCounter());
+	}
+	//activityCounter--;
+	System.out.println(p2choiceOrder);
+
+	//getNextPlayer(currentPlayer)
+	moveAct = true;
+	System.out.println(activityCounter);
+
+}
+
+	
 	}
 });
 buttonGroup.add(trade);
@@ -387,35 +468,48 @@ trade.setVisible(false);
 buttonGroup.add(search);
 search.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		activityCounter--;
+		turn++;
+		
+		if(turn > 8){
+			
+			move.setVisible(false);
+			hide.setVisible(false);
+			search.setVisible(false);
+			 rest.setVisible(false);
+			trade.setVisible(false);
+			//getNextPlayer(currentPlayer);
+		//moveAct = true;
+			//System.out.println(hm);
 
-		//GuiActivities gm = new GuiActivities();
-		
-		gm.activity(currentPlayer, e, activityCounter);
-		
-		choiceOrder.add("SEARCH");
+			playGame();
 
-		
-		if(activityCounter == 1){
-		move.setVisible(false);
-        hide.setVisible(false);
-        search.setVisible(false);
-         rest.setVisible(false);
-         trade.setVisible(false);
-		
-		
-         activityCounter = 5;
-         getNextPlayer(currentPlayer);
- 		gm.activity(currentPlayer, e, activityCounter);
- 		move.setVisible(true);
-        hide.setVisible(true);
-        search.setVisible(true);
-         rest.setVisible(true);
-         trade.setVisible(true);
-		
-		
-		
 		}
+		
+		if(currentPlayer == player2){
+			gm.activity(p2choiceOrder, e, getActivityCounter());
+		}else{
+			gm.activity(p1choiceOrder, e, getActivityCounter());
+		}
+			 //gm.activity(p1choiceOrder, e, getActivityCounter());
+	
+			System.out.println(p1choiceOrder);
+
+if(activityCounter < 1){
+	getNextPlayer(currentPlayer);
+	activityCounter = 5;
+	if(currentPlayer == player2){
+		gm.activity(p2choiceOrder, e, getActivityCounter());
+	}else{
+		gm.activity(p1choiceOrder, e, getActivityCounter());
+	}
+	//activityCounter--;
+	System.out.println(p2choiceOrder);
+
+	//getNextPlayer(currentPlayer)
+	moveAct = true;
+	System.out.println(activityCounter);
+
+}
 	}
 });
 search.setBounds(1460, 329, 89, 23);
@@ -425,35 +519,49 @@ search.setVisible(false);
  rest = new JButton("REST");
 rest.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		activityCounter--;
+		turn++;
+		
+		if(turn > 8){
+			
+			move.setVisible(false);
+			hide.setVisible(false);
+			search.setVisible(false);
+			 rest.setVisible(false);
+			trade.setVisible(false);
+			//getNextPlayer(currentPlayer);
+		//moveAct = true;
+			//System.out.println(hm);
 
-		//GuiActivities gm = new GuiActivities();
-		
-		gm.activity(currentPlayer, e, activityCounter);
-		
-		choiceOrder.add("REST");
+			playGame();
 
-		
-		if(activityCounter == 1){
-		move.setVisible(false);
-        hide.setVisible(false);
-        search.setVisible(false);
-         rest.setVisible(false);
-         trade.setVisible(false);
-		
-		
-         activityCounter = 5;
-         getNextPlayer(currentPlayer);
- 		gm.activity(currentPlayer, e, activityCounter);
- 		move.setVisible(true);
-        hide.setVisible(true);
-        search.setVisible(true);
-         rest.setVisible(true);
-         trade.setVisible(true);
-		
-		
-		
 		}
+		
+		if(currentPlayer == player2){
+			gm.activity(p2choiceOrder, e, getActivityCounter());
+		}else{
+			gm.activity(p1choiceOrder, e, getActivityCounter());
+		}
+			 //gm.activity(p1choiceOrder, e, getActivityCounter());
+	
+			System.out.println(p1choiceOrder);
+
+if(activityCounter < 1){
+	getNextPlayer(currentPlayer);
+	activityCounter = 5;
+	if(currentPlayer == player2){
+		gm.activity(p2choiceOrder, e, getActivityCounter());
+	}else{
+		gm.activity(p1choiceOrder, e, getActivityCounter());
+	}
+	//activityCounter--;
+	System.out.println(p2choiceOrder);
+
+	//getNextPlayer(currentPlayer)
+	moveAct = true;
+	System.out.println(activityCounter);
+
+}
+	
 	}
 });
 buttonGroup.add(rest);
@@ -890,6 +998,11 @@ contentPane.add(backButton);
 	}
 
 	
+protected int getActivityCounter() {
+	//activityCounter++;
+		return activityCounter--;
+	}
+
 public static int Dice(){                                       // Dice Function - returns # 
         
         return (int)(6.0 * Math.random()) + 1;   
@@ -1260,6 +1373,63 @@ public void movePlayer(Player p, ActionEvent e){
 	 moveActivity(p, e);
 	
 	
+}
+
+public void playGame(){
+	
+	if(p1choiceOrder.get(0) == "SEARCH"){
+		
+		searchButtons = new LinkedList<JButton>(); 
+		searchButtons.add(peer);
+		searchButtons.add(loot);
+		searchButtons.add(locate);
+		
+		//getContentPane().add(peer);
+		//getContentPane().add(loot);
+		//getContentPane().add(locate);
+		
+		locate = new JButton("LOCATE");
+		locate.setBounds(1430, 329, 109, 23);
+		locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
+		//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		locate.setSelected(true);
+		locate.setVisible(true);
+		//Gui.getContentPane().add(locate);
+		contentPane.add(locate);
+
+		
+		peer = new JButton("PEER");
+		peer.setBounds(1460, 295, 80, 23);
+		peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+		peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		peer.setSelected(true);
+		peer.setVisible(true);
+		contentPane.add(peer);
+		
+		
+		loot = new JButton("LOOT");
+		loot.setBounds(1460, 261, 80, 23);
+		loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+		loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		loot.setSelected(true);
+		loot.setVisible(true);
+		contentPane.add(peer);
+
+		
+		//searchButtons = gm.requestSearch();
+		
+	}
+	else if(p1choiceOrder.get(0)== "HIDE"){
+		gm.requestHide(p1character);
+	}
+	
+	else if(p1choiceOrder.get(0)== "MOVE"){
+		gm.requestMove();
+	}
+
+
+
+
 }
 
 public void checkSelected(Player p, MouseEvent e){

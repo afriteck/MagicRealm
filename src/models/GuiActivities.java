@@ -2,11 +2,15 @@ package models;
 
 import gameLogic.BoardTiles;
 import gui.BoardTest;
+import gui.Gui;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 import java.util.LinkedList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
@@ -31,6 +35,7 @@ public class GuiActivities {
 	    private LinkedList<Tiles> moveTiles = new LinkedList<Tiles>();
 	    private LinkedList<Tiles> searchTiles = new LinkedList<Tiles>();
 
+	   private JButton locate, loot, peer;
 	 
 	    BoardTiles bd; 
 	    
@@ -45,64 +50,70 @@ public class GuiActivities {
 	}
 
 
-	public void activity(Player p, ActionEvent e, int n) {
-		if(n > 0 && !moveAct){
+	public void activity(LinkedList<String> p1, ActionEvent e, int n) {
+		
+      	 HashMap<Player, LinkedList<String>> hm = new HashMap<Player, LinkedList<String>>();
+    	 LinkedList<String>  p1choiceOrder = new LinkedList<String>();
+
+    	 String activity = e.getActionCommand();
+    	/* String activity2 = e.getActionCommand();
+    	 String activity3 = e.getActionCommand();
+    	 String activity4 = e.getActionCommand();
+    	 String activity5 = e.getActionCommand();
+    	 String activity6 = e.getActionCommand();
+    	 String activity7 = e.getActionCommand();
+
+    	
+    	 if(n == 5)
+	    	 p1choiceOrder.add(activity5);
+    	 if(n == 4)
+	    	 p1choiceOrder.add(activity2);
+
+		if(n == 3)
+	    	 p1choiceOrder.add(activity3);
+		
+		if(n == 2)
+	    	 p1choiceOrder.add(activity7);
+
+		
+		if(n == 1)
+	    	 p1choiceOrder.add(activity4);
+		
+		if(n == 0)
+	    	 p1choiceOrder.add(activity6);
+		*/
+		
+		
+
+		
+		
+    	 
+    	 
+    	 
+		if(!moveAct){
 				int dialogButton = JOptionPane.YES_NO_OPTION;
 		    	int dialogResult = JOptionPane.showConfirmDialog (null, "ARE YOU SURE YOU WANT TO DO THIS ACTIVITY FOR THE DAY?","Alert",dialogButton);
 		        if (dialogResult == JOptionPane.YES_OPTION){  
-		           n--;
-		        	// setActivityCounter(getActivityCounter()-1);
-		            activityCounter--;
-		            moveAct = true;
-		            //requestMove();
-		            
+		       
+		    	 p1.add(activity);
+		    	
 		        }
-		        else if(!moveAct){
-		        	n++;
-		        	//setActivityCounter(getActivityCounter()+1);
-		        	//activityCounter++;
-		        	moveAct = false;
-		        	JOptionPane.showMessageDialog(null, "PLEASE CHOOSE YOUR ACTIVITIES FOR THE DAY.");
-		        	System.out.println("PLEASE CHOOSE YOUR ACTIVITIES FOR THE DAY.");
-		        	activityCounter++;
-		        	//activity(p,e,activityCounter);
-		        }
-				}
-						else { 
+		        else{
+					//n++;
+					
+						//moveAct = true;					
+						System.out.println("select your action");
 
-				moveAct = false;
-				//setActivityCounter(activityCounter);
-				//System.out.println( "YOU HAVE USED ALL YOUR REQUIRED ACTIVITIES FOR THE DAY.");
-
-		}	//getNextPlayer(currentPlayer);
-					//movePlayer(currentPlayer, e);
-		//if (getActivityCounter()== 0)
-			
-			//JOptionPane.showMessageDialog(null, "YOU HAVE USED ALL YOUR REQUIRED ACTIVITIES FOR THE DAY.");
-
-			
-			
-			//if(moveAct & p == player2 & activityCounter  == 0){
+		        }} 
 		
-			
-			
-			//if(moveAct & n  == 0){
-
-				//moveAct = false;
-			   // doneMove = true;
-			    	//gui.txt.append("done activity choosing");
-		        	//JOptionPane.showMessageDialog(gui.getContentPane(), "we are done here.");
-		           // gui.move.setVisible(false);
-		           // gui.hide.setVisible(false);
-		            //gui.search.setVisible(false);
-		            //gui.rest.setVisible(false);
-		            //gui.trade.setVisible(false);
-		//}
-		//else{
-		//	doneMove = false;
-		//}
-
+		
+		
 		}
+		
+		// hm.put(p1, p1choiceOrder);
+		//System.out.println(p1choiceOrder);
+       	// return hm;		        }
+		
 
 	public void display(JTextArea txt){
 		
@@ -209,15 +220,46 @@ public void requestMove(){
 
 }
 
-public void requestSearch(){
-int option = JOptionPane.showConfirmDialog(null, message, "SEARCH!", JOptionPane.OK_CANCEL_OPTION);
-	
+public LinkedList<JButton> requestSearch(){
+int option = JOptionPane.showConfirmDialog(null, null, "SEARCH!", JOptionPane.OK_CANCEL_OPTION);
+LinkedList <JButton> buttons = new LinkedList<JButton>();
+
 	if (option == JOptionPane.OK_OPTION) {
-		String input = TileName.getText().toString().trim();
+		//String input = TileName.getText().toString().trim();
+//LinkedList <JButton> buttons = new LinkedList<JButton>();
+		
+		locate = new JButton("LOCATE");
+		locate.setBounds(1430, 329, 109, 23);
+		locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
+		//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		locate.setSelected(true);
+		locate.setVisible(true);
+		//Gui.getContentPane().add(locate);
+		
+		
+		peer = new JButton("PEER");
+		peer.setBounds(1460, 295, 80, 23);
+		peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+		peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		peer.setSelected(true);
+		peer.setVisible(true);
+		//contentPane.add(peer);
+		
+		
+		loot = new JButton("LOOT");
+		loot.setBounds(1460, 261, 80, 23);
+		loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
+		loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
+		loot.setSelected(true);
+		loot.setVisible(true);
+		//contentPane.add(loot);
 
-
-		searchTiles.add(bd.getTile(input));
-		System.out.println(bd.getTile(input).getName());
+		
+		buttons.add(locate);
+		buttons.add(peer);
+		buttons.add(loot);
+		//searchTiles.add(bd.getTile(input));
+		//System.out.println(bd.getTile(input).getName());
 	
 		 if (TileName.getText().equals("h") && Clearing.getText().equals("h")) {	
 		        System.out.println("Login successful");
@@ -227,7 +269,7 @@ int option = JOptionPane.showConfirmDialog(null, message, "SEARCH!", JOptionPane
 		} else {
 		    System.out.println("Login canceled");
 		}
-	
+	return buttons;
 	}
 
 public void requestHide(Things character){
