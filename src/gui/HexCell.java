@@ -19,7 +19,6 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 
 import models.Tiles;
-import models.WarningChit;
 
 /**
  * @author joshwhite
@@ -119,36 +118,8 @@ public class HexCell {
             g2.setPaint(Color.black);
         }
         //g2.draw(shape);
-        if(tilehex != null){g2.draw(shape);
-        
-        /*
-        BufferedImage scaled = new BufferedImage(tileimg.getWidth() / 2, tileimg.getHeight() / 2, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = scaled.createGraphics();
-        g2d.setTransform(AffineTransform.getScaleInstance(0.5d, 0.5d));
-        g2d.drawImage(tileimg, 0, 0, null);
-        g2d.dispose();
-        tileimg = scaled;
-        setAngle(0d);
-        */
-        // Save the current transform of the graphics contexts.
-        //AffineTransform saveTransform = g2.getTransform();
-        // Create a identity affine transform, and apply to the Graphics2D context
-        //AffineTransform identity = new AffineTransform();
-        //g2.setTransform(identity);
-        //g2.translate(shape.getBounds().x, shape.getBounds().y);
-        
-        /*if(tilehex != null){
-	        switch (tilehex.getTheta()) {
-				case 0:  g2.rotate(Math.toRadians(0));
-		        case 60:  g2.rotate(Math.toRadians(60));
-		        case 120:  g2.rotate(Math.toRadians(120));
-		        case 180:  g2.rotate(Math.toRadians(180));
-		        case 240:  g2.rotate(Math.toRadians(240));
-		        case 300:  g2.rotate(Math.toRadians(300));
-		        default: 
-			}
-        }*/
-        //rotateTile();
+        if(tilehex != null){
+        	g2.draw(shape);
 	        if(tilehex != null && tileimg != null){
 	    		double angle = tilehex.getTheta();
 	    	
@@ -168,32 +139,42 @@ public class HexCell {
 		        Shape cl = null;
 		        BufferedImage chitimg = null;
 		        for(int i=0; i<tilehex.getClearings().size(); i++){
-		        	if(tilehex.getClearings().get(i).getMonsterChits().size()>0){
-		        		URL url = BoardTest.class.getResource("/monsters/" + tilehex.getClearings().get(i).getMonsterChits().get(0).getImgFilePath());
+		        	cl = at.createTransformedShape(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition() - 40), (tilehex.getClearings().get(i).getYposition() - 40), 80, 80));
+		        	if(tilehex.getClearings().get(i).getDwelling() != null){
+		        		URL url = BoardTest.class.getResource(tilehex.getClearings().get(i).getDwelling().getFpath());
 	        			try {
 							chitimg = ImageIO.read(new File(url.getPath()));
+							at.translate((w / 2), (h / 2));
+					        at.rotate(Math.toRadians(-angle));
+					        at.translate((-w / 2), (-h / 2));
+					        g2d.setTransform(at);
+				        	g2d.drawImage(chitimg, cl.getBounds().x, cl.getBounds().y, cl.getBounds().width, cl.getBounds().height, null);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 		        	}
-		        		//System.out.println("adding warning chit pictures to board");
+		        	if(tilehex.getClearings().get(i).getMonsterChits().size()>0){
+		        		URL url = BoardTest.class.getResource("/monsters/" + tilehex.getClearings().get(i).getMonsterChits().get(0).getImgFilePath());
+	        			try {
+							chitimg = ImageIO.read(new File(url.getPath()));
+							at.translate((w / 2), (h / 2));
+					        at.rotate(Math.toRadians(-angle));
+					        at.translate((-w / 2), (-h / 2));
+					        g2d.setTransform(at);
+				        	g2d.drawImage(chitimg, cl.getBounds().x, cl.getBounds().y, cl.getBounds().width, cl.getBounds().height, null);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		        	}
 		        	/*
-		        		if(tilehex.getWarnings() !=null){
-		        			URL url = BoardTest.class.getResource("/monsters/" + tilehex.getWarnings().getUrl());
-		        			try {
-								chitimg = ImageIO.read(new File(url.getPath()));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-		        		}*/
-		        		
-		        	
-		        	//g2d.draw(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition()), (tilehex.getClearings().get(i).getYposition()), 80, 80));
-		        	//chitimg = ImageIO.read(new File("/Z:/eclipse-Juno-Workspace/MagicRealm/src/" + tilehex.getClearings().get(i).getSoundChits().get(i).getFilePath()));
-		        	cl = at.createTransformedShape(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition() - 40), (tilehex.getClearings().get(i).getYposition() - 40), 80, 80));
-		        	g2d.drawImage(chitimg, tilehex.getClearings().get(i).getXposition() - 40, tilehex.getClearings().get(i).getYposition() - 40, cl.getBounds().width, cl.getBounds().height, null);
+		        	at.translate((w / 2), (h / 2));
+			        at.rotate(Math.toRadians(-angle));
+			        at.translate((-w / 2), (-h / 2));
+			        g2d.setTransform(at);
+		        	g2d.drawImage(chitimg, cl.getBounds().x, cl.getBounds().y, cl.getBounds().width, cl.getBounds().height, null);
+					*/
 		        }
 
 		        //g2d.draw(new Ellipse2D.Double(center.x-1.5, center.y-1.5, 30, 30));
@@ -211,7 +192,7 @@ public class HexCell {
         //g2.setTransform(saveTransform);
         
         if(isSelected) {
-        	System.out.println(tilehex.getName());
+        	System.out.println(tilehex);
         	toggleSelection();
         }
     }

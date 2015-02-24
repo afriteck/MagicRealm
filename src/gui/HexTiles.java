@@ -14,16 +14,11 @@ import gameLogic.Iteration1Board;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import models.Dwellings;
 import models.Tiles;
  
 public class HexTiles extends JPanel {
@@ -63,6 +58,7 @@ public class HexTiles extends JPanel {
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                             RenderingHints.VALUE_ANTIALIAS_ON);
+        
         double w = getWidth();
         double h = getHeight();
         double R = Math.min(w,h)/7;
@@ -70,6 +66,9 @@ public class HexTiles extends JPanel {
         if(debug && firstTime)
             System.out.printf("w = %.1f  h = %.1f  R = %.1f%n", w, h, R);
         double delta = (1.0 - scale)/2;
+        Image img = Toolkit.getDefaultToolkit().getImage(  
+                HexTiles.class.getResource("/others/background_1.png"));  
+        g2.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
         if(zoomOut) {
             // Draw everything smaller to see all the cells.
             g2.translate(delta*w, delta*h);
@@ -361,7 +360,7 @@ public class HexTiles extends JPanel {
         f.add(test);
         f.add(test.getControls(), "Last");
         f.pack();
-        f.setLocation(100,100);
+        f.setLocation(35,180);
         f.setVisible(true);
         test.addMouseListener(test.switcher);
         test.addComponentListener(test.resizeMonitor);

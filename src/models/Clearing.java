@@ -19,7 +19,7 @@ public class Clearing {
 	private ArrayList<TreasureChit> treasureChits;
 	private ArrayList<Monster> monsterChits;
 	private ArrayList<SoundChit> soundChits;
-	private Dwellings dwelling;
+	private Dwelling dwelling;
 	
 	
 	
@@ -94,11 +94,11 @@ public class Clearing {
 		this.soundChits = soundChits;
 	}
 
-	public Dwellings getDwelling() {
+	public Dwelling getDwelling() {
 		return dwelling;
 	}
 
-	public void setDwelling(Dwellings dwelling) {
+	public void setDwelling(Dwelling dwelling) {
 		this.dwelling = dwelling;
 	}
 }
