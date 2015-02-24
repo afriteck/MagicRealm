@@ -14,6 +14,8 @@ public class Iteration1Board {
 	
 	public static void it1Board(BoardTiles bt){
 		bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(new Dwelling("CHAPEL", "/dwellings/chapel.gif"));
+		bt.getTile("DARK VALLEY").getClearingByNum(5).setDwelling(new Dwelling("GUARD", "/dwellings/guard.gif"));
+		bt.getTile("BAD VALLEY").getClearingByNum(5).setDwelling(new Dwelling("INN", "/dwellings/inn.gif"));
 		/*Monster goul = new Monster("Ghost");
 		goul.setImgFilePath("ghost.gif");
 		bt.getTile("AWFUL VALLEY").getClearings().get(3).addMonster(goul);*/

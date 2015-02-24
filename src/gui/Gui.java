@@ -40,6 +40,7 @@ import models.Things;
 import models.Tiles;
 
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.awt.event.MouseAdapter;
@@ -112,6 +113,7 @@ public class Gui extends JFrame implements MouseListener {
 	 
 	 Player player1 = new Player();
 	 Player player2 = new Player();
+	 
 	 
 	 JButton die1 ;
 	 JButton die2 ;
@@ -1096,7 +1098,7 @@ public void selectPlayerCharacter(Player p, int t, MouseEvent e){
               startGame = true;
           
           }
-              }
+	}
 
 
 
@@ -1172,6 +1174,8 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	    	 p1character = new Amazon();
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
+			boardt.getTile("BAD VALLEY").getClearingByNum(5).setPlayerHere(true);
+
 		}
 		
 		else if(name == "Captain"){
@@ -1203,7 +1207,6 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	        p1characters.add(p1character); 
 	        showMessage(p1character, player1);
 		}
-		
 	}
 	
 	if(p == player2){
@@ -1243,7 +1246,7 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	        p2characters.add(p2character); 
 	        showMessage(p2character, player2);
 		}		
-		
+		//HexTiles.placeCharacter("BAD VALLEY", 5);
 		
 	
 	

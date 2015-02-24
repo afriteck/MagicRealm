@@ -20,6 +20,7 @@ public class Clearing {
 	private ArrayList<Monster> monsterChits;
 	private ArrayList<SoundChit> soundChits;
 	private Dwelling dwelling;
+	private boolean playerHere;
 	
 	
 	
@@ -100,5 +101,13 @@ public class Clearing {
 
 	public void setDwelling(Dwelling dwelling) {
 		this.dwelling = dwelling;
+	}
+
+	public boolean isPlayerHere() {
+		return playerHere;
+	}
+
+	public void setPlayerHere(boolean playerHere) {
+		this.playerHere = playerHere;
 	}
 }

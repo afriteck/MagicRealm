@@ -138,17 +138,20 @@ public class HexCell {
 		        g2d.drawImage(tileimg, 0, 0, null);
 		        Shape cl = null;
 		        BufferedImage chitimg = null;
+		        AffineTransform saveAt = new AffineTransform();
 		        for(int i=0; i<tilehex.getClearings().size(); i++){
 		        	cl = at.createTransformedShape(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition() - 40), (tilehex.getClearings().get(i).getYposition() - 40), 80, 80));
 		        	if(tilehex.getClearings().get(i).getDwelling() != null){
 		        		URL url = BoardTest.class.getResource(tilehex.getClearings().get(i).getDwelling().getFpath());
 	        			try {
 							chitimg = ImageIO.read(new File(url.getPath()));
+							saveAt.setTransform(at);
 							at.translate((w / 2), (h / 2));
 					        at.rotate(Math.toRadians(-angle));
 					        at.translate((-w / 2), (-h / 2));
 					        g2d.setTransform(at);
 				        	g2d.drawImage(chitimg, cl.getBounds().x, cl.getBounds().y, cl.getBounds().width, cl.getBounds().height, null);
+				        	at.setTransform(saveAt);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -158,11 +161,30 @@ public class HexCell {
 		        		URL url = BoardTest.class.getResource("/monsters/" + tilehex.getClearings().get(i).getMonsterChits().get(0).getImgFilePath());
 	        			try {
 							chitimg = ImageIO.read(new File(url.getPath()));
+							saveAt.setTransform(at);
 							at.translate((w / 2), (h / 2));
 					        at.rotate(Math.toRadians(-angle));
 					        at.translate((-w / 2), (-h / 2));
 					        g2d.setTransform(at);
 				        	g2d.drawImage(chitimg, cl.getBounds().x, cl.getBounds().y, cl.getBounds().width, cl.getBounds().height, null);
+				        	at.setTransform(saveAt);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		        	}
+		        	if(tilehex.getClearings().get(i).isPlayerHere()){
+		        		System.out.println("Placed player image");
+		        		URL url = BoardTest.class.getResource("/monsters/dragon.gif");
+	        			try {
+							chitimg = ImageIO.read(new File(url.getPath()));
+							saveAt.setTransform(at);
+							at.translate((w / 2), (h / 2));
+					        at.rotate(Math.toRadians(-angle));
+					        at.translate((-w / 2), (-h / 2));
+					        g2d.setTransform(at);
+				        	g2d.drawImage(chitimg, cl.getBounds().x, cl.getBounds().y, cl.getBounds().width, cl.getBounds().height, null);
+				        	at.setTransform(saveAt);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

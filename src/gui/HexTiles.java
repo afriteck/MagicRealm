@@ -47,7 +47,13 @@ public class HexTiles extends JPanel {
     public HexCell getHexCell(int i){
     	return cells[i];
     }
-    
+    /*
+    public static void placeCharacter(String tilename, int tileclearing){
+    	for(int i=0; i<20; i++){
+    		if(cells[i].tilehex.getName().equals(tilename)){cells[i].setPlayerImg(tileclearing);}
+    	}
+    }
+    */
     public static void placeTile(int hexIndex, Tiles tile, int rotation){
 		tile.setTheta(rotation);
 		cells[hexIndex].setTile(tile);
