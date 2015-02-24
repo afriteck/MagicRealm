@@ -3,7 +3,7 @@
  */
 package gameLogic;
 
-import models.Monster;
+import models.Dwelling;
 import gui.HexTiles;
 
 /**
@@ -13,6 +13,7 @@ import gui.HexTiles;
 public class Iteration1Board {
 	
 	public static void it1Board(BoardTiles bt){
+		bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(new Dwelling("CHAPEL", "/dwellings/chapel.gif"));
 		/*Monster goul = new Monster("Ghost");
 		goul.setImgFilePath("ghost.gif");
 		bt.getTile("AWFUL VALLEY").getClearings().get(3).addMonster(goul);*/
