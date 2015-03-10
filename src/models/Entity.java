@@ -1,6 +1,10 @@
 package models;
 
-public class Entity {
+import javax.swing.JOptionPane;
+
+import natives.Native;
+
+public class Entity{
 
 	private int xPos, yPos; // used to keep track of the entity's position on the board
 	private String imgFilePath; // used to show image file for entity 
@@ -58,5 +62,8 @@ public class Entity {
 	public void setEntityName(String entityName) {
 		this.entityName = entityName;
 	}
+
+	
+	
 	
 }

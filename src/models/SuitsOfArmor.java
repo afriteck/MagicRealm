@@ -10,6 +10,9 @@ public class SuitsOfArmor extends Armor{
 		setDamage(isDamaged());
 		setDestroyed(isDestroyed());
 	    setDamageLevel(DamageEnum.HEAVY);
+	    setIntactPrice(17);
+	    setDamagedPrice(12);
+	    setDestroyedPrice(0);
 
 	}
 

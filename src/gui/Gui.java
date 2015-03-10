@@ -3,7 +3,9 @@ package gui;
 
 
 
+import gameLogic.InitBoardTiles;
 import gameLogic.BoardTiles;
+import gameLogic.GuiActivities;
 import gameLogic.Locate;
 import gameLogic.SearchTable;
 
@@ -35,7 +37,6 @@ import models.Captain;
 import models.CharacterContainer;
 import models.Dwarf;
 import models.Elf;
-import models.GuiActivities;
 import models.Player;
 import models.Swordsman;
 import models.Things;
@@ -57,7 +58,7 @@ public class Gui extends JFrame implements MouseListener {
 	private JTextArea txt = new JTextArea ("Welcome to Magic Realm! ");
 	private JLabel[] Die1Label, Die2Label;
 	
-	private JButton rollButton, selectButton, backButton,move,hide,search,trade,rest;
+	private JButton rollButton, selectButton, backButton,move,hide,search,trade,rest,alert,hire,follow,enchant;
 	private JButton p1button, p2button;         // player turn indicators
     private int turn = 0;       // for the player character selection phase
     private int activityCounter = 4;       // for the player character selection phase
@@ -65,7 +66,7 @@ public class Gui extends JFrame implements MouseListener {
     private JButton peer = new JButton("PEER");
     private JButton loot = new JButton("LOOT");
     private JButton locate = new JButton("LOCATE");
-    
+    private JButton[] tradeItems;
     
 	 LinkedList<JButton> searchButtons;
 	 
@@ -113,8 +114,8 @@ public class Gui extends JFrame implements MouseListener {
 	 Things p2character;
 	 
 	 
-	 Player player1 = new Player();
-	 Player player2 = new Player();
+	Player player1 = new Player();
+	Player player2  = new Player();
 	 
 	 
 	 JButton die1 ;
@@ -146,7 +147,7 @@ public class Gui extends JFrame implements MouseListener {
 			public void run() {
 				try {
 					boardt = new BoardTiles(); 
-					boardt = BoardTest.initializeTiles();
+					boardt = InitBoardTiles.initializeTiles();
 					gm = new GuiActivities(boardt);
 					Gui window = new Gui();
 					HexTiles.initGameBoard(boardt);
@@ -164,39 +165,11 @@ public class Gui extends JFrame implements MouseListener {
 	 */
 	public Gui() {
 		//initialize();
-	
-	
-	   final int totalPlayers = 2;
-		
-	
-		
-		String firstPlayer = (String)JOptionPane.showInputDialog(null, "Name:", "Enter Player 1 name", JOptionPane.QUESTION_MESSAGE,
-	            null, null, "");
-	    if (firstPlayer == null || firstPlayer.trim().length() == 0){
-	    	System.out.println("You must enter a name");
-	    	System.exit(1);
-	    }
-	   final String player1Name = firstPlayer.trim();
-		
-		
-		String secondPlayer = (String)JOptionPane.showInputDialog(null, "Name:", "Enter Player 2 name", JOptionPane.QUESTION_MESSAGE,
-	            null, null, "");
-	    if (secondPlayer == null || secondPlayer.trim().length() == 0){ 
-	    	
-	    	System.out.println("You must enter a name");
-	    	System.exit(1);
-	    }
-	   final String player2Name = secondPlayer.trim();
-		
-	    txt.append("\n----------------------------------\n Welcome to Magic Realm " + player1Name + " and " + player2Name + "!" + " \n Press 'New Game' to Play. \n--"); 
+		gm.promptPlayerName(txt);
+		//player1.setName(player1.getName());
+		//player2.setName(player2.getName());
 
-			
-		player1.setName(player1Name);
-		player2.setName(player2Name);
-		
-		
-		
-		
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Gui.class.getResource("/others/rs_logo.jpg")));
         setVisible(true);
         setTitle(" MAGIC REALM ");
@@ -283,159 +256,55 @@ getContentPane().add(RollButton);
  move = new JButton("MOVE");
 move.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
+	if(turn >= 4){
+		getNextPlayer(currentPlayer);
+		turn = 0;
+	}
+	if(gm.requestMove(currentPlayer))
 		turn++;
-	
-		if(turn > 8){
-			
-			move.setVisible(false);
-			hide.setVisible(false);
-			search.setVisible(false);
-			 rest.setVisible(false);
-			trade.setVisible(false);
-			
-			playGame();
 
-		}
-		
-		//if(currentPlayer == player2){
-			//gm.activity(p2choiceOrder, e, getActivityCounter());
-		//}else{
-			gm.activity(p1choiceOrder, e, getActivityCounter());
-		//}
-	
-			//System.out.println(p1choiceOrder);
-
-if(activityCounter < 1){
-	getNextPlayer(currentPlayer);
-	activityCounter = 5;
-	//if(currentPlayer == player2){
-		gm.activity(p2choiceOrder, e, getActivityCounter());
-	//}else{
-		//gm.activity(p1choiceOrder, e, getActivityCounter());
-	//}
-	System.out.println(p2choiceOrder);
-
-	moveAct = true;
-	System.out.println(activityCounter);
-
-}
-//getNextPlayer(currentPlayer);
-
-         
-    	 
-		if(currentPlayer == player2){
-			
-			
-    	}
-        
-    	 else {
-    		
-
-    		 
-    		 
-    	 }
 	}
 });
 buttonGroup.add(move);
-move.setBounds(1460, 227, 80, 23);
+move.setBounds(1460, 227, 89, 23);
 contentPane.add(move);
 move.setVisible(false);
 
  hide = new JButton("HIDE");
 hide.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		turn++;
-		
-		if(turn > 8){
-			
-			move.setVisible(false);
-			hide.setVisible(false);
-			search.setVisible(false);
-			 rest.setVisible(false);
-			trade.setVisible(false);
-		
-			playGame();
-		
-
-		
+		if(turn >= 4){
+			getNextPlayer(currentPlayer);
+			turn = 0;
 		}
-		
-		if(currentPlayer == player2){
-			gm.activity(p2choiceOrder, e, getActivityCounter());
-		}else{
-			gm.activity(p1choiceOrder, e, getActivityCounter());
+		if(gm.requestHide(currentPlayer)){
+			turn++;
+			txt.append(currentPlayer.getCharacter().getName() + " is now hidden from everyone\n");
 		}
-	
-			System.out.println(p1choiceOrder);
-
-if(activityCounter < 1){
-	getNextPlayer(currentPlayer);
-	activityCounter = 5;
-	if(currentPlayer == player2){
-		gm.activity(p2choiceOrder, e, getActivityCounter());
-	}else{
-		gm.activity(p1choiceOrder, e, getActivityCounter());
-	}
-	System.out.println(p2choiceOrder);
-
-	moveAct = true;
-	System.out.println(activityCounter);
-
-}
-	
 	}
 });
 buttonGroup.add(hide);
-hide.setBounds(1460, 261, 80, 23);
+hide.setBounds(1460, 261, 89, 23);
 contentPane.add(hide);
 hide.setVisible(false);
 
  trade = new JButton("TRADE");
 trade.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		turn++;
-		
-		if(turn > 8){
-			
-			move.setVisible(false);
-			hide.setVisible(false);
-			search.setVisible(false);
-			 rest.setVisible(false);
-			trade.setVisible(false);
-		
-
-			playGame();
-			
-
+		if(turn >= 4){
+			getNextPlayer(currentPlayer);
+			turn = 0;
 		}
-		
-		if(currentPlayer == player2){
-			gm.activity(p2choiceOrder, e, getActivityCounter());
-		}else{
-			gm.activity(p1choiceOrder, e, getActivityCounter());
-		}
-	
-			System.out.println(p1choiceOrder);
-
-if(activityCounter < 1){
-	getNextPlayer(currentPlayer);
-	activityCounter = 5;
-	if(currentPlayer == player2){
-		gm.activity(p2choiceOrder, e, getActivityCounter());
-	}else{
-		gm.activity(p1choiceOrder, e, getActivityCounter());
-	}
-	System.out.println(p2choiceOrder);
-	moveAct = true;
-	System.out.println(activityCounter);
-
-}
-
+		tradeItems = gm.intializeTrade();
+		for(int i = 0; i < tradeItems.length; i++)
+			getContentPane().add(tradeItems[i]);
+		//if(gm.intializeTrade(currentPlayer))
+			turn++;
 	
 	}
 });
 buttonGroup.add(trade);
-trade.setBounds(1460, 295, 80, 23);
+trade.setBounds(1460, 295, 89, 23);
 contentPane.add(trade);
 trade.setVisible(false);
 
@@ -446,7 +315,7 @@ search.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
 		turn++;
 		
-		if(turn > 8){
+		if(turn >= 8){
 			
 			move.setVisible(false);
 			hide.setVisible(false);
@@ -492,7 +361,7 @@ rest.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
 		turn++;
 		
-		if(turn > 8){
+		if(turn >= 8){
 			
 			move.setVisible(false);
 			hide.setVisible(false);
@@ -530,12 +399,227 @@ if(activityCounter < 1){
 	}
 });
 buttonGroup.add(rest);
-rest.setBounds(1460, 363, 80, 23);
+rest.setBounds(1460, 363, 89, 23);
 contentPane.add(rest);
 rest.setVisible(false);
 
 
 
+
+alert = new JButton("ALERT");
+alert.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		turn++;
+	
+		if(turn >= 8){
+			
+			move.setVisible(false);
+			hide.setVisible(false);
+			search.setVisible(false);
+			 rest.setVisible(false);
+			trade.setVisible(false);
+			alert.setVisible(false);
+			
+			playGame();
+
+		}
+
+			gm.activity(p1choiceOrder, e, getActivityCounter());
+	
+
+if(activityCounter < 1){
+	getNextPlayer(currentPlayer);
+	activityCounter = 5;
+		gm.activity(p2choiceOrder, e, getActivityCounter());
+	System.out.println(p2choiceOrder);
+
+	moveAct = true;
+	System.out.println(activityCounter);
+
+}
+   
+   	 
+		if(currentPlayer == player2){
+			
+			
+   	}
+       
+   	 else {
+   		
+
+   		 
+   		 
+   	 }
+	}
+});
+buttonGroup.add(alert);
+alert.setBounds(1460, 394, 89, 23);
+contentPane.add(alert);
+alert.setVisible(false);
+
+
+
+hire = new JButton("HIRE");
+hire.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		turn++;
+	
+		if(turn >= 8){
+			
+			move.setVisible(false);
+			hide.setVisible(false);
+			search.setVisible(false);
+			 rest.setVisible(false);
+			trade.setVisible(false);
+			alert.setVisible(false);
+			hire.setVisible(false);
+			playGame();
+
+		}
+
+			gm.activity(p1choiceOrder, e, getActivityCounter());
+	
+
+if(activityCounter < 1){
+	getNextPlayer(currentPlayer);
+	activityCounter = 5;
+		gm.activity(p2choiceOrder, e, getActivityCounter());
+	System.out.println(p2choiceOrder);
+
+	moveAct = true;
+	System.out.println(activityCounter);
+
+}
+   
+   	 
+		if(currentPlayer == player2){
+			
+			
+   	}
+       
+   	 else {
+   		
+
+   		 
+   		 
+   	 }
+	}
+});
+buttonGroup.add(hire);
+hire.setBounds(1460, 428, 89, 23);
+contentPane.add(hire);
+hire.setVisible(false);
+
+
+
+
+follow = new JButton("FOLLOW");
+follow.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		turn++;
+	
+		if(turn >= 8){
+			
+			move.setVisible(false);
+			hide.setVisible(false);
+			search.setVisible(false);
+			 rest.setVisible(false);
+			trade.setVisible(false);
+			alert.setVisible(false);
+			hire.setVisible(false);
+			follow.setVisible(false);
+			playGame();
+
+		}
+
+			gm.activity(p1choiceOrder, e, getActivityCounter());
+	
+
+if(activityCounter < 1){
+	getNextPlayer(currentPlayer);
+	activityCounter = 5;
+		gm.activity(p2choiceOrder, e, getActivityCounter());
+	System.out.println(p2choiceOrder);
+
+	moveAct = true;
+	System.out.println(activityCounter);
+
+}
+   
+   	 
+		if(currentPlayer == player2){
+			
+			
+   	}
+       
+   	 else {
+   		
+
+   		 
+   		 
+   	 }
+	}
+});
+buttonGroup.add(follow);
+follow.setBounds(1460, 462, 89, 23);
+contentPane.add(follow);
+follow.setVisible(false);
+
+
+
+
+enchant = new JButton("ENCHANT");
+enchant.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		turn++;
+	
+		if(turn >= 8){
+			
+			move.setVisible(false);
+			hide.setVisible(false);
+			search.setVisible(false);
+			 rest.setVisible(false);
+			trade.setVisible(false);
+			alert.setVisible(false);
+			hire.setVisible(false);
+			follow.setVisible(false);
+			enchant.setVisible(false);
+			playGame();
+
+		}
+
+			gm.activity(p1choiceOrder, e, getActivityCounter());
+	
+
+if(activityCounter < 1){
+	getNextPlayer(currentPlayer);
+	activityCounter = 5;
+		gm.activity(p2choiceOrder, e, getActivityCounter());
+	System.out.println(p2choiceOrder);
+
+	moveAct = true;
+	System.out.println(activityCounter);
+
+}
+   
+   	 
+		if(currentPlayer == player2){
+			
+			
+   	}
+       
+   	 else {
+   		
+
+   		 
+   		 
+   	 }
+	}
+});
+buttonGroup.add(enchant);
+enchant.setBounds(1460, 496, 89, 23);
+contentPane.add(enchant);
+enchant.setVisible(false);
 
 
 
@@ -1028,6 +1112,8 @@ public void playerCharacterSelectionPrompt(Player p, int n){
    // if (n == 3) txt.append("Third Character.\n\n");
 }
 
+
+/*
 public void selectPlayerCharacter(Player p, int t, MouseEvent e){
    
     //Things temp = getTerrainFromBoard(e, JLabelList);
@@ -1065,7 +1151,7 @@ public void selectPlayerCharacter(Player p, int t, MouseEvent e){
           
           }
 	}
-
+*/
 
 
 
@@ -1123,6 +1209,7 @@ public void recruitCharacter(Player p, MouseEvent e){
 }
  
 public void showMessage(Things ths, Player p){
+	//p = currentPlayer;
 	 txt.append(p.getName() + " Chose " + ths.getName() + "\n" + ths.getName() + " has the following weapons \n" + ths.getWeapons().getName() + "\n" + ths.getWeapons().getName() + " has a length of " + ths.getWeapons().getLength()+"\n the weapon has a speed of " + ths.getWeapons().getSpeed() + "\n");		    
 	    txt.append(ths.getName() + " has the following armors \n");
 		for(int j = 0 ; j < ths.getArsenalSize(); j++)
@@ -1139,38 +1226,61 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 		if(name == "Amazon"){
 	    	 p1character = new Amazon();
 	        p1characters.add(p1character); 
-	        showMessage(p1character, player1);
+	       // player1.getPlayerCharacters().add(p1character);
+	        gm.getPlayer1().setCharacter(p1character);
+	   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+
+	       // showMessage(p1character, player1);
 
 		}
 		
 		else if(name == "Captain"){
 			 p1character = new Captain();
 	        p1characters.add(p1character); 
-	        showMessage(p1character, player1);
+	       // player1.getPlayerCharacters().add(p1character);
+	        gm.getPlayer1().setCharacter(p1character);
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+	       
+	        //showMessage(p1character, player1);
 		}
 		
 		else if(name == "Dwarf"){
 			 p1character = new Dwarf();
 	        p1characters.add(p1character); 
-	        showMessage(p1character, player1);
+	        gm.getPlayer1().setCharacter(p1character);
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+	       
+	        //showMessage(p1character, player1);
 		}
 	
 		else if(name == "Elf"){
 			 p1character = new Elf();
 	        p1characters.add(p1character); 
-	        showMessage(p1character, player1);
+	       // player1.getPlayerCharacters().add(p1character);
+	        gm.getPlayer1().setCharacter(p1character);
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+	       
+	        //showMessage(p1character, player1);
 
 		}
 		
 		else if(name == "BlackKnight"){
 			 p1character = new BlackKnight();
-	        p1characters.add(p1character); 
-	        showMessage(p1character, player1);
+	        p1characters.add(p1character);
+	       // player1.getPlayerCharacters().add(p1character);
+	        gm.getPlayer1().setCharacter(p1character);
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+	       
+	        //showMessage(p1character, player1);
 		}
 		else if(name == "SwordsMan"){
 			 p1character = new Swordsman();
 	        p1characters.add(p1character); 
-	        showMessage(p1character, player1);
+	       // player1.getPlayerCharacters().add(p1character);
+	        gm.getPlayer1().setCharacter(p1character);
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+	        
+	        //showMessage(p1character, player1);
 		}
 		boardt.getTile("BAD VALLEY").getClearingByNum(5).setPlayerHere(true);
 
@@ -1181,37 +1291,64 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 		if(name == "Amazon"){
 	    	 p2character = new Amazon();
 	        p2characters.add(p2character); 
-	        showMessage(p2character, player2);
+	        //player2.getPlayerCharacters().add(p2character);
+	        gm.getPlayer2().setCharacter(p2character);
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        
+	        //showMessage(p2character, player2);
 
 		}
 		
 		else if(name == "Captain"){
 			 p2character = new Captain();
 	        p2characters.add(p2character); 
-	        showMessage(p2character, player2);
+	        //player2.getPlayerCharacters().add(p2character);
+	        gm.getPlayer2().setCharacter(p2character);
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        	        
+	        
+	        //showMessage(p2character, player2);
 		}
 		
 		else if(name == "Dwarf"){
 			 p2character = new Dwarf();
 	        p2characters.add(p2character); 
-	        showMessage(p2character, player2);
+	       // player2.getPlayerCharacters().add(p2character);
+	        gm.getPlayer2().setCharacter(p2character);
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        	        
+	        //showMessage(p2character, player2);
 		}
 	
 		else if(name == "Elf"){
 			 p2character = new Elf();
-	        p2characters.add(p2character); 
-	        showMessage(p2character, player2);
+	        p2characters.add(p2character);
+	        //player2.getPlayerCharacters().add(p2character);
+	        gm.getPlayer2().setCharacter(p2character);
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        	        
+	        
+	        //showMessage(p2character, player2);
 		}
 		
 		else if(name == "BlackKnight"){
 			 p2character = new BlackKnight();
 	        p2characters.add(p2character); 
-	        showMessage(p2character, player2);
+	       // player2.getPlayerCharacters().add(p2character);
+	        gm.getPlayer2().setCharacter(p2character);
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        	        
+	        
+	        //showMessage(p2character, player2);
 		}
 		else if(name == "SwordsMan"){
 			 p2character = new Swordsman();
 	        p2characters.add(p2character); 
-	        showMessage(p2character, player2);
+	       // player2.getPlayerCharacters().add(p2character);
+	        gm.getPlayer2().setCharacter(p2character);
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        	        
+	        //showMessage(p2character, player2);
 		}		
 		boardt.getTile("BAD VALLEY").getClearingByNum(5).setPlayerHere(true);
 		
@@ -1366,185 +1503,16 @@ public void setLastRoll2(int t){
 }
 
 public void playGame(){
-	//for(int i = 0; i < p1choiceOrder.size(); i++){
 	getNextPlayer(currentPlayer);
 
-	if(p1choiceOrder.get(0) == "SEARCH"){
-		
-		searchButtons = new LinkedList<JButton>(); 
-		searchButtons.add(peer);
-		searchButtons.add(loot);
-		searchButtons.add(locate);
-		
-		//getContentPane().add(peer);
-		//getContentPane().add(loot);
-		//getContentPane().add(locate);
-		
-		locate = new JButton("LOCATE");
-
-		locate.addActionListener(new ActionListener() {                 //Button Listener/* 
-    @Override
-public void actionPerformed(ActionEvent e) { 
-    	
-    	txt.append("PLEASE ROLL A DIE");
-        player1Roll = Math.max(roll(), roll());
-
-    	System.out.println(getPlayer1Roll());
-    	Locate.locateAction(currentPlayer, player1Roll);
-
-    }  
-    }); 
-		locate.setBounds(1430, 329, 109, 23);
-		locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
-		//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-		locate.setSelected(true);
-		locate.setVisible(true);
-		//Gui.getContentPane().add(locate);
-		contentPane.add(locate);
-
-		
-		peer = new JButton("PEER");
-		
-		peer.addActionListener(new ActionListener() {                 //Button Listener/* 
-		    @Override
-		public void actionPerformed(ActionEvent e) { 
-		    	
-		    
-		    }  
-		    }); 
-		peer.setBounds(1460, 295, 80, 23);
-		//peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-		//peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-		peer.setSelected(true);
-		peer.setVisible(true);
-		contentPane.add(peer);
-		
-		
-		loot = new JButton("LOOT");
-		loot.addActionListener(new ActionListener() {                 //Button Listener/* 
-		    @Override
-		public void actionPerformed(ActionEvent e) { 
-		    	
-		    
-		    }  
-		    }); 
-		loot.setBounds(1460, 261, 80, 23);
-		//loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-		//loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-		loot.setSelected(true);
-		loot.setVisible(true);
-		contentPane.add(loot);
-
-		
-		//searchButtons = gm.requestSearch();
-		
-	}
-	else if(p1choiceOrder.get(0)== "HIDE"){
-		gm.requestHide(p1character);
-		txt.append(p1character.getName() + " is now hidden from everybody \n");
-	}
 	
-	else if(p1choiceOrder.get(0)== "MOVE"){
-		gm.requestMove();
 	}
-
-	else if (p1choiceOrder.get(0) == "TRADE"){
-		txt.append("NOT IMPEMENTED YET");
-	}
-	
-
-
-
-
-if(p1choiceOrder.get(1) == "SEARCH"){
-		
-		searchButtons = new LinkedList<JButton>(); 
-		searchButtons.add(peer);
-		searchButtons.add(loot);
-		searchButtons.add(locate);
-		
-		//getContentPane().add(peer);
-		//getContentPane().add(loot);
-		//getContentPane().add(locate);
-		
-		locate = new JButton("LOCATE");
-
-		locate.addActionListener(new ActionListener() {                 //Button Listener/* 
-    @Override
-public void actionPerformed(ActionEvent e) { 
-    	
-    	txt.append("PLEASE ROLL A DIE");
-        player1Roll = Math.max(roll(), roll());
-
-    	System.out.println(getPlayer1Roll());
-    	Locate.locateAction(currentPlayer, player1Roll);
-
-    }  
-    }); 
-		locate.setBounds(1430, 329, 109, 23);
-		locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
-		//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-		locate.setSelected(true);
-		locate.setVisible(true);
-		//Gui.getContentPane().add(locate);
-		contentPane.add(locate);
-
-		
-		peer = new JButton("PEER");
-		
-		peer.addActionListener(new ActionListener() {                 //Button Listener/* 
-		    @Override
-		public void actionPerformed(ActionEvent e) { 
-		    	
-		    
-		    }  
-		    }); 
-		peer.setBounds(1460, 295, 80, 23);
-		//peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-		//peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-		peer.setSelected(true);
-		peer.setVisible(true);
-		contentPane.add(peer);
-		
-		
-		loot = new JButton("LOOT");
-		loot.addActionListener(new ActionListener() {                 //Button Listener/* 
-		    @Override
-		public void actionPerformed(ActionEvent e) { 
-		    	
-		    
-		    }  
-		    }); 
-		loot.setBounds(1460, 261, 80, 23);
-		//loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-		//loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-		loot.setSelected(true);
-		loot.setVisible(true);
-		contentPane.add(loot);
-
-		
-		//searchButtons = gm.requestSearch();
-		
-	}
-	else if(p1choiceOrder.get(1)== "HIDE"){
-		gm.requestHide(p1character);
-		txt.append(p1character.getName() + " is now hidden from everybody \n");
-	}
-	
-	else if(p1choiceOrder.get(1)== "MOVE"){
-		gm.requestMove();
-	}
-
-	else if (p1choiceOrder.get(1) == "TRADE"){
-		txt.append("NOT IMPEMENTED YET");
-	}
-	
 	
 	
 
 
 
-if(p1choiceOrder.get(2) == "SEARCH"){
+public void searchAction(){
 	
 	searchButtons = new LinkedList<JButton>(); 
 	searchButtons.add(peer);
@@ -1610,206 +1578,7 @@ public void actionPerformed(ActionEvent e) {
 	loot.setVisible(true);
 	contentPane.add(loot);
 
-	
-	//searchButtons = gm.requestSearch();
-	
-}
-else if(p1choiceOrder.get(2)== "HIDE"){
-	gm.requestHide(p1character);
-	txt.append(p1character.getName() + " is now hidden from everybody \n");
-}
 
-else if(p1choiceOrder.get(2)== "MOVE"){
-	gm.requestMove();
-}
-
-else if (p1choiceOrder.get(2) == "TRADE"){
-	txt.append("NOT IMPEMENTED YET");
-}
-
-
-
-
-if(p1choiceOrder.get(3) == "SEARCH"){
-	
-	searchButtons = new LinkedList<JButton>(); 
-	searchButtons.add(peer);
-	searchButtons.add(loot);
-	searchButtons.add(locate);
-	
-	//getContentPane().add(peer);
-	//getContentPane().add(loot);
-	//getContentPane().add(locate);
-	
-	locate = new JButton("LOCATE");
-
-	locate.addActionListener(new ActionListener() {                 //Button Listener/* 
-@Override
-public void actionPerformed(ActionEvent e) { 
-	
-	txt.append("PLEASE ROLL A DIE");
-    player1Roll = Math.max(roll(), roll());
-
-	System.out.println(getPlayer1Roll());
-	Locate.locateAction(currentPlayer, player1Roll);
-
-}  
-}); 
-	locate.setBounds(1430, 329, 109, 23);
-	locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
-	//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-	locate.setSelected(true);
-	locate.setVisible(true);
-	//Gui.getContentPane().add(locate);
-	contentPane.add(locate);
-
-	
-	peer = new JButton("PEER");
-	
-	peer.addActionListener(new ActionListener() {                 //Button Listener/* 
-	    @Override
-	public void actionPerformed(ActionEvent e) { 
-	    	
-	    
-	    }  
-	    }); 
-	peer.setBounds(1460, 295, 80, 23);
-	//peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-	//peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-	peer.setSelected(true);
-	peer.setVisible(true);
-	contentPane.add(peer);
-	
-	
-	loot = new JButton("LOOT");
-	loot.addActionListener(new ActionListener() {                 //Button Listener/* 
-	    @Override
-	public void actionPerformed(ActionEvent e) { 
-	    	
-	    
-	    }  
-	    }); 
-	loot.setBounds(1460, 261, 80, 23);
-	//loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-	//loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-	loot.setSelected(true);
-	loot.setVisible(true);
-	contentPane.add(loot);
-
-	
-	//searchButtons = gm.requestSearch();
-	
-}
-else if(p1choiceOrder.get(3)== "HIDE"){
-	gm.requestHide(p1character);
-	txt.append(p1character.getName() + " is now hidden from everybody \n");
-}
-
-else if(p1choiceOrder.get(3)== "MOVE"){
-	gm.requestMove();
-}
-
-else if (p1choiceOrder.get(3) == "TRADE"){
-	txt.append("NOT IMPEMENTED YET");
-}
-
-
-
-
-//}
-	
-	
-	
-	
-	
-	//getNextPlayer(currentPlayer);
-	
-	//for(int i = 0; i < p2choiceOrder.size(); i++){
-
-	else if( p2choiceOrder.get(0) == "SEARCH"){
-			
-			searchButtons = new LinkedList<JButton>(); 
-			searchButtons.add(peer);
-			searchButtons.add(loot);
-			searchButtons.add(locate);
-			
-			//getContentPane().add(peer);
-			//getContentPane().add(loot);
-			//getContentPane().add(locate);
-			
-			locate = new JButton("LOCATE");
-
-			locate.addActionListener(new ActionListener() {                 //Button Listener/* 
-	    @Override
-	public void actionPerformed(ActionEvent e) { 
-	    	
-	    	txt.append("PLEASE ROLL A DIE");
-	        player1Roll = Math.max(roll(), roll());
-
-	    	System.out.println(getPlayer1Roll());
-	    	Locate.locateAction(currentPlayer, player1Roll);
-
-	    }  
-	    }); 
-			locate.setBounds(1430, 329, 109, 23);
-			locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
-			//locate.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-			locate.setSelected(true);
-			locate.setVisible(true);
-			//Gui.getContentPane().add(locate);
-			contentPane.add(locate);
-
-			
-			peer = new JButton("PEER");
-			
-			peer.addActionListener(new ActionListener() {                 //Button Listener/* 
-			    @Override
-			public void actionPerformed(ActionEvent e) { 
-			    	
-			    
-			    }  
-			    }); 
-			peer.setBounds(1460, 295, 80, 23);
-			//peer.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-			//peer.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-			peer.setSelected(true);
-			peer.setVisible(true);
-			contentPane.add(peer);
-			
-			
-			loot = new JButton("LOOT");
-			loot.addActionListener(new ActionListener() {                 //Button Listener/* 
-			    @Override
-			public void actionPerformed(ActionEvent e) { 
-			    	
-			    
-			    }  
-			    }); 
-			loot.setBounds(1460, 261, 80, 23);
-			//loot.setIcon(new ImageIcon(Gui.class.getResource("/others/p1.png")));
-			//loot.setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-			loot.setSelected(true);
-			loot.setVisible(true);
-			contentPane.add(loot);
-
-			
-			//searchButtons = gm.requestSearch();
-			
-		}
-		else if(p2choiceOrder.get(0)== "HIDE"){
-			gm.requestHide(p1character);
-		}
-		
-		else if(p2choiceOrder.get(0)== "MOVE"){
-			gm.requestMove();
-		}
-
-		else if (p2choiceOrder.get(0) == "TRADE"){
-			txt.append("NOT IMPEMENTED YET");
-		}
-		//}
-	
-	
 }
 
 public void checkSelected(Player p, MouseEvent e){
@@ -1823,7 +1592,7 @@ public void checkSelected(Player p, MouseEvent e){
 	            selected = true;
                 recruitCharacter(currentPlayer, e);
                 
-	            txt.append("\n---------------------------------- " + p.getName() + " YOU HAVE CHOOSEN :\n" + ((Component) e.getSource()).getName() + "\n");
+	          //  txt.append("\n---------------------------------- " + p.getName() + " YOU HAVE CHOOSEN :\n" + ((Component) e.getSource()).getName() + "\n");
 	            AmazonIcon.setVisible(false);
 	            CaptainIcon.setVisible(false);
 	            BlackKnightIcon.setVisible(false);
@@ -1859,6 +1628,11 @@ public void checkSelected(Player p, MouseEvent e){
 		            search.setVisible(true);
 		            rest.setVisible(true);
 		            trade.setVisible(true);
+		            alert.setVisible(true);
+		            hire.setVisible(true);
+		            follow.setVisible(true);
+		            enchant.setVisible(true);
+
 		}
 		else{
 			characterSelectionPhase = false;

@@ -9,6 +9,11 @@ public class BreastPlates extends Armor {
 	setDamage(isDamaged());
 	setDestroyed(isDestroyed());
     setDamageLevel(DamageEnum.MEDIUM);
+    setIntactPrice(9);
+    setDamagedPrice(6);
+    setDestroyedPrice(0);
+
+
 
 	
 	

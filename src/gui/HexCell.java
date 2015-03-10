@@ -3,6 +3,8 @@
  */
 package gui;
 
+import gameLogic.InitBoardTiles;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -49,7 +51,7 @@ public class HexCell {
         this.neighbors = neighbors;
         this.tilehex = tile;
         try {
-        	URL url = BoardTest.class.getResource("/" + tilehex.getFilePath());
+        	URL url = InitBoardTiles.class.getResource("/" + tilehex.getFilePath());
 			this.tileimg = ImageIO.read(new File(url.getPath()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -76,7 +78,7 @@ public class HexCell {
     public void setTile(Tiles tile){
     	tilehex = tile;
     	try {
-        	URL url = BoardTest.class.getResource("/" + tilehex.getFilePath());
+        	URL url = InitBoardTiles.class.getResource("/" + tilehex.getFilePath());
 			this.tileimg = ImageIO.read(new File(url.getPath()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -142,7 +144,7 @@ public class HexCell {
 		        for(int i=0; i<tilehex.getClearings().size(); i++){
 		        	cl = at.createTransformedShape(new Ellipse2D.Double((tilehex.getClearings().get(i).getXposition() - 40), (tilehex.getClearings().get(i).getYposition() - 40), 80, 80));
 		        	if(tilehex.getClearings().get(i).getDwelling() != null){
-		        		URL url = BoardTest.class.getResource(tilehex.getClearings().get(i).getDwelling().getFpath());
+		        		URL url = InitBoardTiles.class.getResource(tilehex.getClearings().get(i).getDwelling().getFpath());
 	        			try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);
@@ -158,7 +160,7 @@ public class HexCell {
 						}
 		        	}
 		        	if(tilehex.getClearings().get(i).getMonsterChits().size()>0){
-		        		URL url = BoardTest.class.getResource("/monsters/" + tilehex.getClearings().get(i).getMonsterChits().get(0).getImgFilePath());
+		        		URL url = InitBoardTiles.class.getResource("/monsters/" + tilehex.getClearings().get(i).getMonsterChits().get(0).getImgFilePath());
 	        			try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);
@@ -175,7 +177,7 @@ public class HexCell {
 		        	}
 		        	if(tilehex.getClearings().get(i).isPlayerHere()){
 		        		System.out.println("Placed player image");
-		        		URL url = BoardTest.class.getResource("/monsters/dragon.gif");
+		        		URL url = InitBoardTiles.class.getResource("/monsters/dragon.gif");
 	        			try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);

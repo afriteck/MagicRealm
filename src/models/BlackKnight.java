@@ -2,11 +2,15 @@ package models;
 
 import java.util.LinkedList;
 
+import natives.NativeGroup;
+
 public class BlackKnight extends Things {
 
 	Weapons weapon;
 	 private static LinkedList<Armor> myArsenal;    // the chatacters arsenal
 	private Armor myArmor1, myArmor2;
+	private LinkedList<NativeGroup> hiredNatives;
+    private NativeGroup hiredNative;
 	
 	
 	public BlackKnight(){
@@ -19,6 +23,10 @@ public class BlackKnight extends Things {
 		myArsenal = new LinkedList<Armor>();
 		myArmor1 = new Shields();
 		myArmor2 = new SuitsOfArmor();
+		hiredNatives =  new LinkedList<NativeGroup>();
+	    hiredNative =  new NativeGroup();
+	    setHiredNatives(hiredNatives);
+	    setHiredNative(hiredNative);
 		
 		setGold(10);
 		if(weapon.getSpeed() < 1)

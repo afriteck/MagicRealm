@@ -26,23 +26,23 @@ public class CharacterContainer {
 
     public void fillContainer(){
     	 
-    	Things Amazon = new Things();
+    	Things Amazon = new Amazon();
         charactercontainer.add(Amazon);
  
-        Things Captain = new Things();
+        Things Captain = new Captain();
         charactercontainer.add(Captain);
         
         
-        Things Elf = new Things();
+        Things Elf = new Elf();
         charactercontainer.add(Elf);
  
-        Things Dwarf = new Things();
+        Things Dwarf = new Dwarf();
         charactercontainer.add(Dwarf);
  
-        Things Swordsman = new Things();
+        Things Swordsman = new Swordsman();
         charactercontainer.add(Swordsman);
  
-        Things BlackKnight = new Things();
+        Things BlackKnight = new BlackKnight();
         charactercontainer.add(BlackKnight);
 
     }

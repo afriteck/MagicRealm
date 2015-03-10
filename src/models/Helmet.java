@@ -9,6 +9,9 @@ public class Helmet extends Armor{
 	setDamage(isDamaged());
 	setDestroyed(isDestroyed());
     setDamageLevel(DamageEnum.MEDIUM);
+    setIntactPrice(5);
+    setDamagedPrice(3);
+    setDestroyedPrice(0);
 
 
 

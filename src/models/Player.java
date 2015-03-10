@@ -102,7 +102,7 @@ public class Player {
 	    public void chooseCharacters(LinkedList<Things> characterstack, Things playercharacter){
 	     
 	        this.characterStack= characterstack;
-	        this.character = playercharacter;
+	        this.setCharacter(playercharacter);
 	         
 	        characterStack.add(playercharacter);
 	     
@@ -137,6 +137,14 @@ public class Player {
 	        t.append("----------------------------------\n");
 	         
 	    }
+
+		public Things getCharacter() {
+			return character;
+		}
+
+		public void setCharacter(Things character) {
+			this.character = character;
+		}
 
 
 
