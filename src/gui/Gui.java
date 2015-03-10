@@ -1224,61 +1224,40 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	if(p == player1){
 	    selected = false;		//we know the players are not done selection
 		if(name == "Amazon"){
-	    	 p1character = new Amazon();
-	        p1characters.add(p1character); 
-	       // player1.getPlayerCharacters().add(p1character);
-	        gm.getPlayer1().setCharacter(p1character);
-	   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+	      gm.getPlayer1().setCharacter(new Amazon());
+	   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n");		    
 
 	       // showMessage(p1character, player1);
 
 		}
 		
-		else if(name == "Captain"){
-			 p1character = new Captain();
-	        p1characters.add(p1character); 
-	       // player1.getPlayerCharacters().add(p1character);
-	        gm.getPlayer1().setCharacter(p1character);
-		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
-	       
-	        //showMessage(p1character, player1);
+		else if(name == "Captain"){	        
+	        gm.getPlayer1().setCharacter(new Captain());
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n");		    
 		}
 		
 		else if(name == "Dwarf"){
-			 p1character = new Dwarf();
-	        p1characters.add(p1character); 
-	        gm.getPlayer1().setCharacter(p1character);
-		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
-	       
-	        //showMessage(p1character, player1);
+	        gm.getPlayer1().setCharacter(new Dwarf());
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n");		    
 		}
 	
 		else if(name == "Elf"){
-			 p1character = new Elf();
-	        p1characters.add(p1character); 
-	       // player1.getPlayerCharacters().add(p1character);
-	        gm.getPlayer1().setCharacter(p1character);
-		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+	        gm.getPlayer1().setCharacter(new Elf());
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n");		    
 	       
 	        //showMessage(p1character, player1);
 
 		}
 		
 		else if(name == "BlackKnight"){
-			 p1character = new BlackKnight();
-	        p1characters.add(p1character);
-	       // player1.getPlayerCharacters().add(p1character);
-	        gm.getPlayer1().setCharacter(p1character);
-		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+	        gm.getPlayer1().setCharacter(new BlackKnight());
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n");		    
 	       
 	        //showMessage(p1character, player1);
 		}
 		else if(name == "SwordsMan"){
-			 p1character = new Swordsman();
-	        p1characters.add(p1character); 
-	       // player1.getPlayerCharacters().add(p1character);
-	        gm.getPlayer1().setCharacter(p1character);
-		   	 txt.append(gm.getPlayer1().getName() + " Chose " + p1character.getName() + "\n" + p1character.getName() + " has the following weapons \n" + p1character.getWeapons().getName() + "\n" + p1character.getWeapons().getName() + " has a length of " + p1character.getWeapons().getLength()+"\n the weapon has a speed of " + p1character.getWeapons().getSpeed() + "\n");		    
+	        gm.getPlayer1().setCharacter(new Swordsman());
+		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n");		    
 	        
 	        //showMessage(p1character, player1);
 		}
@@ -1289,64 +1268,46 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	if(p == player2){
 	    selected = true;			//we now know that p2 is done selecting so, selecion phase is over	
 		if(name == "Amazon"){
-	    	 p2character = new Amazon();
-	        p2characters.add(p2character); 
-	        //player2.getPlayerCharacters().add(p2character);
-	        gm.getPlayer2().setCharacter(p2character);
-		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        gm.getPlayer2().setCharacter(new Amazon());
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n");		    
 	        
 	        //showMessage(p2character, player2);
 
 		}
 		
 		else if(name == "Captain"){
-			 p2character = new Captain();
-	        p2characters.add(p2character); 
-	        //player2.getPlayerCharacters().add(p2character);
-	        gm.getPlayer2().setCharacter(p2character);
-		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	       gm.getPlayer2().setCharacter(new Captain());
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n");		    
 	        	        
 	        
 	        //showMessage(p2character, player2);
 		}
 		
 		else if(name == "Dwarf"){
-			 p2character = new Dwarf();
-	        p2characters.add(p2character); 
-	       // player2.getPlayerCharacters().add(p2character);
-	        gm.getPlayer2().setCharacter(p2character);
-		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        gm.getPlayer2().setCharacter(new Dwarf());
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n");		    
 	        	        
 	        //showMessage(p2character, player2);
 		}
 	
 		else if(name == "Elf"){
-			 p2character = new Elf();
-	        p2characters.add(p2character);
-	        //player2.getPlayerCharacters().add(p2character);
-	        gm.getPlayer2().setCharacter(p2character);
-		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        gm.getPlayer2().setCharacter(new Elf());
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n");		    
 	        	        
 	        
 	        //showMessage(p2character, player2);
 		}
 		
 		else if(name == "BlackKnight"){
-			 p2character = new BlackKnight();
-	        p2characters.add(p2character); 
-	       // player2.getPlayerCharacters().add(p2character);
-	        gm.getPlayer2().setCharacter(p2character);
-		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        gm.getPlayer2().setCharacter(new BlackKnight());
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n");		    
 	        	        
 	        
 	        //showMessage(p2character, player2);
 		}
 		else if(name == "SwordsMan"){
-			 p2character = new Swordsman();
-	        p2characters.add(p2character); 
-	       // player2.getPlayerCharacters().add(p2character);
-	        gm.getPlayer2().setCharacter(p2character);
-		   	 txt.append(gm.getPlayer2().getName() + " Chose " + p2character.getName() + "\n" + p2character.getName() + " has the following weapons \n" + p2character.getWeapons().getName() + "\n" + p2character.getWeapons().getName() + " has a length of " + p2character.getWeapons().getLength()+"\n the weapon has a speed of " + p2character.getWeapons().getSpeed() + "\n");		    
+	        gm.getPlayer2().setCharacter(new Swordsman());
+		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n");		    
 	        	        
 	        //showMessage(p2character, player2);
 		}		

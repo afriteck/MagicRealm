@@ -29,7 +29,7 @@ public class GuiActivities {
 	
 	private Player player1 = new Player();
 	 private Player player2 = new Player();
-	 Player currentPlayer = null;
+	 private Player currentPlayer = null;
 	 
 	 private boolean hideAct;
 		private boolean moveAct;
@@ -254,13 +254,14 @@ LinkedList <JButton> buttons = new LinkedList<JButton>();
 	}
 
 public boolean requestHide(Player p){
-    // p = new Player();
 	int option = JOptionPane.showConfirmDialog(null, null, "HIDE!", JOptionPane.OK_CANCEL_OPTION);
 
 	if (option == JOptionPane.OK_OPTION) {
+		System.out.println(p.getCharacter().getName());
 
 			p.getCharacter().setVisibility(false);
-			System.out.println(p.getCharacter().getName() + " is now hidden from everybody");
+			System.out.println(p.getCharacter().getName());
+
 			return true;
 	
 		}else{
@@ -426,5 +427,27 @@ public Player getPlayer2() {
 public void setPlayer2(Player player2) {
 	this.player2 = player2;
 }
+
+
+public void getNextPlayer(Player p){
+    
+    if (p == player1) { 
+    	setCurrentPlayer(player2);  }
+    if (p == player2) {
+    	setCurrentPlayer(player1); 
+                       }   
+      
+}
+
+
+public Player getCurrentPlayer() {
+	return currentPlayer;
+}
+
+
+public void setCurrentPlayer(Player currentPlayer) {
+	this.currentPlayer = currentPlayer;
+}
+
 
 }
