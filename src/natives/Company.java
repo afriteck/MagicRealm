@@ -31,6 +31,8 @@ private int cost;
 		
 		initializeNatives();
 		setName("Company");
+		setTile("OAK WOODS");
+		setClearing(2);
 	
 	}
 

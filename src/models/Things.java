@@ -25,6 +25,8 @@ public abstract class Things implements Move, Business, Search, Hide{
 	private static String name;
 	private int gold;
 	private Weapons myweapon;
+    private LinkedList<Weapons> myweapons;    // the chatacters arsenal
+
 	private Armor myArmor;
     private LinkedList<Armor> myArsenal;    // the chatacters arsenal
     private LinkedList<Things> friends;
@@ -35,10 +37,10 @@ public abstract class Things implements Move, Business, Search, Hide{
     private boolean hiden = false;
   private String tileName;
   private static int clearingLocation;
-  private int clearingX;
-  private int clearingY;
+
   
   private static  Tiles mytiles;
+  private boolean alert;
   
   
 
@@ -61,13 +63,7 @@ public abstract class Things implements Move, Business, Search, Hide{
 		return clearingLocation;
 	}
 	
-	public int getClearingX(){
-		return clearingX;
-	}
-	
-	public int getClearingY(){
-		return clearingY;
-	}
+
 	
 	public int getGold(){
 		return gold;
@@ -79,14 +75,6 @@ public abstract class Things implements Move, Business, Search, Hide{
 	
 	public void setClearingLocation(int cl) {
 		this.clearingLocation = cl;
-	}
-	
-	public void setClearingX(int xpos) {
-		this.clearingX = xpos;
-	}
-	
-	public void setClearingY(int ypos) {
-		this.clearingY = ypos;
 	}
 	
 	
@@ -253,12 +241,24 @@ public void sellArmor(Things th, Armor arm) {
 
 @Override
 public void sellWeapon(Things th, Weapons arms) {
-	
-	if(th.getWeapons().getName() == arms.getName()){
+		
+	if(th.getMyweapons().size() == 1 && th.getWeapons().getName() == arms.getName()){
+		th.getMyweapons().remove(arms);
 		th.setWeapon(null);
-		th.setGold(th.getGold() + arms.getPrice());
 		JOptionPane.showMessageDialog(null, "You have sold your one and only weapon!");
+		th.setGold(th.getGold() + arms.getPrice());
 
+		}
+	else if(th.getMyweapons().size() > 1){
+	
+	for(int i = 0; i < th.getMyweapons().size(); i++){
+	if(th.getMyweapons().get(i).getName() == arms.getName()){
+		th.getMyweapons().remove(arms);
+		th.setGold(th.getGold() + arms.getPrice());
+		JOptionPane.showMessageDialog(null, "You have sold your weapon!");
+
+	}
+	}
 	}
 }
 
@@ -269,10 +269,20 @@ public void sellTreasure(Things th, TreasureChit tr, int gold) {
 }
 
 public void buyNative(Things th, NativeGroup nt){		//you can recruit a native with gold
-	
-}
+	if(th.getGold() >= nt.getCost()){
+	th.getHiredNatives().add(nt);
+	JOptionPane.showMessageDialog(null, "You have successfully acquired " + nt.getName() + " Native Group");
+	th.setGold(th.getGold()- nt.getCost());
+	}
+	else{
+		JOptionPane.showMessageDialog(null, "You cannot afford this native");
+
+	}
+
+	}
 
 
+/*
 public void buyNative(Things th, LinkedList<NativeGroup> ng, NativeGroup nt) {	
 	
 	if(th.getGold() >= nt.getCost()){
@@ -294,7 +304,7 @@ public void buyNative(Things th, LinkedList<NativeGroup> ng, NativeGroup nt) {
 	
 		}
 	 
-}
+}*/
 
 @Override
 public void buyArmor(Things th, Armor arm) {
@@ -322,7 +332,13 @@ public void buyWeapon(Things th, Weapons arms) {
 	if(th.getGold() < arms.getPrice())
 	JOptionPane.showMessageDialog(null, "You cannot afford the weapon");
 
-		if(th.getName() == "Amazon" && arms.getName() == "Short Sword"){
+	else{
+		th.getMyweapons().add(arms);
+		th.setGold(th.getGold() - arms.getPrice());
+	}
+	
+	/*
+	if(th.getName() == "Amazon" && arms.getName() == "Short Sword"){
 		th.setWeapon(arms);
 		th.setGold(th.getGold() - arms.getPrice());
 	}
@@ -350,7 +366,9 @@ public void buyWeapon(Things th, Weapons arms) {
 		th.setGold(th.getGold() - arms.getPrice());
 	}
 	else JOptionPane.showMessageDialog(null, "Your character cannot use this weapon");
-	}
+	*/
+
+}
 	//else JOptionPane.showMessageDialog(null, "You cannot afford the weapon");
 
 
@@ -376,25 +394,47 @@ public static void main(String[] args){
 
 		
  nt.sellWeapon(nt, nt.getWeapons());
+ 
  System.out.println("after selling weapon, i have " + nt.getGold());
+
  
- 	nt.buyNative(nt, nt.getHiredNatives(), ng);
+ nt.buyWeapon(nt, arms);
  
+ System.out.println("I just bought " + nt.getMyweapons().get(0).getName());
+
+ System.out.println("after buying weapon, i have " + nt.getGold());
+
+ for(int i = 0; i < nt.getMyweapons().size(); i++)
+ System.out.println("checking my list of weapons " + nt.getMyweapons().get(i).getName());
+
+ 
+ 
+ nt.buyNative(nt, ng);
  
  System.out.println("I bought this native group " + nt.getHiredNatives().get(0).getName());
- System.out.println("this native group cost me " + nt.getHiredNatives().get(0).getCost());
  System.out.println("I now have this much gold left " + nt.getGold());
 
-
  
-for(int i = 0; i < nt.getHiredNatives().get(0).size(); i++){
-	System.out.println("the natives in this native group " + nt.getHiredNatives().get(0).getNatives().get(i).getName());
+
+
+
 
 }
 
+public LinkedList<Weapons> getMyweapons() {
+	return myweapons;
+}
 
+public void setMyweapons(LinkedList<Weapons> myweapons) {
+	this.myweapons = myweapons;
+}
 
+public boolean isAlert() {
+	return alert;
+}
 
+public void setAlert(boolean alert) {
+	this.alert = alert;
 }
 
 

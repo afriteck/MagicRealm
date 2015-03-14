@@ -10,6 +10,8 @@ public class Amazon extends Things{
     private static LinkedList<Armor> myArsenal;    // the chatacters arsenal
 	private Armor myArmor1, myArmor2, myArmor3;
 	private LinkedList<NativeGroup> hiredNatives;
+    private LinkedList<Weapons> myweapons;    // the chatacters arsenal
+
     private NativeGroup hiredNative;
 
 
@@ -17,6 +19,7 @@ public class Amazon extends Things{
 
 	public Amazon(){
 		weapon = new ShortSword();
+		myweapons = new  LinkedList<Weapons>();
 		myArsenal = new LinkedList<Armor>();
 		myArmor1 = new Helmet();
 		myArmor2 = new BreastPlates();
@@ -25,6 +28,7 @@ public class Amazon extends Things{
 	    hiredNative =  new NativeGroup();
 	    setHiredNatives(hiredNatives);
 	    setHiredNative(hiredNative);
+	    setMyweapons(myweapons);
 
 		
 		setWeapon(weapon);
@@ -34,11 +38,14 @@ public class Amazon extends Things{
 		setGold(10);
 		setSpeed(3);
 		setPlayerArmoury(myArsenal);
+		setAlert(false);
 
 		
 		addArmor(myArmor1);
 		addArmor(myArmor2);
 		addArmor(myArmor3);
+		myweapons.add(weapon);
+		setVisibility(true);
 
 
 		

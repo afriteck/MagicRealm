@@ -11,6 +11,8 @@ public class Captain extends Things {
 		private Armor myArmor1, myArmor2, myArmor3;
 		private LinkedList<NativeGroup> hiredNatives;
 	    private NativeGroup hiredNative;
+	    private LinkedList<Weapons> myweapons;    // the chatacters arsenal
+
 
 
 
@@ -18,6 +20,8 @@ public class Captain extends Things {
 	public Captain(){
 		setName("Captain");
 		weapon = new ShortSword();
+		myweapons = new  LinkedList<Weapons>();
+
 		setWeapon(weapon);
 		
 		myArsenal = new LinkedList<Armor>();
@@ -28,6 +32,10 @@ public class Captain extends Things {
 	    hiredNative =  new NativeGroup();
 	    setHiredNatives(hiredNatives);
 	    setHiredNative(hiredNative);
+	    setMyweapons(myweapons);
+		setAlert(false);
+
+
 		
 		
 		if(weapon.getSpeed() < 1)
@@ -39,6 +47,10 @@ public class Captain extends Things {
 		addArmor(myArmor1);
 		addArmor(myArmor2);
 		addArmor(myArmor3);
+		myweapons.add(weapon);
+
+		setVisibility(true);
+
 	
 	}
 

@@ -20,6 +20,8 @@ public class Woodfolk extends NativeGroup{
 			
 			initializeNatives();
 			setName("Woodfolk");
+			setTile("CRAG");
+			setClearing(4);
 			
 		}
 

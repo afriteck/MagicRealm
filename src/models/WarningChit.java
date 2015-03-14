@@ -9,6 +9,9 @@ public class WarningChit {
 	private  String name;
     private String url;
 	private boolean hidden = false;
+	private String home;
+	private int clearing;
+
 	//private Smoke sm;
 	//private Bones bn;
 	
@@ -43,6 +46,22 @@ public class WarningChit {
 		this.url = string;
 	}
 	
+	public String getHome() {
+		return home;
+	}
+
+	public void setHome(String home) {
+		this.home = home;
+	}
+
+	public int getClearing() {
+		return clearing;
+	}
+
+	public void setClearing(int clearing) {
+		this.clearing = clearing;
+	}
+
 	public static class Bones extends WarningChit{
 		
 		public Bones(){

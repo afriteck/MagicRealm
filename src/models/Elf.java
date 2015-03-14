@@ -10,6 +10,8 @@ public class Elf extends Things{
 	private Armor myArmor1, myArmor2, myArmor3;
 	private LinkedList<NativeGroup> hiredNatives;
     private NativeGroup hiredNative;
+    private LinkedList<Weapons> myweapons;    // the chatacters arsenal
+
 
 
 	public Elf(){
@@ -17,9 +19,14 @@ public class Elf extends Things{
 		weapon = new LightBow();
 		myArsenal = new LinkedList<Armor>();
 		hiredNatives =  new LinkedList<NativeGroup>();
+		myweapons = new  LinkedList<Weapons>();
+
 	    hiredNative =  new NativeGroup();
 	    setHiredNatives(hiredNatives);
 	    setHiredNative(hiredNative);
+	    setMyweapons(myweapons);
+		setAlert(false);
+
 		
 		
 		setWeapon(weapon);
@@ -32,6 +39,10 @@ public class Elf extends Things{
 		setSpeed(4);
 	
 		setPlayerArmoury(myArsenal);
+		myweapons.add(weapon);
+
+		setVisibility(true);
+
 	
 	}
 

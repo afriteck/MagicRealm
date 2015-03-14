@@ -133,14 +133,9 @@ public abstract class Native implements Move, Business, Hide, Follow{
 			this.leader = leader;
 		}
 
+		public void buyNative(Things th, NativeGroup nt){		//you can recruit a native with gold
 
-
-		public void buyNative(Things th, LinkedList<NativeGroup> ng, NativeGroup nt){		//you can recruit a native with gold
-			
 		}
-
-
-
 
 		@Override
 		public void moveFrom(String tile, int clearing) {

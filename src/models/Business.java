@@ -17,8 +17,8 @@ public void sellTreasure(Things th, TreasureChit tr, int gold);	//sell treasure 
 
 
 
-//public void buyNative(Things th, NativeGroup nt);		//you can recruit a native with gold
-public void buyNative(Things th, LinkedList<NativeGroup> ng, NativeGroup nt);		//you can recruit a native with gold
+public void buyNative(Things th, NativeGroup nt);		//you can recruit a native with gold
+//public void buyNative(Things th, LinkedList<NativeGroup> ng, NativeGroup nt);		//you can recruit a native with gold
 
 public void buyArmor(Things th, Armor arm);		//you can buy an armor with gold
 public void buyWeapon(Things th, Weapons arms);	//you can buy a weapon with gold

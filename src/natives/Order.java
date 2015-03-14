@@ -3,7 +3,9 @@ package natives;
 import java.util.LinkedList;
 
 import models.Armor;
+import models.Chapel;
 import models.DamageEnum;
+import models.Dwelling;
 import models.Things;
 import models.TreasureChit;
 import models.Weapons;
@@ -25,6 +27,9 @@ public  class Order extends NativeGroup{
 		
 		initializeNatives();
 		setName("Order");
+		setTile("AWFUL VALLEY");
+		setClearing(5);
+	
 	}
 
 

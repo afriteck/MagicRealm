@@ -3,8 +3,15 @@
  */
 package gameLogic;
 
-import models.Dwelling;
 import gui.HexTiles;
+import models.Chapel;
+import models.GuardHouse;
+import models.House;
+import models.Inn;
+import natives.Guard;
+import natives.Order;
+import natives.Rogues;
+import natives.Soldiers;
 
 /**
  * @author joshwhite
@@ -12,10 +19,29 @@ import gui.HexTiles;
  */
 public class Iteration1Board {
 	
+	private static Chapel chapel = new Chapel();
+	private static GuardHouse guardhouse = new GuardHouse();
+	private static Inn inn = new Inn();
+	private static House house = new House();
+	
 	public static void it1Board(BoardTiles bt){
-		bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(new Dwelling("CHAPEL", "/dwellings/chapel.gif"));
-		bt.getTile("DARK VALLEY").getClearingByNum(5).setDwelling(new Dwelling("GUARD", "/dwellings/guard.gif"));
-		bt.getTile("BAD VALLEY").getClearingByNum(5).setDwelling(new Dwelling("INN", "/dwellings/inn.gif"));
+		Guard guard = new Guard();
+		Rogues rogues = new Rogues();
+		Order order = new Order();
+		Soldiers soldiers = new Soldiers();
+		
+		
+		
+		bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(chapel);
+		bt.getTile("DARK VALLEY").getClearingByNum(5).setDwelling(guardhouse);
+		bt.getTile("BAD VALLEY").getClearingByNum(5).setDwelling(inn);
+		bt.getTile("CURST VALLEY").getClearingByNum(5).setDwelling(house);
+		
+		guard.setHome(guardhouse);
+		rogues.setHome(inn);
+		order.setHome(chapel);
+		soldiers.setHome(house);
+		
 		/*Monster goul = new Monster("Ghost");
 		goul.setImgFilePath("ghost.gif");
 		bt.getTile("AWFUL VALLEY").getClearings().get(3).addMonster(goul);*/
@@ -40,4 +66,13 @@ public class Iteration1Board {
 		HexTiles.placeTile(18, bt.getTile("RUINS"), 0); 
 		HexTiles.placeTile(21, bt.getTile("PINE WOODS"), 240); //21
 	}
+
+public Chapel getChapel(){
+	return chapel;
+}
+
+public Inn getInn(){
+	return inn;
+}
+
 }

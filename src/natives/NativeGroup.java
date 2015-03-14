@@ -2,6 +2,9 @@ package natives;
 
 import java.util.LinkedList;
 
+import models.Dwelling;
+import models.Tiles;
+
 public  class NativeGroup {
 
     private String name;
@@ -10,6 +13,9 @@ public  class NativeGroup {
 	int sum;
 	int total ;
 	private int cost;
+	private Dwelling home;
+	private String tile;
+	private int clearing;
 
 
 	
@@ -78,6 +84,38 @@ public  class NativeGroup {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
+
+
+	public Dwelling getHome() {
+		return home;
+	}
+
+
+	public void setHome(Dwelling home) {
+		this.home = home;
+	}
+
+
+	public String getTile() {
+		return tile;
+	}
+
+
+	public void setTile(String tile) {
+		this.tile = tile;
+	}
+
+
+	public int getClearing() {
+		return clearing;
+	}
+
+
+	public void setClearing(int clearing) {
+		this.clearing = clearing;
+	}
+
+
 
 
 }

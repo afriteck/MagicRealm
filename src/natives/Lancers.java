@@ -26,6 +26,9 @@ private static LinkedList<Native> natives;
 		
 		initializeNatives();
 		setName("Lancers");
+		setTile("BORDERLAND");
+		setClearing(1);
+	
 	}
 
 

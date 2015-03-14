@@ -1,8 +1,12 @@
 package natives;
 
+import gameLogic.BoardTiles;
+import gameLogic.Iteration1Board;
+
 import java.util.LinkedList;
 
 import models.DamageEnum;
+import models.Inn;
 
 public class Rogues extends NativeGroup{
 
@@ -23,8 +27,11 @@ public class Rogues extends NativeGroup{
 
 	public Rogues() {
 		
-		initializeNatives();
 		setName("Rogues");
+		setTile("BAD VALLEY");
+		setClearing(5);
+		initializeNatives();
+		
 	}
 
 

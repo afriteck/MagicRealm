@@ -25,6 +25,8 @@ public class Bashkars extends NativeGroup {
 		
 		initializeNatives();
 		setName("Bashkars");
+		setTile("CAVES");
+		setClearing(3);
 	
 	}
 

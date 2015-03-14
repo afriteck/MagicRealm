@@ -20,6 +20,8 @@ private static LinkedList<Native> natives;
 		
 		initializeNatives();
 		setName("Patrol");
+		setTile("CAVERN");
+		setClearing(2);
 	
 	}
 

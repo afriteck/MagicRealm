@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import models.Armor;
 import models.DamageEnum;
+import models.GuardHouse;
 import models.Things;
 import models.TreasureChit;
 import models.Weapons;
@@ -25,7 +26,9 @@ private static LinkedList<Native> natives;
 		
 		initializeNatives();
 		setName("Guard");
-	}
+		setTile("DARK VALLEY");
+		setClearing(5);	
+		}
 
 
 

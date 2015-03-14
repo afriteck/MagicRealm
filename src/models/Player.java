@@ -18,7 +18,9 @@ public class Player {
 	    private Dice playerDie;
 	    private boolean dieBool = false;
 	    
-		//protected Object getPlayerDie;
+	    private String tile;
+	    private int clearing;
+	    //protected Object getPlayerDie;
 
 	    
 	    
@@ -144,6 +146,22 @@ public class Player {
 
 		public void setCharacter(Things character) {
 			this.character = character;
+		}
+
+		public String getTile() {
+			return this.character.getTileName();
+		}
+
+		public void setTile(String tile) {
+			this.tile = tile;
+		}
+
+		public int getClearing() {
+			return this.character.getClearingLocation();
+		}
+
+		public void setClearing(int clearing) {
+			this.clearing = clearing;
 		}
 
 

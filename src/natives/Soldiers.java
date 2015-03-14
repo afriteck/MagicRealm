@@ -3,6 +3,7 @@ package natives;
 import java.util.LinkedList;
 
 import models.DamageEnum;
+import models.House;
 
 public class Soldiers extends NativeGroup{
 
@@ -24,7 +25,9 @@ private static LinkedList<Native> natives;
 		
 		initializeNatives();
 		setName("Soldiers");
-	}
+		setTile("CURST VALLEY");
+		setClearing(5);	
+		}
 
 
 
