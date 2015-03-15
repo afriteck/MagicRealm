@@ -57,6 +57,8 @@ public class HexTiles extends JPanel {
     public static void placeTile(int hexIndex, Tiles tile, int rotation){
 		tile.setTheta(rotation);
 		cells[hexIndex].setTile(tile);
+		cells[hexIndex].tilehex.setId(cells[hexIndex].id);
+		cells[hexIndex].tilehex.setNeighbours(cells[hexIndex].neighbors);
 	}
 
 	protected void paintComponent(Graphics g) {

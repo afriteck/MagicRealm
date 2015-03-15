@@ -6,6 +6,7 @@ package gui;
 import gameLogic.BoardTiles;
 import gameLogic.GuiActivities;
 import gameLogic.InitBoardTiles;
+import gameLogic.Iteration1Board;
 import gameLogic.Locate;
 
 import java.awt.Color;
@@ -1256,8 +1257,9 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	        
 	        //showMessage(p1character, player1);
 		}
+		gm.getPlayer1().getCharacter().setTileName("BAD VALLEY");
+		gm.getPlayer1().getCharacter().setClearingLocation(5);
 		boardt.getTile("BAD VALLEY").getClearingByNum(5).setPlayerHere(true);
-
 	}
 	
 	if(p == player2){
@@ -1317,7 +1319,9 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n"  + gm.getPlayer2().getCharacter().getName() + " currently visibile? " + gm.getPlayer2().getCharacter().getVisibility() + "\n");		    
 	        	        
 	        //showMessage(p2character, player2);
-		}		
+		}
+		gm.getPlayer2().getCharacter().setTileName("BAD VALLEY");
+		gm.getPlayer2().getCharacter().setClearingLocation(5);
 		boardt.getTile("BAD VALLEY").getClearingByNum(5).setPlayerHere(true);
 		
 	

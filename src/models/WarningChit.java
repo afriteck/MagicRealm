@@ -66,6 +66,7 @@ public class WarningChit {
 		
 		public Bones(){
 			setName("BONES");
+			setUrl("bones.png");
 		}
 	}
 
@@ -74,6 +75,7 @@ public class WarningChit {
     	
     	public Dank(){
     	setName("DANK");
+    	setUrl("dank.png");
     	}
 
     }
@@ -82,7 +84,7 @@ public class WarningChit {
     public static class Ruins extends WarningChit{
     	public Ruins(){
         	setName("RUINS");
-
+        	setUrl("ruins.png");
     	}
 
     }
@@ -91,6 +93,7 @@ public class WarningChit {
     public static class Smoke extends WarningChit{
     public Smoke(){
     	setName("SMOKE");
+    	setUrl("smoke.png");
 
     }
 
@@ -100,6 +103,7 @@ public class WarningChit {
     public static class Stink extends WarningChit{
     	public Stink(){
     		setName("STINK");
+    		setUrl("stink.png");
     	}
 
     }

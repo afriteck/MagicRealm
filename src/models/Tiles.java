@@ -16,6 +16,8 @@ public class Tiles {
 	private int theta;
 	private ArrayList<Clearing> tileClearings;
 	private WarningChit warnings;
+	private String id;
+	private String[] neighbours;
 	
 	
 	public Tiles(String name, String fPath, int rotation, ArrayList<Clearing> clearings){
@@ -97,5 +99,32 @@ public class Tiles {
 
 	public void setWarnings(WarningChit warnings) {
 		this.warnings = warnings;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String[] getNeighbours() {
+		return neighbours;
+	}
+
+	public void setNeighbours(String[] neighbours) {
+		this.neighbours = neighbours;
+	}
+	
+	public boolean isNeighbour(Tiles tile){
+		boolean isn = false;
+		for(int i=0; i<this.neighbours.length; i++){
+			if(tile.getId().equals(this.neighbours[i])){
+				isn = true;
+				break;
+			}
+		}
+		return isn;
 	}
 }

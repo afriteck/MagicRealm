@@ -18,8 +18,9 @@ public class Clearing {
 	
 	private ArrayList<TreasureChit> treasureChits;
 	private ArrayList<Monster> monsterChits;
-	private ArrayList<SoundChit> soundChits;
+	private ArrayList<WarningChit> warningChits;
 	private Dwelling dwelling;
+	private ArrayList<PlayerChit> peopleHere;
 	private boolean playerHere;
 	
 	
@@ -31,7 +32,7 @@ public class Clearing {
 		setYposition((int) ypos);
 		setTreasureChits(new ArrayList<TreasureChit>());
 		setMonsterChits(new ArrayList<Monster>());
-		setSoundChits(new ArrayList<SoundChit>());
+		setWarningChits(new ArrayList<WarningChit>());
 		
 	}
 
@@ -87,14 +88,6 @@ public class Clearing {
 		monsterChits.add(monster);
 	}
 
-	public ArrayList<SoundChit> getSoundChits() {
-		return soundChits;
-	}
-
-	public void setSoundChits(ArrayList<SoundChit> soundChits) {
-		this.soundChits = soundChits;
-	}
-
 	public Dwelling getDwelling() {
 		return dwelling;
 	}
@@ -109,5 +102,25 @@ public class Clearing {
 
 	public void setPlayerHere(boolean playerHere) {
 		this.playerHere = playerHere;
+	}
+
+	public ArrayList<WarningChit> getWarningChits() {
+		return warningChits;
+	}
+
+	public void setWarningChits(ArrayList<WarningChit> warningChits) {
+		this.warningChits = warningChits;
+	}
+
+	public ArrayList<PlayerChit> getPeopleHere() {
+		return peopleHere;
+	}
+	
+	public void movePersonHere(PlayerChit person) {
+		this.peopleHere.add(person);
+	}
+	
+	public void removePersonHere(PlayerChit person) {
+		this.peopleHere.remove(person);
 	}
 }

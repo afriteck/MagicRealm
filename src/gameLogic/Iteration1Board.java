@@ -5,6 +5,7 @@ package gameLogic;
 
 import gui.HexTiles;
 import models.Chapel;
+import models.Dwelling;
 import models.GuardHouse;
 import models.House;
 import models.Inn;
@@ -30,13 +31,16 @@ public class Iteration1Board {
 		Order order = new Order();
 		Soldiers soldiers = new Soldiers();
 		
+		bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(new Dwelling("Chapel", "/dwellings/chapel.gif"));
+
 		
+		/*
 		
 		bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(chapel);
 		bt.getTile("DARK VALLEY").getClearingByNum(5).setDwelling(guardhouse);
 		bt.getTile("BAD VALLEY").getClearingByNum(5).setDwelling(inn);
 		bt.getTile("CURST VALLEY").getClearingByNum(5).setDwelling(house);
-		
+		*/
 		guard.setHome(guardhouse);
 		rogues.setHome(inn);
 		order.setHome(chapel);

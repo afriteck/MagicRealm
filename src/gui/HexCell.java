@@ -50,6 +50,8 @@ public class HexCell {
         this.start = start;
         this.neighbors = neighbors;
         this.tilehex = tile;
+        this.tilehex.setId(id);
+        this.tilehex.setNeighbours(this.neighbors);
         try {
         	URL url = InitBoardTiles.class.getResource("/" + tilehex.getFilePath());
 			this.tileimg = ImageIO.read(new File(url.getPath()));
@@ -175,9 +177,27 @@ public class HexCell {
 							e.printStackTrace();
 						}
 		        	}
+		        	
 		        	if(tilehex.getClearings().get(i).isPlayerHere()){
 		        		System.out.println("Placed player image");
 		        		URL url = InitBoardTiles.class.getResource("/monsters/dragon.gif");
+	        			try {
+							chitimg = ImageIO.read(new File(url.getPath()));
+							saveAt.setTransform(at);
+							at.translate((w / 2), (h / 2));
+					        at.rotate(Math.toRadians(-angle));
+					        at.translate((-w / 2), (-h / 2));
+					        g2d.setTransform(at);
+				        	g2d.drawImage(chitimg, cl.getBounds().x, cl.getBounds().y, cl.getBounds().width, cl.getBounds().height, null);
+				        	at.setTransform(saveAt);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		        	}
+		        	if(tilehex.getClearings().get(i).getPeopleHere().size() > 0){
+		        		System.out.println("Placed player image");
+		        		URL url = InitBoardTiles.class.getResource("/characters/" + tilehex.getClearings().get(i).getPeopleHere().get(i).getUrl());
 	        			try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);
@@ -200,6 +220,24 @@ public class HexCell {
 		        	g2d.drawImage(chitimg, cl.getBounds().x, cl.getBounds().y, cl.getBounds().width, cl.getBounds().height, null);
 					*/
 		        }
+		        
+		        if(tilehex.getWarnings() != null){
+	        		URL url = InitBoardTiles.class.getResource("/others/" + tilehex.getWarnings().getUrl());
+        			try {
+						chitimg = ImageIO.read(new File(url.getPath()));
+						//saveAt.setTransform(at);
+						at.setTransform(g2.getTransform());
+						//at.translate((w / 2), (h / 2));
+				       // at.rotate(Math.toRadians(-angle));
+				       // at.translate((-w / 2), (-h / 2));
+				        g2d.setTransform(at);
+			        	g2d.drawImage(chitimg, (g2.getClipBounds().x + (w/2)), (g2.getClipBounds().y + (h/2)), cl.getBounds().width, cl.getBounds().height, null);
+			        	//at.setTransform(saveAt);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	        	}
 
 		        //g2d.draw(new Ellipse2D.Double(center.x-1.5, center.y-1.5, 30, 30));
 		        g2.drawImage(rotated, shape.getBounds().x, shape.getBounds().y, shape.getBounds().width, shape.getBounds().height, null);

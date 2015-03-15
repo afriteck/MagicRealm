@@ -176,15 +176,16 @@ public boolean requestMove(Player p){
 	if (option == JOptionPane.OK_OPTION) {
 		//success = true;
 		String input = TileName.getText().toString().trim();
-		bd.getTile(input);
-		moveTiles.add(bd.getTile(input));
-		System.out.println(bd.getTile(input).getName());
-		
-		bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).setPlayerHere(true);
-		p.getCharacter().moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));
-		p.getCharacter().setTileName(TileName.getText());
-		p.getCharacter().setClearingLocation(Integer.parseInt(Clearing.getText()));
-		
+		if(bd.getTile(p.getCharacter().getTileName()).isNeighbour(bd.getTile(input))){
+			//bd.getTile(input);
+			//moveTiles.add(bd.getTile(input));
+			System.out.println(bd.getTile(input).getName());
+			
+			bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).setPlayerHere(true);
+			p.getCharacter().moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));
+			//p.getCharacter().setTileName(TileName.getText());
+			//p.getCharacter().setClearingLocation(Integer.parseInt(Clearing.getText()));
+		}else{JOptionPane.showMessageDialog(null, "Invalid Move \n DON'T CHEAT!");}
 		
 		return true;
 		
@@ -222,7 +223,7 @@ public boolean placedwelling(Dwelling d){
 		moveTiles.add(bd.getTile(input));
 		System.out.println(bd.getTile(input).getName());
 		
-		bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).setPlayerHere(true);
+		bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).setDwelling(d);
 		d.setHome(TileName.getText());
 		d.setClearing(Integer.parseInt(Clearing.getText()));
 		
