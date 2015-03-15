@@ -22,6 +22,8 @@ private static LinkedList<Native> natives;
 		setName("Patrol");
 		setTile("CAVERN");
 		setClearing(2);
+		setHired(false);
+
 	
 	}
 

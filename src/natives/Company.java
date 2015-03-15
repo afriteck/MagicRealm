@@ -33,7 +33,8 @@ private int cost;
 		setName("Company");
 		setTile("OAK WOODS");
 		setClearing(2);
-	
+		setHired(false);
+
 	}
 
 

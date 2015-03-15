@@ -27,6 +27,8 @@ private static LinkedList<Native> natives;
 		setName("Soldiers");
 		setTile("CURST VALLEY");
 		setClearing(5);	
+		setHired(false);
+
 		}
 
 

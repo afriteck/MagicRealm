@@ -22,6 +22,8 @@ public class Woodfolk extends NativeGroup{
 			setName("Woodfolk");
 			setTile("CRAG");
 			setClearing(4);
+			setHired(false);
+
 			
 		}
 

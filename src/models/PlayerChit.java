@@ -12,7 +12,7 @@ public class PlayerChit {
 	private String name;
 	private String character;
 	private String url;
-	private final String hiddenUrl = "hidden.jpg";
+	private String hiddenUrl = "hidden.jpg";
 	private boolean isHidden;
 
 	public PlayerChit(String n, String c, String u){

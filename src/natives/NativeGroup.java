@@ -1,7 +1,5 @@
 package natives;
 
-import gameBoard.Tiles;
-
 import java.util.LinkedList;
 
 import models.Dwelling;
@@ -17,6 +15,7 @@ public  class NativeGroup {
 	private Dwelling home;
 	private String tile;
 	private int clearing;
+	private boolean hired;
 
 
 	
@@ -114,6 +113,16 @@ public  class NativeGroup {
 
 	public void setClearing(int clearing) {
 		this.clearing = clearing;
+	}
+
+
+	public boolean isHired() {
+		return hired;
+	}
+
+
+	public void setHired(boolean hired) {
+		this.hired = hired;
 	}
 
 

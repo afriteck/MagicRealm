@@ -28,6 +28,8 @@ private static LinkedList<Native> natives;
 		setName("Guard");
 		setTile("DARK VALLEY");
 		setClearing(5);	
+		setHired(false);
+
 		}
 
 

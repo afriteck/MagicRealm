@@ -28,6 +28,8 @@ private static LinkedList<Native> natives;
 		setName("Lancers");
 		setTile("BORDERLAND");
 		setClearing(1);
+		setHired(false);
+
 	
 	}
 

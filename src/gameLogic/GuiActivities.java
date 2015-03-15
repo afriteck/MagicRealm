@@ -45,6 +45,8 @@ public class GuiActivities {
 	 private Player currentPlayer = null;
 	 
 	 private boolean hideAct;
+	 private boolean rolled;
+	 
 		private boolean moveAct;
 		private boolean searchAct;
 		private boolean tradeAct;
@@ -182,12 +184,12 @@ public boolean requestMove(Player p){
 			//moveTiles.add(bd.getTile(input));
 			System.out.println(bd.getTile(input).getName());
 			
-			bd.getTile(p.getCharacter().getTileName()).getClearingByNum(p.getCharacter().getClearingLocation()).getPeopleHere().remove(p.getCharacter().getPchit());
+			bd.getTile(p.getCharacter().getTileName()).getClearingByNum(p.getCharacter().getClearingLocation()).removePersonHere(p.getCharacter().getPchit().getName());
 			bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).movePersonHere(p.getCharacter().getPchit());
 			
 			p.getCharacter().moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));
-			//p.getCharacter().setTileName(TileName.getText());
-			//p.getCharacter().setClearingLocation(Integer.parseInt(Clearing.getText()));
+			p.setTile(TileName.getText());
+			p.setClearing(Integer.parseInt(Clearing.getText()));
 		}else{JOptionPane.showMessageDialog(null, "Invalid Move \n DON'T CHEAT!");}
 		
 		return true;
@@ -290,24 +292,42 @@ int option = JOptionPane.showConfirmDialog(null, null, "SEARCH!", JOptionPane.OK
 //LinkedList <JButton> buttons = new LinkedList<JButton>();
 		
 		items[0] = new JButton("LOCATE");
+		items[0].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JOptionPane.showMessageDialog(null, "Please Roll a die \n Roll a 1 for choice \n Roll 2 for Passages and clues \n Roll 3 for passages \n Roll 4 to discover chits \n Roll 5 for nothing \n Roll 6 for nothing");
+
+			
+			}
+		});
 		items[0].setBounds(1430, 329, 109, 30);
 		items[0].setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
 		items[0].setVisible(true);
-		//Gui.getContentPane().add(locate);
 		
 		
 		items[1] = new JButton("PEER");
+		items[1].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
 		items[1].setBounds(1430, 295, 109, 30);
 		items[1].setIcon(new ImageIcon(Gui.class.getResource("/others/peer.png")));
-		//items[1].setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
 		items[1].setVisible(true);
 		
 		
 		items[2] = new JButton("LOOT");
+		items[2].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				JOptionPane.showMessageDialog(null, "Please Roll a die");
+
+				
+			}
+		});
 		items[2].setBounds(1430, 261, 109, 30);
 		items[2].setIcon(new ImageIcon(Gui.class.getResource("/others/loot.png")));
-		//items[2].setSelectedIcon(new ImageIcon(Gui.class.getResource("/others/p1s.png")));
-		//items[2].setSelected(true);
 		items[2].setVisible(true);
 
 	
@@ -323,10 +343,17 @@ int option = JOptionPane.showConfirmDialog(null, null, "SEARCH!", JOptionPane.OK
 	return items;
 	}
 
-public boolean requestHide(Player p, JTextArea txt){
+public boolean requestHide(Player p, boolean rolled, JTextArea txt){
 	int option = JOptionPane.showConfirmDialog(null, null, "HIDE!", JOptionPane.OK_CANCEL_OPTION);
 
 	if (option == JOptionPane.OK_OPTION) {
+		
+		if(getRolled() == false){
+			JOptionPane.showMessageDialog(null, "Please roll die first");
+		return false;
+		}
+		
+		else if(getRolled() && p.getCharacter().getRoll() < 6){
 
 			p.getCharacter().setVisibility(false);
 			p.getCharacter().getPchit().setHidden(true);
@@ -335,11 +362,19 @@ public boolean requestHide(Player p, JTextArea txt){
 
 			return true;
 			
-		}else{
-			System.out.println(p.getCharacter().getVisibility());
-
-			return false;
 		}
+		
+		else if(p.getCharacter().getRoll()==6){
+			JOptionPane.showMessageDialog(null, "Sorry you cant hide");
+			return true;
+		}
+			
+		else{
+			JOptionPane.showMessageDialog(null, "Play a Turn!");
+		}
+		
+	}
+	return false;
 	
 	
 }
@@ -408,22 +443,24 @@ public boolean requestHire(Player p, JTextArea txt){
 	
 }
 
-public boolean hireNative(ActionEvent e, Player p, NativeGroup ng, JTextArea txt ){
+public boolean hireNative(ActionEvent e, Player p, NativeGroup ng, JTextArea txt ){		//player hires a native group
 	String name = ((Component) e.getSource()).getName();
 
 	int option = JOptionPane.showConfirmDialog(null, null, "Recruit this Native Group?", JOptionPane.OK_CANCEL_OPTION);
 
 	if (option == JOptionPane.OK_OPTION) {
 		
-		if(name == ng.getName()){
-			p.getCharacter().buyNative(p.getCharacter(), ng);
-			txt.append("You have successfully recruited " + p.getCharacter().getHiredNatives().get(0).getName());			
+		if(name == ng.getName() && ng.isHired() == false){				//check if the native group is already hired
+			p.getCharacter().buyNative(p.getCharacter(), ng);	//if not hired hire the group
+			txt.append("You have successfully recruited " + p.getCharacter().getHiredNatives().get(0).getName());	
+			ng.setHired(true);			
 			return true;
 		}
 		
 	}else{
-		txt.append("Please choose a valid native group");
+		txt.append("This group has already been hired");
 	}
+	if(p.getCharacter().getHiredNatives().size() > 0)
 	txt.append("You currently have this native group " + p.getCharacter().getHiredNatives().get(0).getName());
 	return false;
 }
@@ -658,13 +695,17 @@ public void showNativeGroup(final NativeGroup ng, final Player p, final JTextAre
 	System.out.println(ng.getTile() +  p.getTile());
 	System.out.println(ng.getClearing() + " " + p.getClearing());
 	
-	JButton groupLabel = new JButton(); 
+	final JButton groupLabel = new JButton(); 
 	
 	groupLabel.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			
-			hireNative(e, p, ng, txt);
-		
+			if(ng.isHired() == true){
+				JOptionPane.showMessageDialog(null, "This group has already been hired!");
+				groupLabel.setVisible(false);	
+				}else{
+				hireNative(e, p, ng, txt);
+				groupLabel.setVisible(false);	
+				}
 		}
 	});
 	groupLabel.setIcon(new ImageIcon(Gui.class.getResource("/others/nativegroup.jpg")));
@@ -952,6 +993,16 @@ public void cheatmodeButtons(Container container){
 
 
 
+}
+
+
+public boolean getRolled() {
+	return rolled;
+}
+
+
+public void setRolled(boolean rolled) {
+	this.rolled = rolled;
 }
 
 }

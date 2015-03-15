@@ -29,6 +29,8 @@ public  class Order extends NativeGroup{
 		setName("Order");
 		setTile("AWFUL VALLEY");
 		setClearing(5);
+		setHired(false);
+
 	
 	}
 

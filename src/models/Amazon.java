@@ -57,7 +57,7 @@ public class Amazon extends Things{
 		
 	}
 
-	
+	/*
 	public static void main(String[] args){
 		
 		Things sm = new Amazon();
@@ -68,7 +68,7 @@ public class Amazon extends Things{
 	    
 		}
 	}
-	
+	*/
 
 
 }

@@ -286,7 +286,7 @@ contentPane.add(p2button);
 
 
 
-setRoll.setBounds(300, 20, 120, 29);                               // bounds for button 
+setRoll.setBounds(300, 20, 120, 29);                               // bounds for cheat button 
 setRoll.setVisible(false);
 getContentPane().add(setRoll); 
 
@@ -324,7 +324,15 @@ move.setVisible(false);
 hide.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
 		
-		if(gm.requestHide(currentPlayer, txt)){
+		JOptionPane.showMessageDialog(null, "Please Roll a die \n Roll a 1 for hide \n Roll 2 for hide \n Roll 3 for hide \n Roll 4 to hide \n Roll 5 for hide \n Roll 6 for nothing");
+
+		/*
+			try {
+			    Thread.sleep(5000);                 //5000 milliseconds is one second.
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}*/
+				if(gm.requestHide(currentPlayer, gm.getRolled(),txt)){
 			turn++;
 			if(turn >= 5){
 				getNextPlayer(currentPlayer);
@@ -596,7 +604,7 @@ getContentPane().add(die2);
 RollButton.addActionListener(new ActionListener() {                 //Button Listener/* 
     @Override
 public void actionPerformed(ActionEvent e) { 
-    	
+    	gm.setRolled(true);
     	die1.setVisible(true);
         die2.setVisible(true);
     	
@@ -604,14 +612,18 @@ public void actionPerformed(ActionEvent e) {
     setLastRoll(roll());  
     setLastRoll2(roll()); 
     
-    setPlayer1Roll (currentPlayer.getPlayerDie().getDieRoll(currentPlayer.getDieBool(), getLastRoll(), getLastRoll2()));
+//  setPlayer1Roll (currentPlayer.getPlayerDie().getDieRoll(currentPlayer.getDieBool(), getLastRoll(), getLastRoll2()));
     
-    txt.append("\n----------------------------------\n" + currentPlayer.getName() +" rolled : " + player1Roll); 
 
     
     txt.append("\n----------------------------------\nDie1 rolled a: " + lastRoll); 
     txt.append("\n----------------------------------\nDie2 rolled a: " + lastRoll2); 
    
+    if(currentPlayer.getCharacter() != null){
+        currentPlayer.getCharacter().setRoll(Math.max(lastRoll, lastRoll2));
+    
+        txt.append("\n----------------------------------\n" + currentPlayer.getName() +" rolled : " + currentPlayer.getCharacter().getRoll()); 
+    }
     die1.setIcon(img[lastRoll]); 
     die2.setIcon(img[lastRoll2]); 
     
@@ -631,6 +643,9 @@ public void actionPerformed(ActionEvent e) {
   
         txt.append("\n---------------------------------- die 1 rolled!!\n" + lastRoll);
         txt.append("\n---------------------------------- die 2 rolled!!\n" + lastRoll2);
+        
+        if(currentPlayer.getCharacter() != null)
+            currentPlayer.getCharacter().setRoll(Math.max(lastRoll, lastRoll2));
 
     }  
     }); 
@@ -1164,11 +1179,11 @@ public void displayCharacterDetail(MouseEvent e, JLabel j){
 
 public Player getNextPlayer(Player p){
     
-    if (p == player1) { 
-    	currentPlayer = player2; p1button.setSelected(false); 
+    if (p == gm.getPlayer1()) { 
+    	currentPlayer = gm.getPlayer2(); p1button.setSelected(false); 
                         p2button.setSelected(true); }
-    if (p == player2) {
-    	currentPlayer = player1; p2button.setSelected(false); 
+    if (p == gm.getPlayer2()) {
+    	currentPlayer = gm.getPlayer1(); p2button.setSelected(false); 
     	p1button.setSelected(true); 
     	turn++;
                        }   
@@ -1325,7 +1340,7 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 		}
 		gm.getPlayer2().getCharacter().setTileName("BAD VALLEY");
 		gm.getPlayer2().getCharacter().setClearingLocation(5);
-		PlayerChit p2chit = new PlayerChit(gm.getPlayer1().getName(), gm.getPlayer1().getCharacter().getName(), gm.getPlayer1().getCharacter().getUrl());
+		PlayerChit p2chit = new PlayerChit(gm.getPlayer2().getName(), gm.getPlayer2().getCharacter().getName(), gm.getPlayer2().getCharacter().getUrl());
 		gm.getPlayer2().getCharacter().setPchit(p2chit);
 		boardt.getTile("BAD VALLEY").getClearingByNum(5).movePersonHere(gm.getPlayer2().getCharacter().getPchit());
 		

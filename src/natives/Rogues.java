@@ -1,6 +1,5 @@
 package natives;
 
-import gameBoard.BoardTiles;
 import gameLogic.Iteration1Board;
 
 import java.util.LinkedList;
@@ -31,6 +30,8 @@ public class Rogues extends NativeGroup{
 		setTile("BAD VALLEY");
 		setClearing(5);
 		initializeNatives();
+		setHired(false);
+
 		
 	}
 
