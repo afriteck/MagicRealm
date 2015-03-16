@@ -25,7 +25,7 @@ public abstract class Things implements Move, Business, Search, Hide{
 	private static String name;
 	private int gold;
 	private static String url;
-	private PlayerChit pchit;
+	//private PlayerChit pchit;
 	private Weapons myweapon;
     private LinkedList<Weapons> myweapons;    // the chatacters arsenal
 
@@ -55,13 +55,14 @@ public abstract class Things implements Move, Business, Search, Hide{
 		return url;
 	}
 	
+	/*
 	public PlayerChit getPchit() {
 		return pchit;
 	}
 
 	public void setPchit(PlayerChit pchit) {
 		this.pchit = pchit;
-	}
+	}*/
 
 	public static String getName(){
 		return name;

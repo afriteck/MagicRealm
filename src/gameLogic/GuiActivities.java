@@ -44,6 +44,7 @@ public class GuiActivities {
 	 private Player player2 = new Player();
 	 private Player currentPlayer = null;
 	 
+
 	 private boolean hideAct;
 	 private boolean rolled;
 	 
@@ -66,7 +67,12 @@ public class GuiActivities {
 		this.bd=bd;
 		//bd = new BoardTiles(); 
 		//bd = BoardTest.initializeTiles();
-		
+		 player1.setTile("BAD VALLEY");
+	      player1.setClearing(5);
+		 
+		 player2.setTile("BAD VALLEY");
+	      player2.setClearing(5);
+		 
 		
 
 	}
@@ -180,21 +186,24 @@ public boolean requestMove(Player p){
 		//success = true;
 		String input = TileName.getText().toString().trim();
 		if(bd.getTile(p.getCharacter().getTileName()).isNeighbour(bd.getTile(input)) == true || p.getCharacter().getTileName().equals(input) == true){
-			//bd.getTile(input);
-			//moveTiles.add(bd.getTile(input));
-			System.out.println(bd.getTile(input).getName());
+			System.out.println(p.getPchit().getName());
+			//bd.getTile(p.getTile()).getClearingByNum(p.getClearing()).removePersonHere(p.getPchit());
+
+			bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).movePersonHere(p.getPchit());
 			
-			bd.getTile(p.getCharacter().getTileName()).getClearingByNum(p.getCharacter().getClearingLocation()).removePersonHere(p.getCharacter().getPchit().getName());
-			bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).movePersonHere(p.getCharacter().getPchit());
-			
+			bd.getTile(p.getTile()).getClearingByNum(p.getClearing()).removePersonHere(p.getPchit());
+
+			p.moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));
+
 			p.getCharacter().moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));
 			p.setTile(TileName.getText());
 			p.setClearing(Integer.parseInt(Clearing.getText()));
+
 		}else{JOptionPane.showMessageDialog(null, "Invalid Move \n DON'T CHEAT!");}
 		
 		return true;
 		
-		
+
 		
 		/*
 		
@@ -210,7 +219,10 @@ public boolean requestMove(Player p){
 	    System.out.println("Login canceled");
         //success = false;*/
 
-	}else return false;
+	}else 
+		return false;
+	
+	
 
 
 
@@ -356,7 +368,7 @@ public boolean requestHide(Player p, boolean rolled, JTextArea txt){
 		else if(getRolled() && p.getCharacter().getRoll() < 6){
 
 			p.getCharacter().setVisibility(false);
-			p.getCharacter().getPchit().setHidden(true);
+			p.getPchit().setHidden(true);
 			txt.append(p.getName() + " is now hidden from every one \n");
 
 
@@ -371,6 +383,7 @@ public boolean requestHide(Player p, boolean rolled, JTextArea txt){
 			
 		else{
 			JOptionPane.showMessageDialog(null, "Play a Turn!");
+			//txt.append(p.getCharacter().getName())
 		}
 		
 	}

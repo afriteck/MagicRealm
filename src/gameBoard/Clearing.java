@@ -131,10 +131,13 @@ public class Clearing {
 		this.peopleHere.add(person);
 	}
 	
-	public void removePersonHere(String person) {
+	public void removePersonHere(PlayerChit person) {
 		if(peopleHere.size()>0){
 			for(int i=0; i<peopleHere.size(); i++){
-				if(peopleHere.get(i).getName().equals(person)){this.peopleHere.remove(i);}
+				System.out.println(peopleHere.toString());
+				if(peopleHere.get(i).equals(person)){
+					this.peopleHere.remove(i);
+				}
 			}
 		}
 	}

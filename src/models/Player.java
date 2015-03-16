@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import javax.swing.JTextArea;
 
 
-public class Player {
+public class Player implements Move{
 
 	    private String playerName;
 	    private Things character;
@@ -17,6 +17,8 @@ public class Player {
 	    private LinkedList<Things> characterStack;    // the players stack
 	    private Dice playerDie;
 	    private boolean dieBool = false;
+		private PlayerChit pchit;
+
 	    
 	    private String tile;
 	    private int clearing;
@@ -41,6 +43,8 @@ public class Player {
 
 	    public Player(){
 	        playerDie = new Dice();
+	       // setTile("BAD VALLEY");
+	       // setClearing(5);
 
 	    }
 
@@ -162,6 +166,27 @@ public class Player {
 
 		public void setClearing(int clearing) {
 			this.clearing = clearing;
+		}
+
+		public PlayerChit getPchit() {
+			return pchit;
+		}
+
+		public void setPchit(PlayerChit pchit) {
+			this.pchit = pchit;
+		}
+
+		@Override
+		public void moveFrom(String tile, int clearing) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void moveTo(String tile, int clearing) {
+			this.setTile(tile);	
+			this.setClearing(clearing);			
+
 		}
 
 

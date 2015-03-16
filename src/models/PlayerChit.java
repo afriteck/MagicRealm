@@ -21,6 +21,10 @@ public class PlayerChit {
 		setUrl(u);
 		setHidden(false);
 	}
+	
+	public PlayerChit(){
+		
+	}
 
 	public String getName() {
 		return name;

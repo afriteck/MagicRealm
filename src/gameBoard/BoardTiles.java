@@ -5,6 +5,8 @@ package gameBoard;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 
 /**
  * @author joshwhite
@@ -62,6 +64,7 @@ public class BoardTiles {
 			//System.out.println(wantedTile.getName());
 			return wantedTile;
 		}else{
+			JOptionPane.showMessageDialog(null, "Error. That is not a valid tile!");
 			System.out.println("Error. That is not a valid tile!");
 			return wantedTile;
 		}

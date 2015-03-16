@@ -73,6 +73,9 @@ public class Gui extends JFrame implements MouseListener {
     private JButton locate = new JButton("LOCATE");
     private JButton[] tradeItems;
     private JButton[] searchItems;
+    
+    PlayerChit p1chit = new PlayerChit();
+    PlayerChit p2chit = new PlayerChit();
 
     
 	 LinkedList<JButton> searchButtons;
@@ -124,7 +127,7 @@ public class Gui extends JFrame implements MouseListener {
 	 private CharacterContainer characters = new CharacterContainer();  // bag of things
 
 	 
-	 private Player currentPlayer = null;    // the turn of the current player.
+	 private Player currentPlayer = gm.getPlayer1();    // the turn of thGDGFGFe current player.
 	 private Things selectedCharacter = null;     //when the player clicks a Character off their rack
 	 
 	 private LinkedList<Things> p1characters = new LinkedList<Things>(), p2characters = new LinkedList<Things>(),
@@ -134,8 +137,8 @@ public class Gui extends JFrame implements MouseListener {
 	 Things p2character;
 	 
 	 
-	Player player1 = gm.getPlayer1();
-	Player player2  = gm.getPlayer2();
+	//Player player1 = gm.getPlayer1();
+	//Player player2  = gm.getPlayer2();
 	 
 	 
 	 JButton die1 ;
@@ -305,14 +308,18 @@ getContentPane().add(RollButton);
  move = new JButton("MOVE");
 move.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-	
+		//boardt.getTile(currentPlayer.getTile()).getClearingByNum(currentPlayer.getClearing()).removePersonHere(currentPlayer.getPchit().getName());
+
 		if(gm.requestMove(currentPlayer)){
-			turn++;			
+			turn++;	
+
 		if(turn >= 5){
 		getNextPlayer(currentPlayer);
 		turn = 1;
 	}
 		}
+		
+
 	}
 });
 buttonGroup.add(move);
@@ -323,16 +330,10 @@ move.setVisible(false);
  hide = new JButton("HIDE");
 hide.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		
+		if(gm.getRolled() == false)
 		JOptionPane.showMessageDialog(null, "Please Roll a die \n Roll a 1 for hide \n Roll 2 for hide \n Roll 3 for hide \n Roll 4 to hide \n Roll 5 for hide \n Roll 6 for nothing");
-
-		/*
-			try {
-			    Thread.sleep(5000);                 //5000 milliseconds is one second.
-			} catch(InterruptedException ex) {
-			    Thread.currentThread().interrupt();
-			}*/
-				if(gm.requestHide(currentPlayer, gm.getRolled(),txt)){
+		if(gm.getRolled())
+		if(gm.requestHide(currentPlayer, gm.getRolled(),txt)){
 			turn++;
 			if(turn >= 5){
 				getNextPlayer(currentPlayer);
@@ -471,48 +472,7 @@ hire.setVisible(false);
 follow = new JButton("FOLLOW");
 follow.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		turn++;
 	
-		if(turn >= 8){
-			
-			move.setVisible(false);
-			hide.setVisible(false);
-			search.setVisible(false);
-			 rest.setVisible(false);
-			trade.setVisible(false);
-			alert.setVisible(false);
-			hire.setVisible(false);
-			follow.setVisible(false);
-			playGame();
-
-		}
-
-			gm.activity(p1choiceOrder, e, getActivityCounter());
-	
-
-if(activityCounter < 1){
-	getNextPlayer(currentPlayer);
-	activityCounter = 5;
-		gm.activity(p2choiceOrder, e, getActivityCounter());
-	System.out.println(p2choiceOrder);
-
-	moveAct = true;
-	System.out.println(activityCounter);
-
-}
-   
-   	 
-		if(currentPlayer == player2){
-			
-			
-   	}
-       
-   	 else {
-   		
-
-   		 
-   		 
-   	 }
 	}
 });
 buttonGroup.add(follow);
@@ -526,49 +486,7 @@ follow.setVisible(false);
 enchant = new JButton("ENCHANT");
 enchant.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		turn++;
-	
-		if(turn >= 8){
-			
-			move.setVisible(false);
-			hide.setVisible(false);
-			search.setVisible(false);
-			 rest.setVisible(false);
-			trade.setVisible(false);
-			alert.setVisible(false);
-			hire.setVisible(false);
-			follow.setVisible(false);
-			enchant.setVisible(false);
-			playGame();
 
-		}
-
-			gm.activity(p1choiceOrder, e, getActivityCounter());
-	
-
-if(activityCounter < 1){
-	getNextPlayer(currentPlayer);
-	activityCounter = 5;
-		gm.activity(p2choiceOrder, e, getActivityCounter());
-	System.out.println(p2choiceOrder);
-
-	moveAct = true;
-	System.out.println(activityCounter);
-
-}
-   
-   	 
-		if(currentPlayer == player2){
-			
-			
-   	}
-       
-   	 else {
-   		
-
-   		 
-   		 
-   	 }
 	}
 });
 buttonGroup.add(enchant);
@@ -712,7 +630,7 @@ btnNewButton.addActionListener(new ActionListener() {
 
         txt.append("\n----------------------------------\nPlease choose your characters \n"); 
         
-        currentPlayer = player1;
+       //currentPlayer = gm.getPlayer1();
       
           
     }
@@ -1180,10 +1098,16 @@ public void displayCharacterDetail(MouseEvent e, JLabel j){
 public Player getNextPlayer(Player p){
     
     if (p == gm.getPlayer1()) { 
-    	currentPlayer = gm.getPlayer2(); p1button.setSelected(false); 
-                        p2button.setSelected(true); }
+    	currentPlayer = gm.getPlayer2();
+    	gm.getPlayer2().setTile(gm.getPlayer2().getTile());
+    	p1button.setSelected(false); 
+                        p2button.setSelected(true); 
+                        }
     if (p == gm.getPlayer2()) {
-    	currentPlayer = gm.getPlayer1(); p2button.setSelected(false); 
+    	currentPlayer = gm.getPlayer1();
+    	gm.getPlayer1().setTile(gm.getPlayer1().getTile());
+
+    	p2button.setSelected(false); 
     	p1button.setSelected(true); 
     	turn++;
                        }   
@@ -1224,7 +1148,7 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	
 	String name = ((Component) e.getSource()).getName();
 	
-	if(p == player1){
+	if(p == gm.getPlayer1()){
 	    selected = false;		//we know the players are not done selection
 		if(name == "Amazon"){
 	      gm.getPlayer1().setCharacter(new Amazon());
@@ -1275,12 +1199,15 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 		}
 		gm.getPlayer1().getCharacter().setTileName("BAD VALLEY");
 		gm.getPlayer1().getCharacter().setClearingLocation(5);
-		PlayerChit p1chit = new PlayerChit(gm.getPlayer1().getName(), gm.getPlayer1().getCharacter().getName(), gm.getPlayer1().getCharacter().getUrl());
-		gm.getPlayer1().getCharacter().setPchit(p1chit);
-		boardt.getTile("BAD VALLEY").getClearingByNum(5).movePersonHere(gm.getPlayer1().getCharacter().getPchit());
+		//PlayerChit p1chit = new PlayerChit(gm.getPlayer1().getName(), gm.getPlayer1().getCharacter().getName(), gm.getPlayer1().getCharacter().getUrl());
+		p1chit.setName(gm.getPlayer1().getName());
+		p1chit.setCharacter(gm.getPlayer1().getCharacter().getName());
+		p1chit.setUrl(gm.getPlayer1().getCharacter().getUrl());
+		gm.getPlayer1().setPchit(p1chit);
+		boardt.getTile("BAD VALLEY").getClearingByNum(5).movePersonHere(gm.getPlayer1().getPchit());
 	}
 	
-	if(p == player2){
+	if(p == gm.getPlayer2()){
 	    selected = true;			//we now know that p2 is done selecting so, selecion phase is over	
 		if(name == "Amazon"){
 	        gm.getPlayer2().setCharacter(new Amazon());
@@ -1340,13 +1267,16 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 		}
 		gm.getPlayer2().getCharacter().setTileName("BAD VALLEY");
 		gm.getPlayer2().getCharacter().setClearingLocation(5);
-		PlayerChit p2chit = new PlayerChit(gm.getPlayer2().getName(), gm.getPlayer2().getCharacter().getName(), gm.getPlayer2().getCharacter().getUrl());
-		gm.getPlayer2().getCharacter().setPchit(p2chit);
-		boardt.getTile("BAD VALLEY").getClearingByNum(5).movePersonHere(gm.getPlayer2().getCharacter().getPchit());
+		//PlayerChit p2chit = new PlayerChit(gm.getPlayer2().getName(), gm.getPlayer2().getCharacter().getName(), gm.getPlayer2().getCharacter().getUrl());
+		p2chit.setName(gm.getPlayer2().getName());
+		p2chit.setCharacter(gm.getPlayer2().getCharacter().getName());
+		p2chit.setUrl(gm.getPlayer2().getCharacter().getUrl());
+		gm.getPlayer2().setPchit(p2chit);
+		boardt.getTile("BAD VALLEY").getClearingByNum(5).movePersonHere(gm.getPlayer2().getPchit());
 		
 	
-		player1 = gm.getPlayer1();
-		player2 = gm.getPlayer2();
+		//player1 = gm.getPlayer1();
+		//player2 = gm.getPlayer2();
 
 	
 	}
@@ -1433,7 +1363,7 @@ public void toggleDie2(){
 }
 //}
 
-
+/*
 public void moveActivity(Player p, ActionEvent e){
 	if(!moveAct){
 		int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -1475,7 +1405,7 @@ public void movePlayer(Player p, ActionEvent e){
 	 moveActivity(p, e);
 	
 	
-}
+}*/
 public int getPlayer1Roll(){
 	return player1Roll;
 }
@@ -1613,7 +1543,7 @@ public void checkSelected(Player p, MouseEvent e){
 
 			}
 
-		if(selected & p == player2){
+		if(selected & p == gm.getPlayer2()){
 			    characterSelectionPhase = true;
 			    	txt.append("done selection!! ya!!!");
 		        	JOptionPane.showMessageDialog(getContentPane(), "PLEASE CHOOSE YOUR 4 ACTIVITIES FOR THE DAY.");
