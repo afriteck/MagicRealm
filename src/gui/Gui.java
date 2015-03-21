@@ -38,9 +38,14 @@ import javax.swing.text.DefaultCaret;
 import models.Amazon;
 import models.BlackKnight;
 import models.Captain;
+import models.Chapel;
 import models.CharacterContainer;
 import models.Dwarf;
+import models.Dwelling;
 import models.Elf;
+import models.GuardHouse;
+import models.House;
+import models.Inn;
 import models.Player;
 import models.PlayerChit;
 import models.Swordsman;
@@ -61,8 +66,7 @@ public class Gui extends JFrame implements MouseListener {
 	
 	private JPanel contentPane;
 	private JTextArea txt = new JTextArea ("Welcome to Magic Realm! ");
-	private JLabel[] Die1Label, Die2Label;
-	
+	private JLabel[] Die1Label, Die2Label;	
 	private JButton rollButton, selectButton, sbackButton, backButton,move,hide,search,trade,rest,alert,hire,follow,enchant;
 	private JButton p1button, p2button;         // player turn indicators
     private int turn = 0;       // for the player character selection phase
@@ -108,15 +112,17 @@ public class Gui extends JFrame implements MouseListener {
 	
 	 LinkedList<NativeGroup> ng;
 	 
-	 Order order;
-	 Soldiers soldiers ;
-	 Guard guard;
-	 Rogues rogues;
 	 Bashkars bashkars;
 	 Company company;
 	 Lancers lancers;
 	 Patrol patrol;
 	 Woodfolk woodfolk;
+	 
+	 Chapel chapel;
+	 GuardHouse guardhouse;
+	 Inn inn;
+	 House house;
+	 
 	
 	 
 	 JLabel grouplabel;
@@ -128,6 +134,8 @@ public class Gui extends JFrame implements MouseListener {
 
 	 
 	 private Player currentPlayer = gm.getPlayer1();    // the turn of thGDGFGFe current player.
+	 
+	 
 	 private Things selectedCharacter = null;     //when the player clicks a Character off their rack
 	 
 	 private LinkedList<Things> p1characters = new LinkedList<Things>(), p2characters = new LinkedList<Things>(),
@@ -139,8 +147,7 @@ public class Gui extends JFrame implements MouseListener {
 	 
 	//Player player1 = gm.getPlayer1();
 	//Player player2  = gm.getPlayer2();
-	 
-	 
+	 	 
 	 JButton die1 ;
 	 JButton die2 ;
 
@@ -223,10 +230,7 @@ contentPane.setLayout(null);
 
 
 ng = new LinkedList<NativeGroup>();
-order = new Order();
-soldiers = new Soldiers();
-guard = new Guard();
-rogues = new Rogues();
+
 bashkars = new Bashkars();
 company = new Company();
 lancers = new Lancers();
@@ -234,24 +238,21 @@ patrol = new Patrol() ;
 woodfolk = new Woodfolk();
 
 
+chapel = new Chapel();
+guardhouse = new GuardHouse();
+inn = new Inn();
+house = new House();
+
+
 
 grouplabel = new JLabel();
 
 
-
-ng.add(order);
-ng.add(soldiers);
-ng.add(guard);
-ng.add(rogues);
 ng.add(bashkars);
 ng.add(company);
 ng.add(lancers);
 ng.add(patrol);
 ng.add(woodfolk);
-
-
-
-
 
 
 
@@ -308,14 +309,14 @@ getContentPane().add(RollButton);
  move = new JButton("MOVE");
 move.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-		//boardt.getTile(currentPlayer.getTile()).getClearingByNum(currentPlayer.getClearing()).removePersonHere(currentPlayer.getPchit().getName());
-
+		System.out.println(currentPlayer.getName() + currentPlayer.getTile() + currentPlayer.getClearing());
 		if(gm.requestMove(currentPlayer)){
 			turn++;	
+		if(turn >= 4){
+			getNextPlayer(currentPlayer);
+			currentPlayer = gm.getPlayer2();
 
-		if(turn >= 5){
-		getNextPlayer(currentPlayer);
-		turn = 1;
+			turn = 1;
 	}
 		}
 		
@@ -330,10 +331,14 @@ move.setVisible(false);
  hide = new JButton("HIDE");
 hide.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
+		RollButton.setVisible(true);
 		if(gm.getRolled() == false)
 		JOptionPane.showMessageDialog(null, "Please Roll a die \n Roll a 1 for hide \n Roll 2 for hide \n Roll 3 for hide \n Roll 4 to hide \n Roll 5 for hide \n Roll 6 for nothing");
 		if(gm.getRolled())
+			RollButton.setVisible(false);
 		if(gm.requestHide(currentPlayer, gm.getRolled(),txt)){
+			gm.setRolled(false);
+			RollButton.setVisible(true);
 			turn++;
 			if(turn >= 5){
 				getNextPlayer(currentPlayer);
@@ -370,16 +375,21 @@ trade.setVisible(false);
 buttonGroup.add(search);
 search.addActionListener(new ActionListener() {
 	public void actionPerformed(ActionEvent e) {
-			if(turn >= 5){
+			RollButton.setVisible(true);
+		if(turn >= 5){
 			getNextPlayer(currentPlayer);
 			turn = 1;
-		}
+			gm.setRolled(false);
 		
-		searchItems = gm.requestSearch();
-		for(int i = 0; i < searchItems.length; i++)
-			getContentPane().add(searchItems[i]);
+			}
+		if(gm.getRolled() == false)
+		JOptionPane.showMessageDialog(null, "Please Roll a die \n Roll a 1 for choice \n Roll 2 for Passages and clues \n Roll 3 for passages \n Roll 4 to discover chits \n Roll 5 for nothing \n Roll 6 for nothing");		
+		
+		if(gm.requestSearch(currentPlayer, getContentPane())){
+			
+		//for(int i = 0; i < searchItems.length; i++)
+			//getContentPane().add(searchItems[i]);
 			turn++;
-			sbackButton.setVisible(true);
 		
 			hide.setVisible(false);
 			move.setVisible(false);
@@ -390,9 +400,10 @@ search.addActionListener(new ActionListener() {
 			hire.setVisible(false);
 			enchant.setVisible(false);
 			follow.setVisible(false);
-
-
 		
+		}
+		sbackButton.setVisible(true);
+
 	}
 });
 search.setBounds(1460, 329, 89, 23);
@@ -525,6 +536,8 @@ public void actionPerformed(ActionEvent e) {
     	gm.setRolled(true);
     	die1.setVisible(true);
         die2.setVisible(true);
+        RollButton.setVisible(false);
+        
     	
     	
     setLastRoll(roll());  
@@ -573,7 +586,6 @@ final JButton btnNewButton = new JButton("New Game");
 btnNewButton.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent arg0) {
         // after start button button is clicked
-
     	characters.fillContainer();
        
     	int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -626,11 +638,32 @@ btnNewButton.addActionListener(new ActionListener() {
 
         if(cheatMode){
         	gm.cheatmodeButtons(getContentPane());
+        
+        
+        }else if(!cheatMode){
+        	
+    		boardt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(chapel);
+    		boardt.getTile("BAD VALLEY").getClearingByNum(5).setDwelling(guardhouse);
+    		boardt.getTile("CURST VALLEY").getClearingByNum(5).setDwelling(house);
+    		boardt.getTile("DARK VALLEY").getClearingByNum(5).setDwelling(inn);
+    		
+
+
+ 		
+    		//else if(!cheat)
+    		
+    		//place other natives 
+    		//place other natives
+
         }
 
         txt.append("\n----------------------------------\nPlease choose your characters \n"); 
         
-       //currentPlayer = gm.getPlayer1();
+      
+        
+        
+        
+        //currentPlayer = gm.getPlayer1();
       
           
     }
@@ -944,13 +977,10 @@ sbackButton.addActionListener(new ActionListener() {
 		enchant.setVisible(true);
 		follow.setVisible(true);
 		
-    	
-    	
-		searchItems[0].setVisible(false);
-		searchItems[1].setVisible(false);
-		searchItems[2].setVisible(false);
+    	 
 
 		sbackButton.setVisible(false);
+		//RollButton.setVisible(true);
 
 
    
@@ -1096,22 +1126,27 @@ public void displayCharacterDetail(MouseEvent e, JLabel j){
 
 
 public Player getNextPlayer(Player p){
-    
+    System.out.println(p.getName());
+
     if (p == gm.getPlayer1()) { 
     	currentPlayer = gm.getPlayer2();
-    	gm.getPlayer2().setTile(gm.getPlayer2().getTile());
     	p1button.setSelected(false); 
                         p2button.setSelected(true); 
-                        }
+                        p.setClearing(p.getClearing())  ; 
+                        p.setTile(p.getTile());
+                        System.out.println(p.getClearing() +  p.getTile() );
+    
+    }
     if (p == gm.getPlayer2()) {
     	currentPlayer = gm.getPlayer1();
-    	gm.getPlayer1().setTile(gm.getPlayer1().getTile());
-
     	p2button.setSelected(false); 
     	p1button.setSelected(true); 
     	turn++;
-                       }   
-      
+    	  p.setClearing(p.getClearing())  ; 
+    	   p.setTile(p.getTile());
+    	   System.out.println(p.getClearing() +  p.getTile() );         
+    }   
+ 
 return p;
 }
 
@@ -1128,10 +1163,10 @@ public void getRecruitThing(MouseEvent e){
 public void recruitCharacter(Player p, MouseEvent e){
     
     getRecruitThing(e); 
-
     checkCharacter(p, e);
      getNextPlayer(currentPlayer);
-     
+     //gm.setSelected(true);
+
 
 
 }
@@ -1151,136 +1186,149 @@ public void checkCharacter(Player p, MouseEvent e){   //check the character clic
 	if(p == gm.getPlayer1()){
 	    selected = false;		//we know the players are not done selection
 		if(name == "Amazon"){
-	      gm.getPlayer1().setCharacter(new Amazon());
+			Amazon amazon = new Amazon();
+	      gm.getPlayer1().setCharacter(amazon);
 	   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n"  + gm.getPlayer1().getCharacter().getName() + " currently visibile? " + gm.getPlayer1().getCharacter().getVisibility() + "\n");		    
-
-	       // showMessage(p1character, player1);
+			gm.getP1chit().setUrl(amazon.getUrl());
+			gm.getP1chit().setCharacter(amazon.getName());
 
 		}
 		
-		else if(name == "Captain"){	        
-	        gm.getPlayer1().setCharacter(new Captain());
+		else if(name == "Captain"){	 
+			
+			Captain captain = new Captain();
+	        gm.getPlayer1().setCharacter(captain);
 		     // player1.setCharacter(new Captain());
 		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n"  + gm.getPlayer1().getCharacter().getName() + " currently visibile? " + gm.getPlayer1().getCharacter().getVisibility() + "\n");		    
+		   	gm.getP1chit().setUrl(captain.getUrl());
+		   	gm.getP1chit().setCharacter(captain.getName());
+
 		}
 		
 		else if(name == "Dwarf"){
-	        gm.getPlayer1().setCharacter(new Dwarf());
-		     // player1.setCharacter(new Dwarf());
-
+			Dwarf dwarf = new Dwarf();	       
+			gm.getPlayer1().setCharacter(dwarf);
 		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n"  + gm.getPlayer1().getCharacter().getName() + " currently visibile? " + gm.getPlayer1().getCharacter().getVisibility() + "\n");		    
+		   	gm.getP1chit().setUrl(dwarf.getUrl());
+		   	gm.getP1chit().setCharacter(dwarf.getName());
+
 		}
 	
 		else if(name == "Elf"){
-	        gm.getPlayer1().setCharacter(new Elf());
-		     // player1.setCharacter(new Elf());
-
+	        Elf elf = new Elf();
+			gm.getPlayer1().setCharacter(elf);
 		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n"  + gm.getPlayer1().getCharacter().getName() + " currently visibile? " + gm.getPlayer1().getCharacter().getVisibility() + "\n");		    
-	       
-	        //showMessage(p1character, player1);
+		   	gm.getP1chit().setUrl(elf.getUrl());
+		   	gm.getP1chit().setCharacter(elf.getName());
 
 		}
 		
 		else if(name == "BlackKnight"){
-	        gm.getPlayer1().setCharacter(new BlackKnight());
-		     // player1.setCharacter(new BlackKnight());
+	        BlackKnight blackknight = new BlackKnight();
+			gm.getPlayer1().setCharacter(blackknight);
+			gm.getP1chit().setUrl(blackknight.getUrl());
+			gm.getP1chit().setCharacter(blackknight.getName());
 
 		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n"  + gm.getPlayer1().getCharacter().getName() + " currently visibile? " + gm.getPlayer1().getCharacter().getVisibility() + "\n");		    
-	       
-	        //showMessage(p1character, player1);
+
 		}
 		else if(name == "Swordsman"){
-	        gm.getPlayer1().setCharacter(new Swordsman());
-		     // player1.setCharacter(new Swordsman());
+	       Swordsman swordsman = new Swordsman();
+			gm.getPlayer1().setCharacter(swordsman);
 
 		   	 txt.append(gm.getPlayer1().getName() + " Chose " + gm.getPlayer1().getCharacter().getName() + "\n"  + gm.getPlayer1().getCharacter().getName() + " currently visibile? " + gm.getPlayer1().getCharacter().getVisibility() + "\n");		    
-	        
+				
+		   	gm.getP1chit().setUrl(swordsman.getUrl());
+		   	gm.getP1chit().setCharacter(swordsman.getName());
+
 	        //showMessage(p1character, player1);
 		}
-		gm.getPlayer1().getCharacter().setTileName("BAD VALLEY");
-		gm.getPlayer1().getCharacter().setClearingLocation(5);
-		//PlayerChit p1chit = new PlayerChit(gm.getPlayer1().getName(), gm.getPlayer1().getCharacter().getName(), gm.getPlayer1().getCharacter().getUrl());
-		p1chit.setName(gm.getPlayer1().getName());
-		p1chit.setCharacter(gm.getPlayer1().getCharacter().getName());
-		p1chit.setUrl(gm.getPlayer1().getCharacter().getUrl());
-		gm.getPlayer1().setPchit(p1chit);
-		boardt.getTile("BAD VALLEY").getClearingByNum(5).movePersonHere(gm.getPlayer1().getPchit());
+	   	p1chit.setName(gm.getPlayer1().getName());
+		gm.getPlayer1().setPchit(gm.getP1chit());
+
+
 	}
 	
 	if(p == gm.getPlayer2()){
 	    selected = true;			//we now know that p2 is done selecting so, selecion phase is over	
 		if(name == "Amazon"){
-	        gm.getPlayer2().setCharacter(new Amazon());
+			Amazon amazon = new Amazon();
+	        gm.getPlayer2().setCharacter(amazon);
 		      //player2.setCharacter(new Amazon());
 
 		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n"  + gm.getPlayer2().getCharacter().getName() + " currently visibile? " + gm.getPlayer2().getCharacter().getVisibility() + "\n");		    
-	        
+		   	gm.getP2chit().setUrl(amazon.getUrl());
+		   	gm.getP2chit().setCharacter(amazon.getName());
+
 	        //showMessage(p2character, player2);
 
 		}
 		
 		else if(name == "Captain"){
-	       gm.getPlayer2().setCharacter(new Captain());
-		      //player2.setCharacter(new Captain());
-
+			Captain captain = new Captain();
+	       gm.getPlayer2().setCharacter(captain);
 		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n"  + gm.getPlayer2().getCharacter().getName() + " currently visibile? " + gm.getPlayer2().getCharacter().getVisibility() + "\n");		    
-	        	        
+		   	gm.getP2chit().setUrl(captain.getUrl());
+		   	gm.getP2chit().setCharacter(captain.getName());
+
 	        
 	        //showMessage(p2character, player2);
 		}
 		
 		else if(name == "Dwarf"){
-	        gm.getPlayer2().setCharacter(new Dwarf());
-		     // player2.setCharacter(new Dwarf());
-
+			Dwarf dwarf = new Dwarf();
+	        
+			gm.getPlayer2().setCharacter(dwarf);
 		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n"  + gm.getPlayer2().getCharacter().getName() + " currently visibile? " + gm.getPlayer2().getCharacter().getVisibility() + "\n");		    
-	        	        
+		   	gm.getP2chit().setUrl(dwarf.getUrl());
+		   	gm.getP2chit().setCharacter(dwarf.getName());
+
 	        //showMessage(p2character, player2);
 		}
 	
 		else if(name == "Elf"){
-	        gm.getPlayer2().setCharacter(new Elf());
-		      //player2.setCharacter(new Elf());
-
+	       Elf elf = new Elf();
+			gm.getPlayer2().setCharacter(elf);
 		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n"  + gm.getPlayer2().getCharacter().getName() + " currently visibile? " + gm.getPlayer2().getCharacter().getVisibility() + "\n");		    
 	        	        
-	        
+		   	gm.getP2chit().setUrl(elf.getUrl());
+		   	gm.getP2chit().setCharacter(elf.getName());
+
 	        //showMessage(p2character, player2);
 		}
 		
 		else if(name == "BlackKnight"){
-	        gm.getPlayer2().setCharacter(new BlackKnight());
-		      //player2.setCharacter(new BlackKnight());
-
+			BlackKnight blackknight = new BlackKnight();
+	        gm.getPlayer2().setCharacter(blackknight);
 		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n"  + gm.getPlayer2().getCharacter().getName() + " currently visibile? " + gm.getPlayer2().getCharacter().getVisibility() + "\n");		    
 	        	        
-	        
+		   	gm.getP2chit().setUrl(blackknight.getUrl());
+		   	gm.getP2chit().setCharacter(blackknight.getName());
+
 	        //showMessage(p2character, player2);
 		}
 		else if(name == "Swordsman"){
-	        gm.getPlayer2().setCharacter(new Swordsman());
-		     //player2.setCharacter(new Swordsman());
-
+			Swordsman swordsman = new Swordsman();
+	        gm.getPlayer2().setCharacter(swordsman);
 		   	 txt.append(gm.getPlayer2().getName() + " Chose " + gm.getPlayer2().getCharacter().getName() + "\n"  + gm.getPlayer2().getCharacter().getName() + " currently visibile? " + gm.getPlayer2().getCharacter().getVisibility() + "\n");		    
-	        	        
+		   	gm.getP2chit().setUrl(swordsman.getUrl());
+		   	gm.getP2chit().setCharacter(swordsman.getName());
+
 	        //showMessage(p2character, player2);
 		}
-		gm.getPlayer2().getCharacter().setTileName("BAD VALLEY");
-		gm.getPlayer2().getCharacter().setClearingLocation(5);
-		//PlayerChit p2chit = new PlayerChit(gm.getPlayer2().getName(), gm.getPlayer2().getCharacter().getName(), gm.getPlayer2().getCharacter().getUrl());
+		gm.getPlayer2().setPchit(gm.getP2chit());
+
 		p2chit.setName(gm.getPlayer2().getName());
-		p2chit.setCharacter(gm.getPlayer2().getCharacter().getName());
-		p2chit.setUrl(gm.getPlayer2().getCharacter().getUrl());
-		gm.getPlayer2().setPchit(p2chit);
-		boardt.getTile("BAD VALLEY").getClearingByNum(5).movePersonHere(gm.getPlayer2().getPchit());
-		
-	
+
+	    gm.setSelected(true);
+
+
 		//player1 = gm.getPlayer1();
 		//player2 = gm.getPlayer2();
 
 	
 	}
-	
+
 	
 }
 
@@ -1516,7 +1564,7 @@ public void checkSelected(Player p, MouseEvent e){
 	            //cheatMode = true;
 	            selected = true;
                 recruitCharacter(currentPlayer, e);
-                
+
 	          //  txt.append("\n---------------------------------- " + p.getName() + " YOU HAVE CHOOSEN :\n" + ((Component) e.getSource()).getName() + "\n");
 	            AmazonIcon.setVisible(false);
 	            CaptainIcon.setVisible(false);
@@ -1525,6 +1573,8 @@ public void checkSelected(Player p, MouseEvent e){
 	            DwarfIcon.setVisible(false);
 	            SwordsManIcon.setVisible(false);
 	            backButton.setVisible(false);
+
+	           // getNextPlayer(currentPlayer);
 
 	    	}
 			
@@ -1558,6 +1608,32 @@ public void checkSelected(Player p, MouseEvent e){
 		            follow.setVisible(true);
 		            enchant.setVisible(true);
 
+		
+		
+		
+		            if(!cheatMode && gm.isSelected()){
+		    			
+		            	
+		            	
+		            	
+		            	gm.getPlayer1().setTile("BAD VALLEY");
+		    			gm.getPlayer1().getCharacter().setTileName("BAD VALLEY");
+		    			gm.getPlayer1().getCharacter().setClearingLocation(5);
+		    			
+		    		
+		    			
+		    			gm.getPlayer2().setTile("BAD VALLEY");
+
+		    			gm.getPlayer2().getCharacter().setTileName("BAD VALLEY");
+		    			gm.getPlayer2().getCharacter().setClearingLocation(5);	
+		    		  	boardt.getTile("BAD VALLEY").getClearingByNum(5).movePersonHere(gm.getPlayer1().getPchit());
+		        		boardt.getTile("BAD VALLEY").getClearingByNum(5).movePersonHere(gm.getPlayer2().getPchit());
+		    		
+		            
+		            }
+		
+		
+		
 		}
 		else{
 			characterSelectionPhase = false;

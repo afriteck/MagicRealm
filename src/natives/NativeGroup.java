@@ -16,6 +16,8 @@ public  class NativeGroup {
 	private String tile;
 	private int clearing;
 	private boolean hired;
+	private String fpath;
+
 
 
 	
@@ -123,6 +125,16 @@ public  class NativeGroup {
 
 	public void setHired(boolean hired) {
 		this.hired = hired;
+	}
+
+
+	public String getFpath() {
+		return fpath;
+	}
+
+
+	public void setFpath(String fpath) {
+		this.fpath = fpath;
 	}
 
 

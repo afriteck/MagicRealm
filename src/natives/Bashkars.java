@@ -28,6 +28,8 @@ public class Bashkars extends NativeGroup {
 		setTile("CAVES");
 		setClearing(3);
 		setHired(false);
+		setFpath("/natives/bashkars.png");
+
 	
 	}
 

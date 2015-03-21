@@ -1,5 +1,6 @@
 package models;
 
+import natives.NativeGroup;
 import gameBoard.Clearing;
 import gameBoard.Tiles;
 
@@ -11,6 +12,7 @@ public class Dwelling {
 	private String home;
 	private Clearing currentClearing;
 	private int clearing;
+	private NativeGroup natives;
 
 	
 	public Dwelling(String name, String fpath){
@@ -74,6 +76,14 @@ public Dwelling(String name){
 
 	public void setHome(String home) {
 		this.home = home;
+	}
+
+	public NativeGroup getNatives() {
+		return natives;
+	}
+
+	public void setNatives(NativeGroup natives) {
+		this.natives = natives;
 	}
 
 }

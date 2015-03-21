@@ -31,6 +31,8 @@ public class Rogues extends NativeGroup{
 		setClearing(5);
 		initializeNatives();
 		setHired(false);
+		setFpath("/others/groups.jpg");
+
 
 		
 	}

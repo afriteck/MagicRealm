@@ -19,7 +19,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -30,13 +29,19 @@ import models.GuardHouse;
 import models.House;
 import models.Inn;
 import models.Player;
+import models.PlayerChit;
 import models.WarningChit;
 import models.WarningChit.Bones;
 import models.WarningChit.Dank;
 import models.WarningChit.Ruins;
 import models.WarningChit.Smoke;
 import models.WarningChit.Stink;
+import natives.Bashkars;
+import natives.Company;
+import natives.Lancers;
 import natives.NativeGroup;
+import natives.Patrol;
+import natives.Woodfolk;
 
 public class GuiActivities {
 	
@@ -44,16 +49,19 @@ public class GuiActivities {
 	 private Player player2 = new Player();
 	 private Player currentPlayer = null;
 	 
+	 private PlayerChit p1chit = new PlayerChit();
+	  private PlayerChit p2chit = new PlayerChit();
+	 
 
 	 private boolean hideAct;
 	 private boolean rolled;
 	 
 		private boolean moveAct;
-		private boolean searchAct;
+		private boolean selected;
 		private boolean tradeAct;
 		private boolean restAct;
 		private boolean doneMove;
-	    private int activityCounter = 5;       // for the player character selection phase
+	    private int activityCounter = 0;       // for the player character selection phase
 	    
 	    private LinkedList<Tiles> moveTiles = new LinkedList<Tiles>();
 	    private LinkedList<Tiles> searchTiles = new LinkedList<Tiles>();
@@ -183,21 +191,18 @@ public boolean requestMove(Player p){
 	int option = JOptionPane.showConfirmDialog(null, message, "MOVE!", JOptionPane.OK_CANCEL_OPTION);
 	
 	if (option == JOptionPane.OK_OPTION) {
-		//success = true;
 		String input = TileName.getText().toString().trim();
 		if(bd.getTile(p.getCharacter().getTileName()).isNeighbour(bd.getTile(input)) == true || p.getCharacter().getTileName().equals(input) == true){
-			System.out.println(p.getPchit().getName());
-			//bd.getTile(p.getTile()).getClearingByNum(p.getClearing()).removePersonHere(p.getPchit());
-
 			bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).movePersonHere(p.getPchit());
 			
+			
+
 			bd.getTile(p.getTile()).getClearingByNum(p.getClearing()).removePersonHere(p.getPchit());
 
 			p.moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));
 
 			p.getCharacter().moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));
-			p.setTile(TileName.getText());
-			p.setClearing(Integer.parseInt(Clearing.getText()));
+	
 
 		}else{JOptionPane.showMessageDialog(null, "Invalid Move \n DON'T CHEAT!");}
 		
@@ -251,8 +256,7 @@ public boolean placedwelling(Dwelling d){
 
 }
 
-
-public boolean placePlayer(Player p){
+public boolean placeNative(NativeGroup d){
 	int option = JOptionPane.showConfirmDialog(null, message, "Place!", JOptionPane.OK_CANCEL_OPTION);
 	
 	if (option == JOptionPane.OK_OPTION) {
@@ -261,76 +265,186 @@ public boolean placePlayer(Player p){
 		moveTiles.add(bd.getTile(input));
 		System.out.println(bd.getTile(input).getName());
 		
-		bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).setPlayerHere(true);
-		p.getCharacter().moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));
-		p.getCharacter().setTileName(TileName.getText());
-		p.getCharacter().setClearingLocation(Integer.parseInt(Clearing.getText()));
+		bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).setNatives(d);
+		d.setClearing(Integer.parseInt(Clearing.getText()));
+		
 		
 		return true;
 	
 	}else return false;
 
 }
+
+
+public boolean placePlayer1(Player p){
+	int option = JOptionPane.showConfirmDialog(null, message, "Place Player 1!", JOptionPane.OK_CANCEL_OPTION);
+	
+	if (option == JOptionPane.OK_OPTION) {
+		String input = TileName.getText().toString().trim();
+		
+		getPlayer1().moveTo(input, Integer.parseInt(Clearing.getText()));		
+		getPlayer1().getCharacter().moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));		
+
+		
+		p1chit.setName(getPlayer1().getName());
+		getPlayer1().setPchit(p1chit);
+		
+		bd.getTile(TileName.getText()).getClearingByNum(Integer.parseInt(Clearing.getText())).movePersonHere(getPlayer1().getPchit());
+	
+		
+		return true;
+		}
+	else return false;
+}
+
+
+public boolean placePlayer2(Player p){
+	int option = JOptionPane.showConfirmDialog(null, message, "Place Player 2!", JOptionPane.OK_CANCEL_OPTION);
+	
+	if (option == JOptionPane.OK_OPTION) {
+		String input = TileName.getText().toString().trim();
+		
+		getPlayer2().moveTo(input, Integer.parseInt(Clearing.getText()));		
+		getPlayer2().getCharacter().moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));		
+
+		
+		p2chit.setName(getPlayer2().getName());
+		//p2chit.setCharacter(getPlayer2().getCharacter().getName());
+		//p2chit.setUrl(getPlayer2().getCharacter().getUrl());
+		getPlayer2().setPchit(p2chit);
+		
+		bd.getTile(TileName.getText()).getClearingByNum(Integer.parseInt(Clearing.getText())).movePersonHere(getPlayer2().getPchit());
+	
+				
+		
+		return true;
+		}
+	else return false;
+}
+
+
 
 public boolean placeWarningChit(WarningChit wc){
-	int option = JOptionPane.showConfirmDialog(null, message, "Place!", JOptionPane.OK_CANCEL_OPTION);
 	
-	if (option == JOptionPane.OK_OPTION) {
-		String input = TileName.getText().toString().trim();
-		bd.getTile(input);
-		moveTiles.add(bd.getTile(input));
-		System.out.println(bd.getTile(input).getName());
-		
-		bd.getTile(TileName.getText().toUpperCase()).getClearingByNum(Integer.parseInt(Clearing.getText())).setPlayerHere(true);
-		wc.setHome(TileName.getText());
-		wc.setClearing(Integer.parseInt(Clearing.getText()));
-		
-		return true;
+	bd.getTile((String)JOptionPane.showInputDialog(null, "Tile:", "Place a dwelling", JOptionPane.QUESTION_MESSAGE, null,
+     null, "Type Tile name here")).setWarnings(wc);
 	
-	}else return false;
+	return true;
+	/*
+	String inputname;
+	
+	 inputname = (String)JOptionPane.showInputDialog(null, "Tile:", "Place a dwelling", JOptionPane.QUESTION_MESSAGE, null,
+	        null, "Type your name here");
+	
+	if (inputname == null || inputname.trim().length() == 0) 
+		JOptionPane.showMessageDialog(null, "Enter A  tile name");
 
-}
+		else if(inputname != null){
+			bd.getTile(inputname);
+	
+				if(bd.isLegalTile()){
+					bd.getTile(inputname).setWarnings(wc);
+					return true;
+	}}
+	else {
+	JOptionPane.showMessageDialog(null, "Enter A  Valid Tile name in Block Letters!");
+	return false;
+	}
+return false;
+	
+	*/
+	
+	}
+	// String input = inputname.trim();
+	//int option = JOptionPane.showConfirmDialog(null, message, "Place!", JOptionPane.OK_CANCEL_OPTION);
+	
+
+	//if(bd.isLegalTile())
+	
+		//bd.getTile((String)JOptionPane.showInputDialog(null, "Tile:", "Place a dwelling", JOptionPane.QUESTION_MESSAGE, null,
+		         //  null, "Type Tile name here")).setWarnings(wc);
+
+	
+	
+//return false;
 
 
 
 
 
-public JButton[] requestSearch(){
+
+
+public boolean requestSearch(final Player p, Container cp){
 int option = JOptionPane.showConfirmDialog(null, null, "SEARCH!", JOptionPane.OK_CANCEL_OPTION);
-	JButton[] items = new JButton[3]; 
+	//JButton[] items = new JButton[3]; 
+	final JButton locate;
+	final JButton peer;
+	final JButton loot ;
+	final JButton backButton;
+
+	
+	
+	if(!rolled)				
+		JOptionPane.showMessageDialog(null, "Roll a die first");
 
 	if (option == JOptionPane.OK_OPTION) {
+
 		//String input = TileName.getText().toString().trim();
 //LinkedList <JButton> buttons = new LinkedList<JButton>();
 		
-		items[0] = new JButton("LOCATE");
-		items[0].addActionListener(new ActionListener() {
+		locate = new JButton("LOCATE");
+		locate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				JOptionPane.showMessageDialog(null, "Please Roll a die \n Roll a 1 for choice \n Roll 2 for Passages and clues \n Roll 3 for passages \n Roll 4 to discover chits \n Roll 5 for nothing \n Roll 6 for nothing");
+				if(!rolled)
+					JOptionPane.showMessageDialog(null, "Roll a die first");
+				if(rolled && p.getCharacter().getRoll() == 4){
+					for(int i = 0; i < bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().size(); i++)
+					bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().get(i).setVisisble(true);
+					
+					JOptionPane.showMessageDialog(null, "Treasure chits are now visible!");
 
-			
+					System.out.println(" Treasure chits are now visible");
+				}else if(rolled && p.getCharacter().getRoll() == 1){
+					JOptionPane.showMessageDialog(null, "Which would you want to do!");
+
+				
+			}else if(rolled && p.getCharacter().getRoll() == 2){
+				JOptionPane.showMessageDialog(null, "you have located hidden clues");
+
+			}
+			else if(rolled && p.getCharacter().getRoll() == 3){
+				JOptionPane.showMessageDialog(null, "you have located hidden Passages");
+
+			}
+		
+			else if(rolled && p.getCharacter().getRoll() > 4){
+				JOptionPane.showMessageDialog(null, "You discovered nothing");
+
+			}
+			rolled = false;
 			}
 		});
-		items[0].setBounds(1430, 329, 109, 30);
-		items[0].setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
-		items[0].setVisible(true);
+		locate.setBounds(1430, 329, 109, 30);
+		locate.setIcon(new ImageIcon(Gui.class.getResource("/others/reveal.gif")));
+		locate.setVisible(true);
+		cp.add(locate);
 		
 		
-		items[1] = new JButton("PEER");
-		items[1].addActionListener(new ActionListener() {
+		peer = new JButton("PEER");
+		peer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
 			}
 		});
-		items[1].setBounds(1430, 295, 109, 30);
-		items[1].setIcon(new ImageIcon(Gui.class.getResource("/others/peer.png")));
-		items[1].setVisible(true);
+		peer.setBounds(1430, 295, 109, 30);
+		peer.setIcon(new ImageIcon(Gui.class.getResource("/others/peer.png")));
+		peer.setVisible(true);
+		cp.add(peer);
 		
 		
-		items[2] = new JButton("LOOT");
-		items[2].addActionListener(new ActionListener() {
+		loot = new JButton("LOOT");
+		loot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				JOptionPane.showMessageDialog(null, "Please Roll a die");
@@ -338,11 +452,40 @@ int option = JOptionPane.showConfirmDialog(null, null, "SEARCH!", JOptionPane.OK
 				
 			}
 		});
-		items[2].setBounds(1430, 261, 109, 30);
-		items[2].setIcon(new ImageIcon(Gui.class.getResource("/others/loot.png")));
-		items[2].setVisible(true);
+		loot.setBounds(1430, 261, 109, 30);
+		loot.setIcon(new ImageIcon(Gui.class.getResource("/others/loot.png")));
+		loot.setVisible(true);
+		cp.add(loot);
 
-	
+		
+		
+		backButton = new JButton("Back");
+		backButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent arg0) {
+		    			    	
+		    	
+				locate.setVisible(false);
+				peer.setVisible(false);
+				loot.setVisible(false);
+
+				backButton.setVisible(false);
+
+
+		   
+		    }
+		    });
+		backButton.setBounds(800, 907, 100, 23);
+		backButton.setIcon (new ImageIcon(Gui.class.getResource("/actions/backarrow.gif")));
+		backButton.setVisible(true);
+		cp.add(backButton);
+		
+		
+		
+		
+		
+		
+		return true;
+
 	
 		// if (TileName.getText().equals("h") && Clearing.getText().equals("h")) {	
 		 //      System.out.println("Login successful");
@@ -352,8 +495,8 @@ int option = JOptionPane.showConfirmDialog(null, null, "SEARCH!", JOptionPane.OK
 		//} else {
 		//    System.out.println("Login canceled");
 		}
-	return items;
-	}
+	return false;	
+		}
 
 public boolean requestHide(Player p, boolean rolled, JTextArea txt){
 	int option = JOptionPane.showConfirmDialog(null, null, "HIDE!", JOptionPane.OK_CANCEL_OPTION);
@@ -738,13 +881,22 @@ public void showNativeGroup(final NativeGroup ng, final Player p, final JTextAre
 
 public void cheatmodeButtons(Container container){
 	
-	JButton[] cheatbuttons = new JButton[4]; 
+	JButton[] cheatbuttons = new JButton[5]; 
 	
 	final JLabel boneslabel;
 	final JLabel danklabel;
 	final JLabel ruinslabel;
 	final JLabel smokelabel;
 	final JLabel stinklabel;
+	
+	
+	final JLabel baskarlabel;
+	final JLabel lancerslabel;
+	final JLabel patrollabel;
+	final JLabel woodfolklabel;
+	final JLabel companylabel;
+
+	
 	final LinkedList<Dwelling> dwellings = new LinkedList<Dwelling>();
 	final LinkedList<WarningChit> warningchits = new LinkedList<WarningChit>();
 
@@ -758,6 +910,12 @@ public void cheatmodeButtons(Container container){
 	final Ruins ruins = new Ruins();
 	final Smoke smoke = new Smoke();
 	final Stink stink = new Stink();
+	
+	final Bashkars bashkars = new Bashkars();
+	final Lancers lancers = new Lancers();
+	final Patrol patrol = new Patrol();
+	final Woodfolk woodfolk = new Woodfolk();
+	final Company company = new Company();
 	
 	
 	final JComboBox comboBox = new JComboBox();
@@ -927,8 +1085,92 @@ public void cheatmodeButtons(Container container){
 	container.add(stinklabel);
 	
 	
+
+
 	
 	
+	companylabel = new JLabel();
+	companylabel.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+		
+			placeNative(company);
+
+		}
+	});
+	companylabel.setIcon(new ImageIcon(Gui.class.getResource("/natives/company.png")));
+	companylabel.setBounds(550, 350, 70, 50);
+	companylabel.setName("Company");
+	companylabel.setVisible(false);
+	container.add(companylabel);
+	
+	
+	
+	woodfolklabel = new JLabel();
+	woodfolklabel.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+		
+			placeNative(woodfolk);
+
+		}
+	});
+	woodfolklabel.setIcon(new ImageIcon(Gui.class.getResource("/natives/woodfolk.png")));
+	woodfolklabel.setBounds(450, 350, 70, 50);
+	woodfolklabel.setName("Woodfolk");
+	woodfolklabel.setVisible(false);
+	container.add(woodfolklabel);
+	
+	
+	
+	patrollabel = new JLabel();
+	patrollabel.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+		
+			placeNative(patrol);
+
+		}
+	});
+	patrollabel.setIcon(new ImageIcon(Gui.class.getResource("/natives/patrol.png")));
+	patrollabel.setBounds(350, 350, 70, 50);
+	patrollabel.setName("PATROL");
+	patrollabel.setVisible(false);
+	container.add(patrollabel);
+	
+	
+	
+	
+	baskarlabel = new JLabel();
+	baskarlabel.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+		
+			placeNative(bashkars);
+
+		}
+	});
+	baskarlabel.setIcon(new ImageIcon(Gui.class.getResource("/natives/bashkars.png")));
+	baskarlabel.setBounds(150, 350, 70, 50);
+	baskarlabel.setName("Bashkars");
+	baskarlabel.setVisible(false);
+	container.add(baskarlabel);
+	
+	
+	lancerslabel = new JLabel();
+	lancerslabel.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+		
+			placeNative(lancers);
+
+		}
+	});
+	lancerslabel.setIcon(new ImageIcon(Gui.class.getResource("/natives/lancers.png")));
+	lancerslabel.setBounds(250, 350, 70, 50);
+	lancerslabel.setName("LANCERS");
+	lancerslabel.setVisible(false);
+	container.add(lancerslabel);
 	
 	
 	
@@ -957,9 +1199,17 @@ public void cheatmodeButtons(Container container){
 	cheatbuttons[1] = new JButton("Player");
 	cheatbuttons[1].addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			
-			placePlayer(currentPlayer);
+			if(!isSelected())
+				JOptionPane.showMessageDialog(null, "Please select a character first before placing players on the board");
+			else activityCounter++;
 
+			if(isSelected() && activityCounter == 1)
+			placePlayer1(getPlayer1());
+
+			if(isSelected() && activityCounter == 2){
+				placePlayer2(getPlayer2());
+				activityCounter = 0;
+			}
 		
 		}
 	});
@@ -1001,7 +1251,22 @@ public void cheatmodeButtons(Container container){
 	container.add(cheatbuttons[3]);
 
 
-	
+	cheatbuttons[4] = new JButton("NATIVES");
+	cheatbuttons[4].addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(null, "Please select the Natives that you would like to place on the board");
+
+			baskarlabel.setVisible(true);
+			lancerslabel.setVisible(true);
+			patrollabel.setVisible(true);
+			woodfolklabel.setVisible(true);
+			companylabel.setVisible(true);
+		
+		}
+	});
+	cheatbuttons[4].setBounds(50, 350, 100, 40);
+	cheatbuttons[4].setVisible(true);
+	container.add(cheatbuttons[4]);
 
 
 
@@ -1016,6 +1281,32 @@ public boolean getRolled() {
 
 public void setRolled(boolean rolled) {
 	this.rolled = rolled;
+}
+
+
+public boolean isSelected() {
+	return selected;
+}
+
+
+public void setSelected(boolean selected) {
+	this.selected = selected;
+}
+
+public PlayerChit getP1chit(){
+	return p1chit;
+}
+
+public PlayerChit getP2chit(){
+	return p2chit;
+}
+
+public void setP1chit(PlayerChit pc){
+	this.p1chit = pc;
+}
+
+public void setP2chit(PlayerChit pc){
+	this.p2chit = pc;
 }
 
 }

@@ -23,6 +23,8 @@ public class Woodfolk extends NativeGroup{
 			setTile("CRAG");
 			setClearing(4);
 			setHired(false);
+			setFpath("/natives/woodfolk.png");
+
 
 			
 		}

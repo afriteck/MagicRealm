@@ -5,6 +5,8 @@ package gameBoard;
 
 import java.util.ArrayList;
 
+import natives.NativeGroup;
+
 import models.Dwelling;
 import models.Monster;
 import models.PlayerChit;
@@ -28,7 +30,9 @@ public class Clearing {
 	private Dwelling dwelling;
 	private ArrayList<PlayerChit> peopleHere;
 	private boolean playerHere;
-	
+	private PlayerChit personHere;
+	private NativeGroup natives;
+
 	
 	
 
@@ -40,6 +44,7 @@ public class Clearing {
 		setMonsterChits(new ArrayList<Monster>());
 		setWarningChits(new ArrayList<WarningChit>());
 		setPeopleHere(new ArrayList<PlayerChit>());
+		setPersonHere(new PlayerChit());
 		
 	}
 
@@ -129,16 +134,48 @@ public class Clearing {
 	
 	public void movePersonHere(PlayerChit person) {
 		this.peopleHere.add(person);
+		setPlayerHere(true);
 	}
 	
 	public void removePersonHere(PlayerChit person) {
 		if(peopleHere.size()>0){
+			//this.peopleHere.remove(person);
 			for(int i=0; i<peopleHere.size(); i++){
-				System.out.println(peopleHere.toString());
 				if(peopleHere.get(i).equals(person)){
 					this.peopleHere.remove(i);
-				}
+					if(peopleHere.size() == 0){
+						setPlayerHere(false);						
+						System.out.println("no body is here");
+
+					}
+				
+					
+					}
 			}
 		}
+	}
+
+	public void removePerson(PlayerChit person) {
+		if(personHere.equals(person)){
+			person.setName(null);
+			person.setUrl(null);
+
+		}
+	}
+	
+	public PlayerChit getPersonHere() {
+		return personHere;
+	}
+
+	public void setPersonHere(PlayerChit personHere) {
+		this.personHere = personHere;
+	}
+
+	public NativeGroup getNatives() {
+		return natives;
+	}
+
+	public void setNatives(NativeGroup natives) {
+		this.natives = natives;
 	}
 }

@@ -23,6 +23,8 @@ private static LinkedList<Native> natives;
 		setTile("CAVERN");
 		setClearing(2);
 		setHired(false);
+		setFpath("/natives/patrol.png");
+
 
 	
 	}

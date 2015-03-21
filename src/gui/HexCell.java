@@ -197,9 +197,10 @@ public class HexCell {
 		        	}
 		        	*/
 		        	if(tilehex.getClearings().get(i).getPeopleHere().size()>0){
-		        		System.out.println("Placed player image");
-		        		URL url = InitBoardTiles.class.getResource("/characters/" + tilehex.getClearings().get(i).getPeopleHere().get(0).getUrl());
-	        			try {
+		        		for(int y = 0; y < tilehex.getClearings().get(i).getPeopleHere().size(); y++){
+		        			if(tilehex.getClearings().get(i).isPlayerHere()){
+		        		URL url = InitBoardTiles.class.getResource("/characters/" + tilehex.getClearings().get(i).getPeopleHere().get(y).getUrl());
+		        		try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);
 							at.translate((w / 2), (h / 2));
@@ -208,12 +209,14 @@ public class HexCell {
 					        g2d.setTransform(at);
 				        	g2d.drawImage(chitimg, cl.getBounds().x, cl.getBounds().y, cl.getBounds().width, cl.getBounds().height, null);
 				        	at.setTransform(saveAt);
-						} catch (IOException e) {
+		        		} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+		        		}
+		        		}
 		        	}
-		        	/*
+		        	}
+		        		/*
 		        	at.translate((w / 2), (h / 2));
 			        at.rotate(Math.toRadians(-angle));
 			        at.translate((-w / 2), (-h / 2));

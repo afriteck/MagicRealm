@@ -27,12 +27,12 @@ public class Iteration1Board {
 	private static House house = new House();
 	
 	public static void it1Board(BoardTiles bt){
-		Guard guard = new Guard();
-		Rogues rogues = new Rogues();
-		Order order = new Order();
-		Soldiers soldiers = new Soldiers();
+		//Guard guard = new Guard();
+		//Rogues rogues = new Rogues();
+		//Order order = new Order();
+		//Soldiers soldiers = new Soldiers();
 		
-		bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(new Dwelling("Chapel", "/dwellings/chapel.gif"));
+		//bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(new Dwelling("Chapel", "/dwellings/chapel.gif"));
 
 		
 		/*
@@ -42,10 +42,10 @@ public class Iteration1Board {
 		bt.getTile("BAD VALLEY").getClearingByNum(5).setDwelling(inn);
 		bt.getTile("CURST VALLEY").getClearingByNum(5).setDwelling(house);
 		*/
-		guard.setHome(guardhouse);
-		rogues.setHome(inn);
-		order.setHome(chapel);
-		soldiers.setHome(house);
+		//guard.setHome(guardhouse);
+		//rogues.setHome(inn);
+		//order.setHome(chapel);
+		//soldiers.setHome(house);
 		
 		/*Monster goul = new Monster("Ghost");
 		goul.setImgFilePath("ghost.gif");

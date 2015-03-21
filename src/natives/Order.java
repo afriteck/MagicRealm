@@ -30,6 +30,8 @@ public  class Order extends NativeGroup{
 		setTile("AWFUL VALLEY");
 		setClearing(5);
 		setHired(false);
+		setFpath("/others/groups.jpg");
+
 
 	
 	}

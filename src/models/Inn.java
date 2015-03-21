@@ -1,5 +1,6 @@
 package models;
 
+import natives.Rogues;
 import gameBoard.BoardTiles;
 
 public class Inn extends Dwelling{
@@ -8,12 +9,10 @@ public class Inn extends Dwelling{
 public Inn(){
 		
 		setName("INN");
-		//setHomeTile(bt.getTile("BAD VALLEY"));
 		setHome("BAD VALLEY");
-		//setCurrentClearing(bt.getTile("BAD VALLEY").getClearingByNum(5));
 		setClearing(5);
-
 		setFpath("/dwellings/inn.gif");
+		setNatives(new Rogues());
 		
 	}
 

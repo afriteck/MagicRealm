@@ -34,6 +34,8 @@ private int cost;
 		setTile("OAK WOODS");
 		setClearing(2);
 		setHired(false);
+		setFpath("/natives/company.png");
+
 
 	}
 

@@ -29,6 +29,8 @@ private static LinkedList<Native> natives;
 		setTile("DARK VALLEY");
 		setClearing(5);	
 		setHired(false);
+		setFpath("/others/nativegroup.jpg");
+
 
 		}
 

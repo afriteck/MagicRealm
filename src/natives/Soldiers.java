@@ -28,6 +28,8 @@ private static LinkedList<Native> natives;
 		setTile("CURST VALLEY");
 		setClearing(5);	
 		setHired(false);
+		setFpath("/natives/soldiers.png");
+
 
 		}
 

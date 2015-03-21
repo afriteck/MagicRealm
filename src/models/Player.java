@@ -161,7 +161,7 @@ public class Player implements Move{
 		}
 
 		public int getClearing() {
-			return this.character.getClearingLocation();
+			return clearing;
 		}
 
 		public void setClearing(int clearing) {

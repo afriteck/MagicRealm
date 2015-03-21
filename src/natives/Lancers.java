@@ -29,6 +29,8 @@ private static LinkedList<Native> natives;
 		setTile("BORDERLAND");
 		setClearing(1);
 		setHired(false);
+		setFpath("/natives/lancers.png");
+
 
 	
 	}
