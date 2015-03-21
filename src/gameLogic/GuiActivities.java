@@ -325,12 +325,12 @@ public boolean placePlayer2(Player p){
 
 
 public boolean placeWarningChit(WarningChit wc){
-	
+	/*
 	bd.getTile((String)JOptionPane.showInputDialog(null, "Tile:", "Place a dwelling", JOptionPane.QUESTION_MESSAGE, null,
      null, "Type Tile name here")).setWarnings(wc);
 	
 	return true;
-	/*
+	*/
 	String inputname;
 	
 	 inputname = (String)JOptionPane.showInputDialog(null, "Tile:", "Place a dwelling", JOptionPane.QUESTION_MESSAGE, null,
@@ -340,20 +340,15 @@ public boolean placeWarningChit(WarningChit wc){
 		JOptionPane.showMessageDialog(null, "Enter A  tile name");
 
 		else if(inputname != null){
-			bd.getTile(inputname);
-	
-				if(bd.isLegalTile()){
-					bd.getTile(inputname).setWarnings(wc);
-					return true;
-	}}
-	else {
-	JOptionPane.showMessageDialog(null, "Enter A  Valid Tile name in Block Letters!");
-	return false;
-	}
-return false;
-	
-	*/
-	
+			if(bd.getTile(inputname) != null){
+				bd.getTile(inputname).setWarnings(wc);
+				return true;
+			}else {
+				JOptionPane.showMessageDialog(null, "Enter A  Valid Tile name in Block Letters!");
+				return false;
+			}
+		}
+		return false;
 	}
 	// String input = inputname.trim();
 	//int option = JOptionPane.showConfirmDialog(null, message, "Place!", JOptionPane.OK_CANCEL_OPTION);

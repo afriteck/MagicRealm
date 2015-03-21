@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import natives.NativeGroup;
@@ -16,7 +17,8 @@ public class Amazon extends Things{
 
     private NativeGroup hiredNative;
 
-
+    private ArrayList<Counters> readyCounter;
+    private ArrayList<Counters> fatiguedCounter;
 
 
 	public Amazon(){
@@ -32,9 +34,13 @@ public class Amazon extends Things{
 		myArmor3 = new Shields();
 	    hiredNatives =  new LinkedList<NativeGroup>();
 	    hiredNative =  new NativeGroup();
+
+	    fatiguedCounter = new ArrayList<Counters>();
+	    readyCounter = new ArrayList<Counters>();
 	    setHiredNatives(hiredNatives);
 	    setHiredNative(hiredNative);
 	    setMyweapons(myweapons);
+	    
 
 		
 		setWeapon(weapon);
@@ -52,7 +58,22 @@ public class Amazon extends Things{
 		addArmor(myArmor3);
 		myweapons.add(weapon);
 		setVisibility(true);
-
+		
+		readyCounter.add(new Counters("MOVE", DamageEnum.MEDIUM, 4, 0));
+		readyCounter.add(new Counters("MOVE", DamageEnum.MEDIUM, 3, 1));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.LIGHT, 4, 0));
+		readyCounter.add(new Counters("MOVE", DamageEnum.MEDIUM, 4, 0));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 5, 0));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 4, 1));
+		readyCounter.add(new Counters("MOVE", DamageEnum.MEDIUM, 3, 1));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 3, 2));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.HEAVY, 4, 2));				
+		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 4, 1));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 3, 2));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 3, 1));
+		
+		setReadyCounter(readyCounter);
+	    setFatiguedCounter(fatiguedCounter);
 
 		
 	}

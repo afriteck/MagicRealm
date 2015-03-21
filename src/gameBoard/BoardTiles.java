@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class BoardTiles {
 
 	private ArrayList<Tiles> tiles;
-	private boolean legalTile = true;
+	//private boolean legalTile = true;
 	
 	public BoardTiles(){
 		//constructor
@@ -61,18 +61,18 @@ public class BoardTiles {
 		for(int i=0; i<tiles.size(); i++){
 			if(tiles.get(i).getName().equals(name)){
 				wantedTile = tiles.get(i);
-				setLegalTile(true);
+				//setLegalTile(true);
 			}
 		}
 		if(wantedTile != null){
 			//System.out.println(wantedTile.getName());
-			setLegalTile(false);
+			//setLegalTile(false);
 
 			return wantedTile;
 		}else{
 			JOptionPane.showMessageDialog(null, "Error. That is not a valid tile!");
 			System.out.println("Error. That is not a valid tile!");
-			setLegalTile(false);
+			//setLegalTile(false);
 
 			return wantedTile;
 		}
@@ -86,12 +86,12 @@ public class BoardTiles {
 			return null;
 		}
 	}
-
+/*
 	public boolean isLegalTile() {
 		return legalTile;
 	}
 
 	public void setLegalTile(boolean legalTile) {
 		this.legalTile = legalTile;
-	}
+	}*/
 }

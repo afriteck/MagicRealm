@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import natives.NativeGroup;
@@ -15,7 +16,8 @@ public class Elf extends Things{
     private NativeGroup hiredNative;
     private LinkedList<Weapons> myweapons;    // the chatacters arsenal
 
-
+    private ArrayList<Counters> readyCounter;
+    private ArrayList<Counters> fatiguedCounter;
 
 	public Elf(){
 		setUrl(url);
@@ -24,8 +26,11 @@ public class Elf extends Things{
 		myArsenal = new LinkedList<Armor>();
 		hiredNatives =  new LinkedList<NativeGroup>();
 		myweapons = new  LinkedList<Weapons>();
-
-	    hiredNative =  new NativeGroup();
+	    fatiguedCounter = new ArrayList<Counters>();
+	    readyCounter = new ArrayList<Counters>();
+	    
+	    
+	    hiredNative =  new NativeGroup();	    
 	    setHiredNatives(hiredNatives);
 	    setHiredNative(hiredNative);
 	    setMyweapons(myweapons);
@@ -47,6 +52,21 @@ public class Elf extends Things{
 
 		setVisibility(true);
 
+	
+	
+		
+		readyCounter.add(new Counters("MOVE", DamageEnum.LIGHT, 3, 1));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.LIGHT, 3, 1));
+		readyCounter.add(new Counters("MOVE", DamageEnum.LIGHT, 2, 1));		
+		readyCounter.add(new Counters("MOVE", DamageEnum.MEDIUM, 4, 0));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 3, 1));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 4, 0));
+
+		
+		setReadyCounter(readyCounter);
+	    setFatiguedCounter(fatiguedCounter);
+	
+	
 	
 	}
 

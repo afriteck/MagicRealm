@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import natives.NativeGroup;
@@ -15,6 +16,8 @@ public class Dwarf extends Things{
     private NativeGroup hiredNative;
     private LinkedList<Weapons> myweapons;    // the chatacters arsenal
 
+    private ArrayList<Counters> readyCounter;
+    private ArrayList<Counters> fatiguedCounter;
 
 
 	public Dwarf(){
@@ -27,6 +30,9 @@ public class Dwarf extends Things{
 		myArmor1 = new Helmet();
 		hiredNatives =  new LinkedList<NativeGroup>();
 	    hiredNative =  new NativeGroup();
+	    fatiguedCounter = new ArrayList<Counters>();
+	    readyCounter = new ArrayList<Counters>();
+	    
 	    setHiredNatives(hiredNatives);
 	    setHiredNative(hiredNative);
 	    setMyweapons(myweapons);
@@ -49,6 +55,24 @@ public class Dwarf extends Things{
 		setVisibility(true);
 
 
+		readyCounter.add(new Counters("DUCK", DamageEnum.TREMENDOUS, 3, 1));
+		readyCounter.add(new Counters("MOVE", DamageEnum.HEAVY, 6, 0));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.HEAVY, 5, 1));		
+		readyCounter.add(new Counters("MOVE", DamageEnum.TREMENDOUS, 6, 1));		
+		readyCounter.add(new Counters("FIGHT", DamageEnum.HEAVY, 6, 0));		
+		readyCounter.add(new Counters("FIGHT", DamageEnum.HEAVY, 4, 2));				
+		readyCounter.add(new Counters("MOVE", DamageEnum.HEAVY, 5, 1));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.TREMENDOUS, 6, 1));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.HEAVY, 4, 2));						
+		readyCounter.add(new Counters("MOVE", DamageEnum.TREMENDOUS, 5, 2));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.TREMENDOUS, 5, 2));
+		readyCounter.add(new Counters("FIGHT", DamageEnum.TREMENDOUS, 5, 2));
+		
+		setReadyCounter(readyCounter);
+	    setFatiguedCounter(fatiguedCounter);
+		
+	
+	
 	
 	}
 

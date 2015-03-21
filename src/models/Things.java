@@ -5,6 +5,7 @@ import gameBoard.Tiles;
 import gui.Gui;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -40,6 +41,9 @@ public abstract class Things implements Move, Business, Search, Hide{
   private String tileName;
   private static int clearingLocation;
   private int roll;
+  private ArrayList<Counters> readyCounter;
+  private ArrayList<Counters> fatiguedCounter;
+
 
 
   
@@ -459,6 +463,22 @@ public int getRoll() {
 
 public void setRoll(int roll) {
 	this.roll = roll;
+}
+
+public ArrayList<Counters> getReadyCounter() {
+	return readyCounter;
+}
+
+public void setReadyCounter(ArrayList<Counters> readyCounter) {
+	this.readyCounter = readyCounter;
+}
+
+public ArrayList<Counters> getFatiguedCounter() {
+	return fatiguedCounter;
+}
+
+public void setFatiguedCounter(ArrayList<Counters> fatiguedCounter) {
+	this.fatiguedCounter = fatiguedCounter;
 }
 
 
