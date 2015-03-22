@@ -177,10 +177,9 @@ public class HexCell {
 							e.printStackTrace();
 						}
 		        	}
-		        	/*
-		        	if(tilehex.getClearings().get(i).isPlayerHere()){
-		        		System.out.println("Placed player image");
-		        		URL url = InitBoardTiles.class.getResource("/monsters/dragon.gif");
+		        	
+		        	if(tilehex.getClearings().get(i).getNatives() != null){
+		        		URL url = InitBoardTiles.class.getResource(tilehex.getClearings().get(i).getNatives().getFpath());
 	        			try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);
@@ -195,7 +194,7 @@ public class HexCell {
 							e.printStackTrace();
 						}
 		        	}
-		        	*/
+		        	
 		        	if(tilehex.getClearings().get(i).getPeopleHere().size()>0){
 		        		for(int y = 0; y < tilehex.getClearings().get(i).getPeopleHere().size(); y++){
 		        			if(tilehex.getClearings().get(i).isPlayerHere()){

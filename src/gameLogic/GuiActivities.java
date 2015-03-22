@@ -203,7 +203,6 @@ public boolean requestMove(Player p){
 
 			p.getCharacter().moveTo(TileName.getText(), Integer.parseInt(Clearing.getText()));
 	
-
 		}else{JOptionPane.showMessageDialog(null, "Invalid Move \n DON'T CHEAT!");}
 		
 		return true;
