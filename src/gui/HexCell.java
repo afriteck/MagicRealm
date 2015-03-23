@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -20,6 +22,9 @@ import java.net.URL;
 import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 
 /**
@@ -177,9 +182,10 @@ public class HexCell {
 							e.printStackTrace();
 						}
 		        	}
-		        	
-		        	if(tilehex.getClearings().get(i).getNatives() != null){
-		        		URL url = InitBoardTiles.class.getResource(tilehex.getClearings().get(i).getNatives().getFpath());
+		        	/*
+		        	if(tilehex.getClearings().get(i).isPlayerHere()){
+		        		System.out.println("Placed player image");
+		        		URL url = InitBoardTiles.class.getResource("/monsters/dragon.gif");
 	        			try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);
@@ -194,7 +200,7 @@ public class HexCell {
 							e.printStackTrace();
 						}
 		        	}
-		        	
+		        	*/
 		        	if(tilehex.getClearings().get(i).getPeopleHere().size()>0){
 		        		for(int y = 0; y < tilehex.getClearings().get(i).getPeopleHere().size(); y++){
 		        			if(tilehex.getClearings().get(i).isPlayerHere()){
@@ -257,7 +263,8 @@ public class HexCell {
         //g2.setTransform(saveTransform);
         
         if(isSelected) {
-        	//System.out.println(tilehex);
+        	System.out.println(tilehex.getName());
+        	CombatGui.popup(tilehex.getName());
         	toggleSelection();
         }
     }
