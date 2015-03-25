@@ -10,34 +10,23 @@ import models.Weapons;
 
 public class ShortSwordsman extends Native {
 
-	private static Weapons weapon ;
-    private LinkedList<Armor> nativeArsenal;    // the chatacters arsenal
-    private Armor armor;
+	private static Weapons weapon;
+	private LinkedList<Armor> nativeArsenal; // the characters arsenal
+	private Armor armor;
 
+	public ShortSwordsman() {
 
+		setName("Short SwordsMan");
+		weapon = new ShortSword();
+		armor = new Shields();
+		nativeArsenal = new LinkedList<Armor>();
+		setNativeArsenal(nativeArsenal);
+		nativeArsenal.add(armor);
+		setStrikeWeight(DamageEnum.MEDIUM);
+		setWage(2);
+		setNotoriety(3);
+		setWeapon(weapon);
 
-    public ShortSwordsman(){
-    	
-    	
-    	setName("Short SwordsMan");
-    	weapon = new ShortSword();
-    	armor = new Shields();
-    	nativeArsenal = new LinkedList<Armor>();
-    	setNativeArsenal(nativeArsenal);    	
-    	nativeArsenal.add(armor);
-    	setStrikeWeight(DamageEnum.MEDIUM);
-    	setWage(2);
-    	setNotoriety(3);
-    	setWeapon(weapon);
-
-
-    
-
-    	
-    	
-    	
-    }
-    
-    
+	}
 
 }

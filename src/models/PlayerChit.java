@@ -5,25 +5,25 @@ package models;
 
 /**
  * @author joshwhite
- *
+ * 
  */
 public class PlayerChit {
-	
+
 	private String name;
 	private String character;
 	private String url;
 	private String hiddenUrl = "hidden.jpg";
 	private boolean isHidden;
 
-	public PlayerChit(String n, String c, String u){
+	public PlayerChit(String n, String c, String u) {
 		setName(n);
 		setCharacter(c);
 		setUrl(u);
 		setHidden(false);
 	}
-	
-	public PlayerChit(){
-		
+
+	public PlayerChit() {
+
 	}
 
 	public String getName() {
@@ -43,9 +43,9 @@ public class PlayerChit {
 	}
 
 	public String getUrl() {
-		if(this.isHidden==true){
+		if (this.isHidden == true) {
 			return this.hiddenUrl;
-		}else{
+		} else {
 			return this.url;
 		}
 	}

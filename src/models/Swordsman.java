@@ -8,35 +8,34 @@ import natives.NativeGroup;
 public class Swordsman extends Things {
 
 	private static final String url = "swordsman.png";
-	
-	static Weapons weapon ;
-    private static LinkedList<Armor> myArsenal;    // the chatacters arsenal
-    private LinkedList<NativeGroup> hiredNatives;
-    private NativeGroup hiredNative;
-    private LinkedList<Weapons> myweapons;    // the chatacters arsenal
 
-    private ArrayList<Counters> readyCounter;
-    private ArrayList<Counters> fatiguedCounter;
+	static Weapons weapon;
+	private static LinkedList<Armor> myArsenal; // the characters arsenal
+	private LinkedList<NativeGroup> hiredNatives;
+	private NativeGroup hiredNative;
+	private LinkedList<Weapons> myweapons; // the characters arsenal
 
+	private ArrayList<Counters> readyCounter;
+	private ArrayList<Counters> fatiguedCounter;
 
-	public Swordsman(){
+	public Swordsman() {
 		setUrl(url);
 		setName("Swordsman");
 		weapon = new ThrustingSword();
-		hiredNatives =  new LinkedList<NativeGroup>();
-		myweapons = new  LinkedList<Weapons>();
+		hiredNatives = new LinkedList<NativeGroup>();
+		myweapons = new LinkedList<Weapons>();
 
-	    hiredNative =  new NativeGroup();
-	    fatiguedCounter = new ArrayList<Counters>();
-	    readyCounter = new ArrayList<Counters>();
-	    setHiredNatives(hiredNatives);
-	    setHiredNative(hiredNative);
+		hiredNative = new NativeGroup();
+		fatiguedCounter = new ArrayList<Counters>();
+		readyCounter = new ArrayList<Counters>();
+		setHiredNatives(hiredNatives);
+		setHiredNative(hiredNative);
 		setWeapon(weapon);
-	    setMyweapons(myweapons);
+		setMyweapons(myweapons);
 
-		if(weapon.getSpeed() < 1)
-		weapon.setSpeed(2);
-		
+		if (weapon.getSpeed() < 1)
+			weapon.setSpeed(2);
+
 		weapon.setReadySharpness(2);
 		setGold(10);
 		setSpeed(2);
@@ -47,7 +46,6 @@ public class Swordsman extends Things {
 
 		setVisibility(true);
 
-		
 		readyCounter.add(new Counters("MOVE", DamageEnum.LIGHT, 4, 0));
 		readyCounter.add(new Counters("MOVE", DamageEnum.LIGHT, 3, 1));
 		readyCounter.add(new Counters("FIGHT", DamageEnum.LIGHT, 3, 1));
@@ -62,12 +60,8 @@ public class Swordsman extends Things {
 		readyCounter.add(new Counters("FIGHT", DamageEnum.LIGHT, 2, 2));
 
 		setReadyCounter(readyCounter);
-	    setFatiguedCounter(fatiguedCounter);
-		
-		
+		setFatiguedCounter(fatiguedCounter);
 
-	
 	}
-
 
 }

@@ -1,11 +1,11 @@
 package models;
 
-import natives.NativeGroup;
 import gameBoard.Clearing;
 import gameBoard.Tiles;
+import natives.NativeGroup;
 
 public class Dwelling {
-	
+
 	private String name;
 	private String fpath;
 	private Tiles homeTile;
@@ -14,21 +14,19 @@ public class Dwelling {
 	private int clearing;
 	private NativeGroup natives;
 
-	
-	public Dwelling(String name, String fpath){
-		this.name=name;
-		this.fpath=fpath;
-		
+	public Dwelling(String name, String fpath) {
+		this.name = name;
+		this.fpath = fpath;
+
 	}
-	
-	public Dwelling(){
-		
+
+	public Dwelling() {
+
 	}
-	
-public Dwelling(String name){
-		
+
+	public Dwelling(String name) {
+
 	}
-	
 
 	public String getName() {
 		return name;

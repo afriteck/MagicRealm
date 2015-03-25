@@ -2,9 +2,6 @@ package models;
 
 public interface Hide {
 
-public void HideCharacter(Things character);
-
-
-
+	public void HideCharacter(Things character);
 
 }

@@ -1,22 +1,19 @@
 package models;
 
-import natives.Rogues;
 import gameBoard.BoardTiles;
+import natives.Rogues;
 
-public class Inn extends Dwelling{
+public class Inn extends Dwelling {
 	BoardTiles bt;
 
-public Inn(){
-		
+	public Inn() {
+
 		setName("INN");
 		setHome("BAD VALLEY");
 		setClearing(5);
 		setFpath("/dwellings/inn.gif");
 		setNatives(new Rogues());
-		
+
 	}
-
-
-
 
 }

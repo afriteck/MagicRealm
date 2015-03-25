@@ -1,8 +1,4 @@
-/**
- * 
- */
 package gameBoard;
-
 
 import java.util.ArrayList;
 
@@ -10,7 +6,7 @@ import models.WarningChit;
 
 /**
  * @author joshwhite
- *
+ * 
  */
 public class Tiles {
 
@@ -21,45 +17,44 @@ public class Tiles {
 	private WarningChit warnings;
 	private String id;
 	private String[] neighbours;
-	
-	
-	public Tiles(String name, String fPath, int rotation, ArrayList<Clearing> clearings){
+
+	public Tiles(String name, String fPath, int rotation,
+			ArrayList<Clearing> clearings) {
 		setName(name);
 		setFilePath(fPath);
 		setTheta(rotation);
 		setClearings(clearings);
 	}
-	
-	public Tiles(String name, String fPath, ArrayList<Clearing> clearings){
+
+	public Tiles(String name, String fPath, ArrayList<Clearing> clearings) {
 		setName(name);
 		setFilePath(fPath);
 		setClearings(clearings);
 	}
 
-	public Tiles(String name){
+	public Tiles(String name) {
 		setName(name);
 	}
 
-	public Tiles(){
-		
+	public Tiles() {
+
 	}
+
 	public String getName() {
 		return tileName;
 	}
-
 
 	public void setName(String tileName) {
 		this.tileName = tileName;
 	}
 
-
 	public ArrayList<Clearing> getClearings() {
 		return tileClearings;
 	}
-	
-	public Clearing getClearingByNum(int num){
-		for(int i=0; i< tileClearings.size(); i++){
-			if(tileClearings.get(i).getClearingNumber() == num)
+
+	public Clearing getClearingByNum(int num) {
+		for (int i = 0; i < tileClearings.size(); i++) {
+			if (tileClearings.get(i).getClearingNumber() == num)
 				return tileClearings.get(i);
 		}
 		return null;
@@ -76,16 +71,18 @@ public class Tiles {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	
-	public String toString() {
-		String strToReturn = "Tile Name: " + tileName + "\nat file path: " + filePath + "\nWarningChits: " + warnings.getName() + "\nClearings in tile: \n";
 
-		for(int i = 0; i < tileClearings.size(); i++) {
+	public String toString() {
+		String strToReturn = "Tile Name: " + tileName + "\nat file path: "
+				+ filePath + "\nWarningChits: " + warnings.getName()
+				+ "\nClearings in tile: \n";
+
+		for (int i = 0; i < tileClearings.size(); i++) {
 			strToReturn += tileClearings.get(i);
 		}
-		
+
 		return strToReturn;
-		
+
 	}
 
 	public int getTheta() {
@@ -119,11 +116,11 @@ public class Tiles {
 	public void setNeighbours(String[] neighbours) {
 		this.neighbours = neighbours;
 	}
-	
-	public boolean isNeighbour(Tiles tile){
+
+	public boolean isNeighbour(Tiles tile) {
 		boolean isn = false;
-		for(int i=0; i<this.neighbours.length; i++){
-			if(tile.getId().equals(this.neighbours[i])){
+		for (int i = 0; i < this.neighbours.length; i++) {
+			if (tile.getId().equals(this.neighbours[i])) {
 				isn = true;
 				break;
 			}

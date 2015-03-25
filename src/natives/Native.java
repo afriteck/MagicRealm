@@ -12,195 +12,178 @@ import models.Things;
 import models.TreasureChit;
 import models.Weapons;
 
-public abstract class Native implements Move, Business, Hide, Follow{
+public abstract class Native implements Move, Business, Hide, Follow {
 
 	private Weapons weapon;
 	private int wage;
 	private String name;
 	private int notoriety;
-    private static LinkedList<Armor> myArsenal;    // the chatacters arsenal
-    private boolean status;
+	private static LinkedList<Armor> myArsenal; // the characters arsenal
+	private boolean status;
 
 	private DamageEnum alertedStrikeWeight;
 	private DamageEnum strikeWeight;
 	private int moveSpeed;
 	private int alertMoveSpeed;
 	private boolean leader;
-	
 
-	
-	
-	public Native(String nativeName){
-		// Take native name and parse native JSON. Used returned values to fill in details for native
+	public Native(String nativeName) {
+		// Take native name and parse native JSON. Used returned values to fill
+		// in details for native
 	}
-	
-	public Native(){
-		
+
+	public Native() {
+
 	}
-	
+
 	/***** Getter Methods *****/
 	public Weapons getWeapon() {
 		return this.weapon;
 	}
-	
-		/***** Setter Methods *****/
+
+	public int getWage() {
+		return wage;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getNotoriety() {
+		return notoriety;
+	}
+
+	public DamageEnum getStrikeWeight() {
+		return strikeWeight;
+	}
+
+	public static LinkedList<Armor> getNativeArsenal() {
+		return myArsenal;
+	}
+
+	public boolean getStatus() {
+		return status;
+	}
+
+	public DamageEnum getAlertedStrikeWeight() {
+		return alertedStrikeWeight;
+	}
+
+	public int getMoveSpeed() {
+		return moveSpeed;
+	}
+
+	public int getAlertMoveSpeed() {
+		return alertMoveSpeed;
+	}
+
+	public boolean getLeader() {
+		return leader;
+	}
+
+	/***** Setter Methods *****/
 	// Set the current native's inventory
 	public void setWeapon(Weapons weapon) {
 		this.weapon = weapon;
 	}
 
-	
+	public void setWage(int wage) {
+		this.wage = wage;
+	}
 
-		public int getWage() {
-			return wage;
-		}
+	public void setName(String string) {
+		this.name = string;
+	}
 
-		public void setWage(int wage) {
-			this.wage = wage;
-		}
+	public void setNotoriety(int notoriety) {
+		this.notoriety = notoriety;
+	}
 
-		public void setName(String string) {
-			// TODO Auto-generated method stub
-			this.name = string;
-		}
-		public String getName(){
-			return name;
-		}
+	public void setStrikeWeight(DamageEnum strikeWeight) {
+		this.strikeWeight = strikeWeight;
+	}
 
-		public int getNotoriety() {
-			return notoriety;
-		}
+	public static void setNativeArsenal(LinkedList<Armor> myArsenal) {
+		Native.myArsenal = myArsenal;
+	}
 
-		public void setNotoriety(int notoriety) {
-			this.notoriety = notoriety;
-		}
+	public void isAlert(boolean alert) {
+		this.status = alert;
+	}
 
-		public DamageEnum getStrikeWeight() {
-			return strikeWeight;
-		}
+	public void setAlertedStrikeWeight(DamageEnum alertedStrikeWeight) {
+		this.alertedStrikeWeight = alertedStrikeWeight;
+	}
 
-		public void setStrikeWeight(DamageEnum strikeWeight) {
-			this.strikeWeight = strikeWeight;
-		}
+	public void setMoveSpeed(int moveSpeed) {
+		this.moveSpeed = moveSpeed;
+	}
 
-	
+	public void setAlertMoveSpeed(int alertMoveSpeed) {
+		this.alertMoveSpeed = alertMoveSpeed;
+	}
 
-		public static LinkedList<Armor> getNativeArsenal() {
-			return myArsenal;
-		}
+	public void isLeader(boolean leader) {
+		this.leader = leader;
+	}
 
-		public static void setNativeArsenal(LinkedList<Armor> myArsenal) {
-			Native.myArsenal = myArsenal;
-		}
+	public void buyNative(Things th, NativeGroup nt) { // you can recruit a
+														// native with gold
 
-		public boolean getStatus() {
-			return status;
-		}
+	}
 
-		public void isAlert(boolean alert) {
-			this.status = alert;
-		}
+	@Override
+	public void moveFrom(String tile, int clearing) {
+		// TODO Auto-generated method stub
 
-		public DamageEnum getAlertedStrikeWeight() {
-			return alertedStrikeWeight;
-		}
+	}
 
-		public void setAlertedStrikeWeight(DamageEnum alertedStrikeWeight) {
-			this.alertedStrikeWeight = alertedStrikeWeight;
-		}
+	@Override
+	public void moveTo(String tile, int clearing) {
+		// TODO Auto-generated method stub
 
-		public int getMoveSpeed() {
-			return moveSpeed;
-		}
+	}
 
-		public void setMoveSpeed(int moveSpeed) {
-			this.moveSpeed = moveSpeed;
-		}
+	@Override
+	public void sellArmor(Things th, Armor arm) {
+		// TODO Auto-generated method stub
 
-		public int getAlertMoveSpeed() {
-			return alertMoveSpeed;
-		}
+	}
 
-		public void setAlertMoveSpeed(int alertMoveSpeed) {
-			this.alertMoveSpeed = alertMoveSpeed;
-		}
+	@Override
+	public void sellWeapon(Things th, Weapons arms) {
+		// TODO Auto-generated method stub
 
-		public boolean getLeader() {
-			return leader;
-		}
+	}
 
-		public void isLeader(boolean leader) {
-			this.leader = leader;
-		}
+	@Override
+	public void sellTreasure(Things th, TreasureChit tr, int gold) {
+		// TODO Auto-generated method stub
 
-		public void buyNative(Things th, NativeGroup nt){		//you can recruit a native with gold
+	}
 
-		}
+	@Override
+	public void buyArmor(Things th, Armor arm) {
+		// TODO Auto-generated method stub
 
-		@Override
-		public void moveFrom(String tile, int clearing) {
-			// TODO Auto-generated method stub
-			
-		}
+	}
 
-		@Override
-		public void moveTo(String tile, int clearing) {
-			// TODO Auto-generated method stub
-			
-		}
+	@Override
+	public void buyWeapon(Things th, Weapons arms) {
+		// TODO Auto-generated method stub
 
-		@Override
-		public void sellArmor(Things th, Armor arm) {
-			// TODO Auto-generated method stub
-			
-		}
+	}
 
-		@Override
-		public void sellWeapon(Things th, Weapons arms) {
-			// TODO Auto-generated method stub
-			
-		}
+	@Override
+	public void buyTreasure(Things th, TreasureChit tr) {
+		// TODO Auto-generated method stub
 
-		@Override
-		public void sellTreasure(Things th, TreasureChit tr, int gold) {
-			// TODO Auto-generated method stub
-			
-		}
+	}
 
-		
-		@Override
-		public void buyArmor(Things th, Armor arm) {
-			// TODO Auto-generated method stub
-			
-		}
+	@Override
+	public void HideCharacter(Things character) {
+		// TODO Auto-generated method stub
 
-		@Override
-		public void buyWeapon(Things th, Weapons arms) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void buyTreasure(Things th, TreasureChit tr) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void HideCharacter(Things character) {
-			// TODO Auto-generated method stub
-			
-		}	
-
-
-
-
-
-
-
-
-
-
-
+	}
 
 }

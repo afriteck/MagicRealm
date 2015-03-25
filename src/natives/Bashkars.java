@@ -2,27 +2,23 @@ package natives;
 
 import java.util.LinkedList;
 
-import models.Armor;
 import models.DamageEnum;
-import models.Things;
-import models.TreasureChit;
-import models.Weapons;
 
 public class Bashkars extends NativeGroup {
-	
-    private static LinkedList<Native> natives;   
-    
+
+	private static LinkedList<Native> natives;
+
 	private Raider BHQ;
 	private Raider b1;
 	private Raider b2;
 	private Raider b3;
 	private Raider b4;
 	private Raider b5;
-	//private int cost;
-    
+
+	// private int cost;
 
 	public Bashkars() {
-		
+
 		initializeNatives();
 		setName("Bashkars");
 		setTile("CAVES");
@@ -30,15 +26,12 @@ public class Bashkars extends NativeGroup {
 		setHired(false);
 		setFpath("/natives/bashkars.png");
 
-	
 	}
 
+	public void initializeNatives() {
 
+		natives = new LinkedList<Native>();
 
-	public void initializeNatives(){
-		
-		natives = new LinkedList<Native>(); 
-		
 		initializeBHQ();
 		initializeB1();
 		initializeB2();
@@ -48,13 +41,10 @@ public class Bashkars extends NativeGroup {
 		setNatives(natives);
 		setCost(getHireCost());
 
-
-		
-	
 	}
-	
-	public void initializeB1(){
-		
+
+	public void initializeB1() {
+
 		b1 = new Raider();
 		b1.setName("Raider(B1)");
 		b1.setStrikeWeight(DamageEnum.MEDIUM);
@@ -62,14 +52,13 @@ public class Bashkars extends NativeGroup {
 		b1.setMoveSpeed(3);
 		b1.setAlertMoveSpeed(3);
 		b1.isLeader(false);
-		//natives.add(b1);
+		// natives.add(b1);
 		addNative(natives, b1);
 
+	}
 
-}
-	
-	public void initializeB2(){
-		
+	public void initializeB2() {
+
 		b2 = new Raider();
 		b2.setName("Raider(B2)");
 		b2.setStrikeWeight(DamageEnum.MEDIUM);
@@ -77,13 +66,13 @@ public class Bashkars extends NativeGroup {
 		b2.setMoveSpeed(2);
 		b2.setAlertMoveSpeed(3);
 		b2.isLeader(false);
-		//natives.add(b2);
+		// natives.add(b2);
 		addNative(natives, b2);
 
 	}
 
-	public void initializeB3(){
-		
+	public void initializeB3() {
+
 		b3 = new Raider();
 		b3.setName("Raider(B3)");
 		b3.setStrikeWeight(DamageEnum.LIGHT);
@@ -91,13 +80,13 @@ public class Bashkars extends NativeGroup {
 		b3.setMoveSpeed(2);
 		b3.setAlertMoveSpeed(3);
 		b3.isLeader(false);
-		//natives.add(b3);
+		// natives.add(b3);
 		addNative(natives, b3);
 
 	}
 
-	public void initializeB4(){
-		
+	public void initializeB4() {
+
 		b4 = new Raider();
 		b4.setName("Raider(B4)");
 		b4.setStrikeWeight(DamageEnum.MEDIUM);
@@ -105,13 +94,13 @@ public class Bashkars extends NativeGroup {
 		b4.setMoveSpeed(2);
 		b4.setAlertMoveSpeed(4);
 		b4.isLeader(false);
-		//natives.add(b4);
+		// natives.add(b4);
 		addNative(natives, b4);
 
 	}
 
-	public void initializeB5(){
-		
+	public void initializeB5() {
+
 		b5 = new Raider();
 		b5.setName("Raider(B5)");
 		b5.setStrikeWeight(DamageEnum.LIGHT);
@@ -119,13 +108,13 @@ public class Bashkars extends NativeGroup {
 		b5.setMoveSpeed(4);
 		b5.setAlertMoveSpeed(4);
 		b5.isLeader(false);
-		//natives.add(b5);
+		// natives.add(b5);
 		addNative(natives, b5);
 
 	}
 
-	public void initializeBHQ(){
-		
+	public void initializeBHQ() {
+
 		BHQ = new Raider();
 		BHQ.setName("Raider(BHQ)");
 		BHQ.setStrikeWeight(DamageEnum.LIGHT);
@@ -133,34 +122,20 @@ public class Bashkars extends NativeGroup {
 		BHQ.setMoveSpeed(2);
 		BHQ.setAlertMoveSpeed(3);
 		BHQ.isLeader(true);
-		//natives.add(BHQ);
+		// natives.add(BHQ);
 		addNative(natives, BHQ);
 
-
 	}
-	
-	public int getHireCost() {	
+
+	public int getHireCost() {
 		int[] sum = new int[natives.size()];
-		for(int i = 0; i < natives.size(); i++){
-		sum[i] = natives.get(i).getWage();
-		
-	}
-		for(int j : sum)
+		for (int i = 0; i < natives.size(); i++) {
+			sum[i] = natives.get(i).getWage();
+
+		}
+		for (int j : sum)
 			total += j;
-			return total ;
+		return total;
 	}
-
-
-
-	/*public int getCost() {
-		return cost;
-	}
-
-
-
-	public void setCost(int cost) {
-		this.cost = cost;
-	}*/
-
 
 }

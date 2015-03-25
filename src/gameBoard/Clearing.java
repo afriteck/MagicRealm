@@ -5,25 +5,23 @@ package gameBoard;
 
 import java.util.ArrayList;
 
-import natives.NativeGroup;
-
 import models.Dwelling;
 import models.Monster;
 import models.PlayerChit;
 import models.TreasureChit;
 import models.WarningChit;
+import natives.NativeGroup;
 
 /**
  * @author joshwhite
- *
+ * 
  */
 public class Clearing {
-	
+
 	private int clearingNumber;
 	private int xposition;
 	private int yposition;
-	
-	
+
 	private ArrayList<TreasureChit> treasureChits;
 	private ArrayList<Monster> monsterChits;
 	private ArrayList<WarningChit> warningChits;
@@ -33,10 +31,7 @@ public class Clearing {
 	private PlayerChit personHere;
 	private NativeGroup natives;
 
-	
-	
-
-	public Clearing(int number, long xpos, long ypos){
+	public Clearing(int number, long xpos, long ypos) {
 		setClearingNumber(number);
 		setXposition((int) xpos);
 		setYposition((int) ypos);
@@ -45,13 +40,13 @@ public class Clearing {
 		setWarningChits(new ArrayList<WarningChit>());
 		setPeopleHere(new ArrayList<PlayerChit>());
 		setPersonHere(new PlayerChit());
-		
+
 	}
 
-	public Clearing(){
-		
+	public Clearing() {
+
 	}
-	
+
 	public int getClearingNumber() {
 		return clearingNumber;
 	}
@@ -75,9 +70,10 @@ public class Clearing {
 	public void setYposition(int yposition) {
 		this.yposition = yposition;
 	}
-	
-	public String toString(){
-		return "Clearing Number: " + clearingNumber + " X position: " + xposition + " Y Position: " + yposition + "\n";
+
+	public String toString() {
+		return "Clearing Number: " + clearingNumber + " X position: "
+				+ xposition + " Y Position: " + yposition + "\n";
 	}
 
 	public ArrayList<TreasureChit> getTreasureChits() {
@@ -95,8 +91,8 @@ public class Clearing {
 	public void setMonsterChits(ArrayList<Monster> monsterChits) {
 		this.monsterChits = monsterChits;
 	}
-	
-	public void addMonster(Monster monster){
+
+	public void addMonster(Monster monster) {
 		monsterChits.add(monster);
 	}
 
@@ -123,7 +119,7 @@ public class Clearing {
 	public void setWarningChits(ArrayList<WarningChit> warningChits) {
 		this.warningChits = warningChits;
 	}
-	
+
 	public void setPeopleHere(ArrayList<PlayerChit> playerChits) {
 		this.peopleHere = playerChits;
 	}
@@ -131,38 +127,37 @@ public class Clearing {
 	public ArrayList<PlayerChit> getPeopleHere() {
 		return peopleHere;
 	}
-	
+
 	public void movePersonHere(PlayerChit person) {
 		this.peopleHere.add(person);
 		setPlayerHere(true);
 	}
-	
+
 	public void removePersonHere(PlayerChit person) {
-		if(peopleHere.size()>0){
-			//this.peopleHere.remove(person);
-			for(int i=0; i<peopleHere.size(); i++){
-				if(peopleHere.get(i).equals(person)){
+		if (peopleHere.size() > 0) {
+			// this.peopleHere.remove(person);
+			for (int i = 0; i < peopleHere.size(); i++) {
+				if (peopleHere.get(i).equals(person)) {
 					this.peopleHere.remove(i);
-					if(peopleHere.size() == 0){
-						setPlayerHere(false);						
+					if (peopleHere.size() == 0) {
+						setPlayerHere(false);
 						System.out.println("no body is here");
 
 					}
-				
-					
-					}
+
+				}
 			}
 		}
 	}
 
 	public void removePerson(PlayerChit person) {
-		if(personHere.equals(person)){
+		if (personHere.equals(person)) {
 			person.setName(null);
 			person.setUrl(null);
 
 		}
 	}
-	
+
 	public PlayerChit getPersonHere() {
 		return personHere;
 	}

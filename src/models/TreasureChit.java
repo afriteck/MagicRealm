@@ -5,14 +5,14 @@ package models;
 
 /**
  * @author joshwhite
- *
+ * 
  */
 public class TreasureChit {
-	
+
 	private boolean visisble;
 
-	public TreasureChit(){
-		//constructor
+	public TreasureChit() {
+		// constructor
 		setVisisble(false);
 	}
 

@@ -2,16 +2,11 @@ package models;
 
 public class Income {
 
-private int gold;
+	private int gold;
 
+	public int getIncome() {
 
-
-
-
-public int getIncome(){
-	
-	return gold;
-}
-
+		return gold;
+	}
 
 }
