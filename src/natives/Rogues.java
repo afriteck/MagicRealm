@@ -1,5 +1,8 @@
 package natives;
 
+import gameLogic.Iteration1Board;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.DamageEnum;
@@ -8,7 +11,7 @@ import models.Inn;
 public class Rogues extends NativeGroup{
 
 	
-	private static LinkedList<Native> natives;   
+	private static ArrayList<Native> natives;   
 
 	private Assasin RHQ;
 	private GreatAxeman r1;
@@ -39,7 +42,7 @@ public class Rogues extends NativeGroup{
 
 	public void initializeNatives(){
 		
-		natives = new LinkedList<Native>(); 
+		natives = new ArrayList<Native>(); 
 		
 		initializeRHQ();
 		initializer1();

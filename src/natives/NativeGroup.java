@@ -1,5 +1,6 @@
 package natives;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.Dwelling;
@@ -7,7 +8,7 @@ import models.Dwelling;
 public  class NativeGroup {
 
     private String name;
-    private LinkedList<Native> natives;   
+    private ArrayList<Native> natives;   
 	private int hireCost;
 	int sum;
 	int total ;
@@ -36,12 +37,12 @@ public  class NativeGroup {
 	}
 
 
-	public  LinkedList<Native> getNatives() {
+	public  ArrayList<Native> getNatives() {
 		return natives;
 	}
 
 
-	public  void setNatives(LinkedList<Native> natives) {
+	public  void setNatives(ArrayList<Native> natives) {
 		this.natives = natives;
 	}
 
@@ -59,7 +60,7 @@ public  class NativeGroup {
 		this.hireCost = hireCost;
 	}   
 
-	public void addNative(LinkedList<Native> groupnative, Native nt) {
+	public void addNative(ArrayList<Native> groupnative, Native nt) {
 		this.natives = groupnative;
 		groupnative.add(nt);
 	} 

@@ -1,5 +1,6 @@
 package natives;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.DamageEnum;
@@ -7,7 +8,7 @@ import models.DamageEnum;
 public class Woodfolk extends NativeGroup{
 
 	
-	 private static LinkedList<Native> natives;   
+	 private static ArrayList<Native> natives;   
 	    
 		private Archer WHQ;
 		private Archer w1;
@@ -32,7 +33,7 @@ public class Woodfolk extends NativeGroup{
 
 		public void initializeNatives(){
 			
-			natives = new LinkedList<Native>(); 
+			natives = new ArrayList<Native>(); 
 			
 			initializeWHQ();
 			initializeW1();

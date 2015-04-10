@@ -1,5 +1,6 @@
 package natives;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.Armor;
@@ -11,7 +12,7 @@ import models.Weapons;
 public class ShortSwordsman extends Native {
 
 	private static Weapons weapon ;
-    private LinkedList<Armor> nativeArsenal;    // the chatacters arsenal
+    private ArrayList<Armor> nativeArsenal;    // the chatacters arsenal
     private Armor armor;
 
 
@@ -22,7 +23,7 @@ public class ShortSwordsman extends Native {
     	setName("Short SwordsMan");
     	weapon = new ShortSword();
     	armor = new Shields();
-    	nativeArsenal = new LinkedList<Armor>();
+    	nativeArsenal = new ArrayList<Armor>();
     	setNativeArsenal(nativeArsenal);    	
     	nativeArsenal.add(armor);
     	setStrikeWeight(DamageEnum.MEDIUM);

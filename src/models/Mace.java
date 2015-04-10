@@ -19,13 +19,4 @@ public Mace(){
     //setReady(true);
 }
 
-public static void main(String[] args){
-	
-Mace ss = new Mace();
-  System.out.println(ss.getSpeed() + "\n " + ss.getDamage().toString() + ss.getSharpness()  + ss.getHands()+ ss.getLength() + ss.getPrice()+ ss.getReady()) ;
-
-
-}
-
-
 }

@@ -160,11 +160,74 @@ public class HexCell {
 							e.printStackTrace();
 						}
 					}
+					if (tilehex.getClearings().get(i).getNatives() != null) {
+						URL url = InitBoardTiles.class.getResource(
+								tilehex.getClearings().get(i)
+										.getNatives()
+										.getFpath());
+						try {
+							chitimg = ImageIO.read(new File(url.getPath()));
+							saveAt.setTransform(at);
+							at.translate((w / 2), (h / 2));
+							at.rotate(Math.toRadians(-angle));
+							at.translate((-w / 2), (-h / 2));
+							g2d.setTransform(at);
+							g2d.drawImage(chitimg, cl.getBounds().x,
+									cl.getBounds().y, cl.getBounds().width,
+									cl.getBounds().height, null);
+							at.setTransform(saveAt);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if (tilehex.getClearings().get(i).getSound().size() > 0) {
+						URL url = InitBoardTiles.class.getResource("/monsters/"
+								+ tilehex.getClearings().get(i)
+										.getSound().get(0)
+										.getFpath());
+						try {
+							chitimg = ImageIO.read(new File(url.getPath()));
+							saveAt.setTransform(at);
+							at.translate((w / 2), (h / 2));
+							at.rotate(Math.toRadians(-angle));
+							at.translate((-w / 2), (-h / 2));
+							g2d.setTransform(at);
+							g2d.drawImage(chitimg, cl.getBounds().x,
+									cl.getBounds().y, cl.getBounds().width,
+									cl.getBounds().height, null);
+							at.setTransform(saveAt);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 					if (tilehex.getClearings().get(i).getMonsterChits().size() > 0) {
 						URL url = InitBoardTiles.class.getResource("/monsters/"
 								+ tilehex.getClearings().get(i)
 										.getMonsterChits().get(0)
 										.getImgFilePath());
+						try {
+							chitimg = ImageIO.read(new File(url.getPath()));
+							saveAt.setTransform(at);
+							at.translate((w / 2), (h / 2));
+							at.rotate(Math.toRadians(-angle));
+							at.translate((-w / 2), (-h / 2));
+							g2d.setTransform(at);
+							g2d.drawImage(chitimg, cl.getBounds().x,
+									cl.getBounds().y, cl.getBounds().width,
+									cl.getBounds().height, null);
+							at.setTransform(saveAt);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if (tilehex.getClearings().get(i).getTreasureChits().size() > 0) {
+						URL url = InitBoardTiles.class.getResource(
+								tilehex.getClearings().get(i)
+										.getTreasureChits().get(0)
+										.getFpath());
 						try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);
@@ -212,9 +275,9 @@ public class HexCell {
 					}
 				}
 
-				if (tilehex.getWarnings() != null) {
+				if (tilehex.getWarnings().size() > 0) {
 					URL url = InitBoardTiles.class.getResource("/others/"
-							+ tilehex.getWarnings().getUrl());
+							+ tilehex.getWarnings().get(0).getUrl());
 					try {
 						chitimg = ImageIO.read(new File(url.getPath()));
 						at.setTransform(g2.getTransform());
@@ -318,12 +381,38 @@ public class HexCell {
 						}
 					}
 					if (tilehex.getClearings().get(i).getMonsterChits().size() > 0) {
-						int offx = -20;
+						int offx = 0;
 						int offy = 0;
-						URL url = InitBoardTiles.class.getResource("/monsters/"
-								+ tilehex.getClearings().get(i)
-										.getMonsterChits().get(0)
-										.getImgFilePath());
+						for (int y = 0; y < tilehex.getClearings().get(i).getMonsterChits().size(); y++){
+							URL url = InitBoardTiles.class.getResource("/monsters/"
+									+ tilehex.getClearings().get(i)
+											.getMonsterChits().get(y)
+											.getImgFilePath());
+							try {
+								chitimg = ImageIO.read(new File(url.getPath()));
+								saveAt.setTransform(at);
+								at.translate((w / 2), (h / 2));
+								at.rotate(Math.toRadians(-angle));
+								at.translate((-w / 2), (-h / 2));
+								g2d.setTransform(at);
+								g2d.drawImage(chitimg, cl.getBounds().x + offx,
+										cl.getBounds().y + offy, cl.getBounds().width/3,
+										cl.getBounds().height/3, null);
+								at.setTransform(saveAt);
+								offx += 25;
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+					if (tilehex.getClearings().get(i).getNatives() != null) {
+						int offx = 50;
+						int offy = 50;
+						URL url = InitBoardTiles.class.getResource(
+								tilehex.getClearings().get(i)
+										.getNatives()
+										.getFpath());
 						try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);
@@ -335,19 +424,19 @@ public class HexCell {
 									cl.getBounds().y + offy, cl.getBounds().width/3,
 									cl.getBounds().height/3, null);
 							at.setTransform(saveAt);
-							offx += 20;
+							offx += 25;
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
-
 					if (tilehex.getClearings().get(i).getPeopleHere().size() > 0) {
-						int offx = -20;
-						int offy = 30;
+						int offx = 0;
+						int offy = 25;
 						for (int y = 0; y < tilehex.getClearings().get(i)
 								.getPeopleHere().size(); y++) {
 							if (tilehex.getClearings().get(i).isPlayerHere()) {
+								
 								URL url = InitBoardTiles.class
 										.getResource("/characters/"
 												+ tilehex.getClearings().get(i)
@@ -366,7 +455,7 @@ public class HexCell {
 											cl.getBounds().width/3,
 											cl.getBounds().height/3, null);
 									at.setTransform(saveAt);
-									offx += 20;
+									offx += 25;
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -376,9 +465,9 @@ public class HexCell {
 					}
 				}
 
-				if (tilehex.getWarnings() != null) {
+				if (tilehex.getWarnings().size() > 0) {
 					URL url = InitBoardTiles.class.getResource("/others/"
-							+ tilehex.getWarnings().getUrl());
+							+ tilehex.getWarnings().get(0).getUrl());
 					try {
 						chitimg = ImageIO.read(new File(url.getPath()));
 						at.setTransform(g2.getTransform());

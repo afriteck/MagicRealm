@@ -2,7 +2,6 @@ package models;
 
 import gameBoard.Clearing;
 import gameBoard.Tiles;
-import gui.Gui;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -38,6 +37,7 @@ public abstract class Things implements Move, Business, Search, Hide{
     private NativeGroup hiredNative;
     private int speed;
     private int notoriety;
+
     private boolean hiden = false;
   private String tileName;
   private static int clearingLocation;
@@ -219,7 +219,7 @@ public void setMytiles(Tiles mytiles) {
 public void searchLocation(Tiles tile) {
 	
 
-	System.out.println(tile.getWarnings().getName());
+	System.out.println(tile.getWarnings().get(clearingLocation).getName());
 
 
 

@@ -10,8 +10,8 @@ import natives.NativeGroup;
 import models.Dwelling;
 import models.Monster;
 import models.PlayerChit;
+import models.SoundChit;
 import models.TreasureChit;
-import models.WarningChit;
 
 /**
  * @author joshwhite
@@ -26,7 +26,7 @@ public class Clearing {
 	
 	private ArrayList<TreasureChit> treasureChits;
 	private ArrayList<Monster> monsterChits;
-	private ArrayList<WarningChit> warningChits;
+	private ArrayList<SoundChit> sound;
 	private Dwelling dwelling;
 	private ArrayList<PlayerChit> peopleHere;
 	private boolean playerHere;
@@ -42,8 +42,8 @@ public class Clearing {
 		setYposition((int) ypos);
 		setTreasureChits(new ArrayList<TreasureChit>());
 		setMonsterChits(new ArrayList<Monster>());
-		setWarningChits(new ArrayList<WarningChit>());
 		setPeopleHere(new ArrayList<PlayerChit>());
+		setSound(new ArrayList<SoundChit>());
 		setPersonHere(new PlayerChit());
 		
 	}
@@ -115,14 +115,6 @@ public class Clearing {
 	public void setPlayerHere(boolean playerHere) {
 		this.playerHere = playerHere;
 	}
-
-	public ArrayList<WarningChit> getWarningChits() {
-		return warningChits;
-	}
-
-	public void setWarningChits(ArrayList<WarningChit> warningChits) {
-		this.warningChits = warningChits;
-	}
 	
 	public void setPeopleHere(ArrayList<PlayerChit> playerChits) {
 		this.peopleHere = playerChits;
@@ -139,11 +131,11 @@ public class Clearing {
 	
 	public void removePersonHere(PlayerChit person) {
 		if(peopleHere.size()>0){
-			//this.peopleHere.remove(person);
+			this.peopleHere.remove(person);
 			for(int i=0; i<peopleHere.size(); i++){
 				if(peopleHere.get(i).equals(person)){
 					this.peopleHere.remove(i);
-					if(peopleHere.size() == 0){
+					if(peopleHere.size() < 1){
 						setPlayerHere(false);						
 						System.out.println("no body is here");
 
@@ -177,5 +169,13 @@ public class Clearing {
 
 	public void setNatives(NativeGroup natives) {
 		this.natives = natives;
+	}
+
+	public ArrayList<SoundChit> getSound() {
+		return sound;
+	}
+
+	public void setSound(ArrayList<SoundChit> sound) {
+		this.sound = sound;
 	}
 }

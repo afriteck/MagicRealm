@@ -1,5 +1,6 @@
 package natives;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.Armor;
@@ -18,7 +19,7 @@ public abstract class Native implements Move, Business, Hide, Follow{
 	private int wage;
 	private String name;
 	private int notoriety;
-    private static LinkedList<Armor> myArsenal;    // the chatacters arsenal
+    private static ArrayList<Armor> myArsenal;    // the chatacters arsenal
     private boolean status;
 
 	private DamageEnum alertedStrikeWeight;
@@ -85,11 +86,11 @@ public abstract class Native implements Move, Business, Hide, Follow{
 
 	
 
-		public static LinkedList<Armor> getNativeArsenal() {
+		public static ArrayList<Armor> getNativeArsenal() {
 			return myArsenal;
 		}
 
-		public static void setNativeArsenal(LinkedList<Armor> myArsenal) {
+		public static void setNativeArsenal(ArrayList<Armor> myArsenal) {
 			Native.myArsenal = myArsenal;
 		}
 

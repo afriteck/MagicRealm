@@ -3,6 +3,7 @@
  */
 package gameBoard;
 
+import models.TreasureChit;
 import gui.HexTiles;
 /*
 import models.Chapel;
@@ -33,9 +34,17 @@ public class InitGameBoard {
 		//Soldiers soldiers = new Soldiers();
 		
 		//bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(new Dwelling("Chapel", "/dwellings/chapel.gif"));
+		
+		
 
 		
 		/*
+		bt.getTile("RUINS").getClearingByNum(1).getTreasureChits().add(new TreasureChit(10, 10, 10));
+		bt.getTile("RUINS").getClearingByNum(1).getTreasureChits().add(new TreasureChit(0, 25, -5));
+		bt.getTile("RUINS").getClearingByNum(1).getTreasureChits().add(new TreasureChit(-5, 50, -5));
+		bt.getTile("RUINS").getClearingByNum(1).getTreasureChits().add(new TreasureChit(10, 30, 20));
+		bt.getTile("RUINS").getClearingByNum(1).getTreasureChits().add(new TreasureChit(20, 40, 10));
+		bt.getTile("RUINS").getClearingByNum(1).getTreasureChits().add(new TreasureChit(10, 50, 20));
 		
 		bt.getTile("AWFUL VALLEY").getClearingByNum(5).setDwelling(chapel);
 		bt.getTile("DARK VALLEY").getClearingByNum(5).setDwelling(guardhouse);

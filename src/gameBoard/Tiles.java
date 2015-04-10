@@ -18,7 +18,7 @@ public class Tiles {
 	private String filePath;
 	private int theta;
 	private ArrayList<Clearing> tileClearings;
-	private WarningChit warnings;
+	private ArrayList<WarningChit> warnings = new ArrayList<WarningChit>();
 	private String id;
 	private String[] neighbours;
 	
@@ -78,7 +78,7 @@ public class Tiles {
 	}
 	
 	public String toString() {
-		String strToReturn = "Tile Name: " + tileName + "\nat file path: " + filePath + "\nWarningChits: " + warnings.getName() + "\nClearings in tile: \n";
+		String strToReturn = "Tile Name: " + tileName + "\nat file path: " + filePath + "\nWarningChits: " + "\nClearings in tile: \n";
 
 		for(int i = 0; i < tileClearings.size(); i++) {
 			strToReturn += tileClearings.get(i);
@@ -96,11 +96,11 @@ public class Tiles {
 		this.theta = rotation;
 	}
 
-	public WarningChit getWarnings() {
+	public ArrayList<WarningChit> getWarnings() {
 		return warnings;
 	}
 
-	public void setWarnings(WarningChit warnings) {
+	public void setWarnings(ArrayList<WarningChit> warnings) {
 		this.warnings = warnings;
 	}
 

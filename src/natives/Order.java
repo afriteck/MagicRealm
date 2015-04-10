@@ -1,5 +1,6 @@
 package natives;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.Armor;
@@ -13,7 +14,7 @@ import models.Weapons;
 public  class Order extends NativeGroup{
 
 	
-    private static LinkedList<Native> natives;   
+    private static ArrayList<Native> natives;   
     
 	private Knight OHQ;
 	private Knight o1;
@@ -40,7 +41,7 @@ public  class Order extends NativeGroup{
 
 	public void initializeNatives(){
 		
-		natives = new LinkedList<Native>(); 
+		natives = new ArrayList<Native>(); 
 		
 		initializeOHQ();
 		initializeo1();

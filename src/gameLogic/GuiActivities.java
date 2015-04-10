@@ -3,7 +3,6 @@ package gameLogic;
 import gameBoard.BoardTiles;
 import gameBoard.Tiles;
 import gui.CombatScreen;
-import gui.Gui;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -50,6 +49,8 @@ import models.Player;
 import models.PlayerChit;
 import models.Shields;
 import models.ShortSword;
+import models.SoundChit;
+import models.SoundChit.Howl;
 import models.Spear;
 import models.SuitsOfArmor;
 import models.Swordsman;
@@ -74,7 +75,7 @@ public class GuiActivities {
 	private Player player1 = new Player();
 	private Player player2 = new Player();
 	private Player currentPlayer = null;
-	int turn;
+	private int turn;
 
 	private PlayerChit p1chit = new PlayerChit();
 	private PlayerChit p2chit = new PlayerChit();
@@ -125,6 +126,8 @@ public class GuiActivities {
 	private Lancers lancers;
 	private Patrol patrol;
 	private Woodfolk woodfolk;
+	
+	private Howl howl;
 
 	private Chapel chapel;
 	private GuardHouse guardhouse;
@@ -166,6 +169,8 @@ public class GuiActivities {
 		ruins = new Ruins();
 		smoke = new Smoke();
 		stink = new Stink();
+		
+		howl = new Howl();
 
 		ng.add(bashkars);
 		ng.add(company);
@@ -226,7 +231,7 @@ public class GuiActivities {
 
 	public void addWarningChits() {
 
-		LinkedList<WarningChit> chits = new LinkedList<WarningChit>();
+		ArrayList<WarningChit> chits = new ArrayList<WarningChit>();
 
 		WarningChit smoke = new Smoke();
 		WarningChit bones = new Bones();
@@ -244,7 +249,7 @@ public class GuiActivities {
 
 		for (int i = 0; i < bd.size(); i++) {
 
-			bd.getTile(i).setWarnings(chits.get(i));
+			bd.getTile(i).getWarnings().add(chits.get(i));
 			// if(bd.getTile(i).getWarnings() !=null)
 			// System.out.println(bd.getTile(i).getWarnings().getName());
 		}
@@ -306,8 +311,8 @@ public class GuiActivities {
 				setMove(false);
 			}
 			setMove(false);
+			turn++;
 			return true;
-
 			/*
 			 * 
 			 * if (TileName.getText().equals("h") &&
@@ -382,37 +387,29 @@ public class GuiActivities {
 	}
 
 	public boolean requestCombat(Player p) {
-		//cs = new CombatScreen(this);
+		// cs = new CombatScreen(this);
 		if (cs != null) {
-			cs.move.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					placeMove(getPlayer1());
-				}
-			});
-			cs.move.setBounds(50, 200, 89, 23);
-			cs.btnPanel.add(cs.move);
-			cs.move.setVisible(true);
-
-			cs.fight.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					placeFight(getPlayer1());
-				}
-			});
-			cs.fight.setBounds(50, 250, 89, 23);
-			cs.btnPanel.add(cs.fight);
-			cs.fight.setVisible(true);
-			
-			cs.submitStats.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					setSendToServer(true);
-				}
-			});
-			cs.submitStats.setBounds(50, 250, 89, 23);
-			cs.btnPanel.add(cs.submitStats);
-			cs.submitStats.setVisible(true);
-
+			/*
+			 * cs.move.addActionListener(new ActionListener() { public void
+			 * actionPerformed(ActionEvent e) { placeMove(getPlayer1()); } });
+			 * cs.move.setBounds(50, 200, 89, 23); cs.btnPanel.add(cs.move);
+			 * cs.move.setVisible(true);
+			 * 
+			 * cs.fight.addActionListener(new ActionListener() { public void
+			 * actionPerformed(ActionEvent e) { placeFight(getPlayer1()); } });
+			 * cs.fight.setBounds(50, 250, 89, 23); cs.btnPanel.add(cs.fight);
+			 * cs.fight.setVisible(true);
+			 * 
+			 * cs.submitStats.addActionListener(new ActionListener() { public
+			 * void actionPerformed(ActionEvent e) { setSendToServer(true); }
+			 * }); cs.submitStats.setBounds(50, 250, 89, 23);
+			 * cs.btnPanel.add(cs.submitStats); cs.submitStats.setVisible(true);
+			 */
+			System.out.println("Here");
 			return true;
 		} else {
+			//this.initCombatScreen();
+			System.out.println("Here 2");
 			return false;
 		}
 	}
@@ -430,7 +427,7 @@ public class GuiActivities {
 			bd.getTile(TileName.getText().toUpperCase())
 					.getClearingByNum(Integer.parseInt(Clearing.getText()))
 					.setDwelling(d);
-			d.setHome(TileName.getText());
+			d.setTile(TileName.getText());
 			d.setClearing(Integer.parseInt(Clearing.getText()));
 
 			return true;
@@ -453,6 +450,29 @@ public class GuiActivities {
 			bd.getTile(TileName.getText().toUpperCase())
 					.getClearingByNum(Integer.parseInt(Clearing.getText()))
 					.setNatives(d);
+			//d.setClearing(Integer.parseInt(Clearing.getText()));
+
+			return true;
+
+		} else
+			return false;
+
+	}
+	
+	public boolean placeSoundChit(SoundChit d) {
+		int option = JOptionPane.showConfirmDialog(null, message, "Place!",
+				JOptionPane.OK_CANCEL_OPTION);
+
+		if (option == JOptionPane.OK_OPTION) {
+			String input = TileName.getText().toString().trim();
+			bd.getTile(input);
+			moveTiles.add(bd.getTile(input));
+			System.out.println(bd.getTile(input).getName());
+
+			bd.getTile(TileName.getText().toUpperCase())
+					.getClearingByNum(Integer.parseInt(Clearing.getText()))
+					.getSound().add(d);
+			
 			d.setClearing(Integer.parseInt(Clearing.getText()));
 
 			return true;
@@ -494,31 +514,7 @@ public class GuiActivities {
 			return false;
 	}
 
-	public boolean placePlayer2(Player p) {
-		int option = JOptionPane.showConfirmDialog(null, message,
-				"Place Player 2!", JOptionPane.OK_CANCEL_OPTION);
-
-		if (option == JOptionPane.OK_OPTION) {
-			String input = TileName.getText().toString().trim();
-
-			getPlayer2().moveTo(input, Integer.parseInt(Clearing.getText()));
-			getPlayer2().getCharacter().moveTo(TileName.getText(),
-					Integer.parseInt(Clearing.getText()));
-
-			p2chit.setName(getPlayer2().getName());
-			// p2chit.setCharacter(getPlayer2().getCharacter().getName());
-			// p2chit.setUrl(getPlayer2().getCharacter().getUrl());
-			getPlayer2().setPchit(p2chit);
-
-			bd.getTile(TileName.getText())
-					.getClearingByNum(Integer.parseInt(Clearing.getText()))
-					.movePersonHere(getPlayer2().getPchit());
-
-			return true;
-		} else
-			return false;
-	}
-
+/*
 	public boolean placeWarningChit(WarningChit wc) {
 		/*
 		 * bd.getTile((String)JOptionPane.showInputDialog(null, "Tile:",
@@ -527,6 +523,7 @@ public class GuiActivities {
 		 * 
 		 * return true;
 		 */
+	/*
 		String inputname;
 
 		inputname = (String) JOptionPane.showInputDialog(null, "Tile:",
@@ -538,7 +535,7 @@ public class GuiActivities {
 
 		else if (inputname != null) {
 			if (bd.getTile(inputname) != null) {
-				bd.getTile(inputname).setWarnings(wc);
+				bd.getTile(inputname).getWarnings().add(wc);
 				return true;
 			} else {
 				JOptionPane.showMessageDialog(null,
@@ -548,7 +545,7 @@ public class GuiActivities {
 		}
 		return false;
 	}
-
+*/
 	// String input = inputname.trim();
 	// int option = JOptionPane.showConfirmDialog(null, message, "Place!",
 	// JOptionPane.OK_CANCEL_OPTION);
@@ -581,7 +578,7 @@ public class GuiActivities {
 				public void actionPerformed(ActionEvent e) {
 					if (!rolled)
 						JOptionPane.showMessageDialog(null, "Roll a die first");
-					if (rolled && p.getCharacter().getRoll() == 4) {
+				/*	if (rolled && p.getCharacter().getRoll() == 4) {
 						for (int i = 0; i < bd.getTile(p.getTile())
 								.getClearingByNum((p.getClearing()))
 								.getTreasureChits().size(); i++)
@@ -594,7 +591,7 @@ public class GuiActivities {
 								"Treasure chits are now visible!");
 
 						System.out.println(" Treasure chits are now visible");
-					} else if (rolled && p.getCharacter().getRoll() == 1) {
+					} else */ if (rolled && p.getCharacter().getRoll() == 1) {
 						JOptionPane.showMessageDialog(null,
 								"Which would you want to do!");
 
@@ -618,7 +615,7 @@ public class GuiActivities {
 				}
 			});
 			locate.setBounds(1430, 329, 109, 30);
-			locate.setIcon(new ImageIcon(Gui.class
+			locate.setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/others/reveal.gif")));
 			locate.setVisible(true);
 			cp.add(locate);
@@ -626,47 +623,11 @@ public class GuiActivities {
 			peer = new JButton("PEER");
 			peer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					/*
-					if (!rolled)
-						JOptionPane.showMessageDialog(null, "Roll a die first");
-					if (rolled && p.getCharacter().getRoll() == 4) {
-						for (int i = 0; i < bd.getTile(p.getTile())
-								.getClearingByNum((p.getClearing()))
-								.getTreasureChits().size(); i++)
-							bd.getTile(p.getTile())
-									.getClearingByNum((p.getClearing()))
-									.getTreasureChits().get(i)
-									.setVisisble(true);
 
-						JOptionPane.showMessageDialog(null,
-								"Treasure chits are now visible!");
-
-						System.out.println(" Treasure chits are now visible");
-					} else if (rolled && p.getCharacter().getRoll() == 1) {
-						JOptionPane.showMessageDialog(null,
-								"Which would you want to do!");
-
-					} else if (rolled && p.getCharacter().getRoll() == 2) {
-						JOptionPane.showMessageDialog(null,
-								"you have located hidden clues");
-
-					} else if (rolled && p.getCharacter().getRoll() == 3) {
-						JOptionPane.showMessageDialog(null,
-								"you have located hidden Passages");
-
-					}
-
-					else if (rolled && p.getCharacter().getRoll() > 4) {
-						JOptionPane.showMessageDialog(null,
-								"You discovered nothing");
-
-					}
-					rolled = false;
-					*/
 				}
 			});
 			peer.setBounds(1430, 295, 109, 30);
-			peer.setIcon(new ImageIcon(Gui.class
+			peer.setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/others/peer.png")));
 			peer.setVisible(true);
 			cp.add(peer);
@@ -680,7 +641,7 @@ public class GuiActivities {
 				}
 			});
 			loot.setBounds(1430, 261, 109, 30);
-			loot.setIcon(new ImageIcon(Gui.class
+			loot.setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/others/loot.png")));
 			loot.setVisible(true);
 			cp.add(loot);
@@ -696,11 +657,12 @@ public class GuiActivities {
 					backButton.setVisible(false);
 					tabbedpane.remove(cp);
 					setSearch(false);
+					turn++;
 
 				}
 			});
 			backButton.setBounds(800, 907, 100, 23);
-			backButton.setIcon(new ImageIcon(Gui.class
+			backButton.setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/actions/backarrow.gif")));
 			backButton.setVisible(true);
 			cp.add(backButton);
@@ -727,6 +689,7 @@ public class GuiActivities {
 
 			if (getRolled() == false) {
 				JOptionPane.showMessageDialog(null, "Please roll die first");
+				setHide(false);
 				return false;
 			}
 
@@ -737,6 +700,7 @@ public class GuiActivities {
 				txt.append(p.getName() + " is now hidden from every one \n");
 
 				setHide(false);
+				turn++;
 				return true;
 
 			}
@@ -744,6 +708,7 @@ public class GuiActivities {
 			else if (p.getCharacter().getRoll() == 6) {
 				JOptionPane.showMessageDialog(null, "Sorry you cant hide");
 				setHide(false);
+				turn++;
 				return true;
 			}
 
@@ -764,11 +729,43 @@ public class GuiActivities {
 				JOptionPane.OK_CANCEL_OPTION);
 
 		if (option == JOptionPane.OK_OPTION) {
-
-			txt.append(" Please select the counter you would like to rest from the character panel\n");
-
+			if(p.getCharacter().getFatiguedCounter().size() > 0 && p.getCharacter().getFatiguedCounter().get(0).getStar() == 1){
+			p.getCharacter().rest(p.getCharacter().getFatiguedCounter().get(0));
+			txt.append("You are now resting " + p.getCharacter().getFatiguedCounter().get(0).getDetails());			
+			setRest(false);
+			turn++;
 			return true;
+			}else if(p.getCharacter().getFatiguedCounter().size() > 0 && p.getCharacter().getFatiguedCounter().get(0).getStar() == 2){
+				int option2 = JOptionPane.showConfirmDialog(null, null, "Needs 2 rest activities!",
+						JOptionPane.OK_CANCEL_OPTION);
+					if((option2 == JOptionPane.OK_OPTION)){
+						turn += 2;
+						p.getCharacter().rest(p.getCharacter().getFatiguedCounter().get(0));
+						setRest(false);
+						return true;
+					}else{ JOptionPane.showMessageDialog(null, p.getCharacter().getFatiguedCounter().get(0).getDetails() + " is not rested");
+					setRest(false);
+					return false;
+					}
+			}else if(p.getCharacter().getFatiguedCounter().size() > 0 && p.getCharacter().getFatiguedCounter().get(0).getStar() == 3 ){
+				int option3 = JOptionPane.showConfirmDialog(null, null, "Needs 3 rest activities!",
+						JOptionPane.OK_CANCEL_OPTION);
+					if((option3 == JOptionPane.OK_OPTION)){
+						turn += 3;
+						p.getCharacter().rest(p.getCharacter().getFatiguedCounter().get(0));
+						setRest(false);
+						return true;
+					}else{ JOptionPane.showMessageDialog(null, p.getCharacter().getFatiguedCounter().get(0).getDetails() + " is not rested");
+					setRest(false);
+					return false;
 
+			}
+				
+			}else{ JOptionPane.showMessageDialog(null, "You have no fatigued counters to rest");
+			setRest(false);
+			return false;
+
+			}
 		} else {
 			txt.append(p.getName() + " is not resting \n");
 			setRest(false);
@@ -792,8 +789,9 @@ public class GuiActivities {
 						.getNatives().size(); i++)
 					p.getCharacter().getHiredNative().getNatives().get(i)
 							.isAlert(true);
-
+				txt.append(p.getCharacter().getHiredNative() + " is now Alerted \n");
 				setAlert(false);
+				turn++;
 				return true;
 
 			}
@@ -818,6 +816,7 @@ public class GuiActivities {
 					"please select the native group you wish to hire \n");
 			txt.append(" You can only hire native groups in the same clearing with you \n");
 
+			turn++;
 			return true;
 
 		} else {
@@ -828,8 +827,7 @@ public class GuiActivities {
 
 	}
 
-	public boolean hireNative(ActionEvent e, Player p, NativeGroup ng,
-			JTextArea txt) { // player hires a native group
+	public boolean hireNative(ActionEvent e, Player p, NativeGroup ng, JTextArea txt) { // player hires a native group
 		String name = ((Component) e.getSource()).getName();
 
 		int option = JOptionPane.showConfirmDialog(null, null,
@@ -916,11 +914,12 @@ public class GuiActivities {
 				backButton.setVisible(false);
 				tabbedPane.remove(cp);
 				setTrade(false);
+				turn++;
 
 			}
 		});
 		backButton.setBounds(800, 907, 100, 23);
-		backButton.setIcon(new ImageIcon(Gui.class
+		backButton.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/actions/backarrow.gif")));
 		backButton.setVisible(true);
 		cp.add(backButton);
@@ -949,7 +948,7 @@ public class GuiActivities {
 			});
 
 			items[0].setBounds(50, 150, 65, 70);
-			items[0].setIcon(new ImageIcon(Gui.class
+			items[0].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/armor/breastplate.png")));
 			items[0].setVisible(true);
 			buttonGroup.add(items[0]);
@@ -972,7 +971,7 @@ public class GuiActivities {
 				}
 			});
 			items[1].setBounds(145, 300, 85, 50);
-			items[1].setIcon(new ImageIcon(Gui.class
+			items[1].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/weapons/broadsword.png")));
 			items[1].setVisible(true);
 			buttonGroup.add(items[1]);
@@ -996,7 +995,7 @@ public class GuiActivities {
 			});
 
 			items[2].setBounds(350, 500, 150, 60);
-			items[2].setIcon(new ImageIcon(Gui.class
+			items[2].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/weapons/crossboww.png")));
 			items[2].setVisible(true);
 			buttonGroup.add(items[2]);
@@ -1019,7 +1018,7 @@ public class GuiActivities {
 				}
 			});
 			items[3].setBounds(50, 300, 75, 70);
-			items[3].setIcon(new ImageIcon(Gui.class
+			items[3].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/weapons/greataxe.png")));
 			items[3].setVisible(true);
 			buttonGroup.add(items[3]);
@@ -1043,7 +1042,7 @@ public class GuiActivities {
 				}
 			});
 			items[4].setBounds(250, 300, 140, 100);
-			items[4].setIcon(new ImageIcon(Gui.class
+			items[4].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/weapons/greatsword.png")));
 			items[4].setVisible(true);
 			buttonGroup.add(items[4]);
@@ -1067,7 +1066,7 @@ public class GuiActivities {
 				}
 			});
 			items[5].setBounds(140, 150, 65, 70);
-			items[5].setIcon(new ImageIcon(Gui.class
+			items[5].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/armor/helmet.png")));
 			items[5].setVisible(true);
 			buttonGroup.add(items[5]);
@@ -1090,7 +1089,7 @@ public class GuiActivities {
 				}
 			});
 			items[6].setBounds(430, 300, 100, 50);
-			items[6].setIcon(new ImageIcon(Gui.class
+			items[6].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/weapons/lightbow.png")));
 			items[6].setVisible(true);
 			buttonGroup.add(items[6]);
@@ -1113,7 +1112,7 @@ public class GuiActivities {
 				}
 			});
 			items[7].setBounds(570, 300, 150, 50);
-			items[7].setIcon(new ImageIcon(Gui.class
+			items[7].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/weapons/mace.png")));
 			items[7].setVisible(true);
 			buttonGroup.add(items[7]);
@@ -1136,7 +1135,7 @@ public class GuiActivities {
 				}
 			});
 			items[8].setBounds(230, 150, 70, 110);
-			items[8].setIcon(new ImageIcon(Gui.class
+			items[8].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/armor/shields.png")));
 			items[8].setVisible(true);
 			buttonGroup.add(items[8]);
@@ -1159,7 +1158,7 @@ public class GuiActivities {
 				}
 			});
 			items[9].setBounds(730, 300, 130, 35);
-			items[9].setIcon(new ImageIcon(Gui.class
+			items[9].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/weapons/shortsword.png")));
 			items[9].setVisible(true);
 			buttonGroup.add(items[9]);
@@ -1182,7 +1181,7 @@ public class GuiActivities {
 				}
 			});
 			items[10].setBounds(50, 500, 130, 90);
-			items[10].setIcon(new ImageIcon(Gui.class
+			items[10].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/weapons/spear.png")));
 			items[10].setVisible(true);
 			buttonGroup.add(items[10]);
@@ -1208,7 +1207,7 @@ public class GuiActivities {
 				}
 			});
 			items[11].setBounds(200, 500, 110, 50);
-			items[11].setIcon(new ImageIcon(Gui.class
+			items[11].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/weapons/thrustingsword.png")));
 			items[11].setVisible(true);
 			buttonGroup.add(items[11]);
@@ -1231,7 +1230,7 @@ public class GuiActivities {
 				}
 			});
 			items[12].setBounds(330, 150, 135, 125);
-			items[12].setIcon(new ImageIcon(Gui.class
+			items[12].setIcon(new ImageIcon(GuiActivities.class
 					.getResource("/armor/suitsofarmor.png")));
 			items[12].setVisible(true);
 			buttonGroup.add(items[12]);
@@ -1277,16 +1276,15 @@ public class GuiActivities {
 		this.currentPlayer = currentPlayer;
 	}
 
-	public void showNativeGroup(final NativeGroup ng, final Player p,
-			final JTextArea txt, JPanel cp) {
+	public void showNativeGroup(final NativeGroup ng, final Player p, final JTextArea txt, JPanel cp) {
 
 		System.out.println(ng.getTile() + p.getTile());
-		System.out.println(ng.getClearing() + " " + p.getClearing());
+		//System.out.println(ng.getClearing() + " " + p.getClearing());
 
 		final JButton groupLabel = new JButton();
 
 		if (ng.getTile().equals(p.getTile())
-				&& ng.getClearing() == p.getClearing()) {
+				/*&& ng.getClearing() == p.getClearing()*/) {
 
 			groupLabel.setVisible(true);
 
@@ -1307,7 +1305,7 @@ public class GuiActivities {
 				}
 			}
 		});
-		groupLabel.setIcon(new ImageIcon(Gui.class
+		groupLabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/others/nativegroup.jpg")));
 		groupLabel.setName(ng.getName());
 		groupLabel.setBounds(400, 700, 120, 120);
@@ -1318,7 +1316,7 @@ public class GuiActivities {
 
 	public void cheatmodeButtons(Container container) {
 
-		JButton[] cheatbuttons = new JButton[4];
+		JButton[] cheatbuttons = new JButton[5];
 
 		final JLabel boneslabel;
 		final JLabel danklabel;
@@ -1331,9 +1329,12 @@ public class GuiActivities {
 		final JLabel patrollabel;
 		final JLabel woodfolklabel;
 		final JLabel companylabel;
+		
+		final JLabel howllabel;
 
-		final LinkedList<Dwelling> dwellings = new LinkedList<Dwelling>();
-		final LinkedList<WarningChit> warningchits = new LinkedList<WarningChit>();
+		//final ArrayList<Dwelling> dwellings = new ArrayList<Dwelling>();
+		//final ArrayList<WarningChit> warningchits = new ArrayList<WarningChit>();
+		//final ArrayList<SoundChit> sounds = new ArrayList<SoundChit>();
 
 		// bashkars = new Bashkars();
 		// lancers = new Lancers();
@@ -1346,16 +1347,18 @@ public class GuiActivities {
 		comboBox.setEnabled(false);
 		comboBox.setBounds(706, 237, 245, 27);
 
-		dwellings.add(chapel);
-		dwellings.add(guardhouse);
-		dwellings.add(house);
-		dwellings.add(inn);
-
+		//dwellings.add(chapel);
+		//dwellings.add(guardhouse);
+		//dwellings.add(house);
+		//dwellings.add(inn);
+/*
 		warningchits.add(bones);
 		warningchits.add(dank);
 		warningchits.add(ruins);
 		warningchits.add(smoke);
 		warningchits.add(stink);
+		*/
+		//sounds.add(howl);
 
 		final JLabel chapelLabel = new JLabel();
 		chapelLabel.addMouseListener(new MouseAdapter() {
@@ -1365,7 +1368,7 @@ public class GuiActivities {
 				placedwelling(chapel);
 			}
 		});
-		chapelLabel.setIcon(new ImageIcon(Gui.class
+		chapelLabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/dwellings/chapel.gif")));
 		chapelLabel.setBounds(220, 150, 70, 50);
 		chapelLabel.setName("Chapel");
@@ -1381,7 +1384,7 @@ public class GuiActivities {
 
 			}
 		});
-		guardLabel.setIcon(new ImageIcon(Gui.class
+		guardLabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/dwellings/guard.gif")));
 		guardLabel.setBounds(300, 150, 70, 50);
 		guardLabel.setName("GuardHouse");
@@ -1397,7 +1400,7 @@ public class GuiActivities {
 
 			}
 		});
-		houseLabel.setIcon(new ImageIcon(Gui.class
+		houseLabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/dwellings/house.gif")));
 		houseLabel.setBounds(390, 150, 70, 50);
 		houseLabel.setName("House");
@@ -1413,7 +1416,7 @@ public class GuiActivities {
 
 			}
 		});
-		innLabel.setIcon(new ImageIcon(Gui.class
+		innLabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/dwellings/inn.gif")));
 		innLabel.setBounds(480, 150, 70, 50);
 		innLabel.setName("Inn");
@@ -1425,10 +1428,26 @@ public class GuiActivities {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				placeWarningChit(bones);
+				String inputname;
+
+				inputname = (String) JOptionPane.showInputDialog(null, "Tile:",
+						"Place a dwelling", JOptionPane.QUESTION_MESSAGE, null, null,
+						"Type your name here");
+
+				if (inputname == null || inputname.trim().length() == 0)
+					JOptionPane.showMessageDialog(null, "Enter A  tile name");
+
+				else if (inputname != null) {
+					if (bd.getTile(inputname) != null) {
+						bd.getTile(inputname).getWarnings().add(bones);
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Enter A  Valid Tile name in Block Letters!");
+					}
+				};
 			}
 		});
-		boneslabel.setIcon(new ImageIcon(Gui.class
+		boneslabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/others/bones.png")));
 		boneslabel.setBounds(150, 250, 70, 50);
 		boneslabel.setName("Bones");
@@ -1440,11 +1459,27 @@ public class GuiActivities {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				placeWarningChit(dank);
+				String inputname;
+
+				inputname = (String) JOptionPane.showInputDialog(null, "Tile:",
+						"Place a dwelling", JOptionPane.QUESTION_MESSAGE, null, null,
+						"Type your name here");
+
+				if (inputname == null || inputname.trim().length() == 0)
+					JOptionPane.showMessageDialog(null, "Enter A  tile name");
+
+				else if (inputname != null) {
+					if (bd.getTile(inputname) != null) {
+						bd.getTile(inputname).getWarnings().add(dank);
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Enter A  Valid Tile name in Block Letters!");
+					}
+				};
 
 			}
 		});
-		danklabel.setIcon(new ImageIcon(Gui.class
+		danklabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/others/dank.png")));
 		danklabel.setBounds(250, 250, 70, 50);
 		danklabel.setName("DANK");
@@ -1456,11 +1491,27 @@ public class GuiActivities {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				placeWarningChit(ruins);
+				String inputname;
+
+				inputname = (String) JOptionPane.showInputDialog(null, "Tile:",
+						"Place a dwelling", JOptionPane.QUESTION_MESSAGE, null, null,
+						"Type your name here");
+
+				if (inputname == null || inputname.trim().length() == 0)
+					JOptionPane.showMessageDialog(null, "Enter A  tile name");
+
+				else if (inputname != null) {
+					if (bd.getTile(inputname) != null) {
+						bd.getTile(inputname).getWarnings().add(ruins);
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Enter A  Valid Tile name in Block Letters!");
+					}
+				};
 
 			}
 		});
-		ruinslabel.setIcon(new ImageIcon(Gui.class
+		ruinslabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/others/ruins.png")));
 		ruinslabel.setBounds(350, 250, 70, 50);
 		ruinslabel.setName("Ruins");
@@ -1472,11 +1523,27 @@ public class GuiActivities {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				placeWarningChit(smoke);
+				String inputname;
+
+				inputname = (String) JOptionPane.showInputDialog(null, "Tile:",
+						"Place a dwelling", JOptionPane.QUESTION_MESSAGE, null, null,
+						"Type your name here");
+
+				if (inputname == null || inputname.trim().length() == 0)
+					JOptionPane.showMessageDialog(null, "Enter A  tile name");
+
+				else if (inputname != null) {
+					if (bd.getTile(inputname) != null) {
+						bd.getTile(inputname).getWarnings().add(smoke);
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Enter A  Valid Tile name in Block Letters!");
+					}
+				};
 
 			}
 		});
-		smokelabel.setIcon(new ImageIcon(Gui.class
+		smokelabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/others/smoke.png")));
 		smokelabel.setBounds(450, 250, 70, 50);
 		smokelabel.setName("Smoke");
@@ -1488,11 +1555,27 @@ public class GuiActivities {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 
-				placeWarningChit(stink);
+				String inputname;
+
+				inputname = (String) JOptionPane.showInputDialog(null, "Tile:",
+						"Place a dwelling", JOptionPane.QUESTION_MESSAGE, null, null,
+						"Type your name here");
+
+				if (inputname == null || inputname.trim().length() == 0)
+					JOptionPane.showMessageDialog(null, "Enter A  tile name");
+
+				else if (inputname != null) {
+					if (bd.getTile(inputname) != null) {
+						bd.getTile(inputname).getWarnings().add(stink);
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Enter A  Valid Tile name in Block Letters!");
+					}
+				};
 
 			}
 		});
-		stinklabel.setIcon(new ImageIcon(Gui.class
+		stinklabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/others/stink.png")));
 		stinklabel.setBounds(550, 250, 70, 50);
 		stinklabel.setName("Stink");
@@ -1508,7 +1591,7 @@ public class GuiActivities {
 
 			}
 		});
-		companylabel.setIcon(new ImageIcon(Gui.class
+		companylabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/natives/company.png")));
 		companylabel.setBounds(550, 350, 70, 50);
 		companylabel.setName("Company");
@@ -1524,7 +1607,7 @@ public class GuiActivities {
 
 			}
 		});
-		woodfolklabel.setIcon(new ImageIcon(Gui.class
+		woodfolklabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/natives/woodfolk.png")));
 		woodfolklabel.setBounds(450, 350, 70, 50);
 		woodfolklabel.setName("Woodfolk");
@@ -1540,7 +1623,7 @@ public class GuiActivities {
 
 			}
 		});
-		patrollabel.setIcon(new ImageIcon(Gui.class
+		patrollabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/natives/patrol.png")));
 		patrollabel.setBounds(350, 350, 70, 50);
 		patrollabel.setName("PATROL");
@@ -1556,7 +1639,7 @@ public class GuiActivities {
 
 			}
 		});
-		baskarlabel.setIcon(new ImageIcon(Gui.class
+		baskarlabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/natives/bashkars.png")));
 		baskarlabel.setBounds(150, 350, 70, 50);
 		baskarlabel.setName("Bashkars");
@@ -1572,12 +1655,28 @@ public class GuiActivities {
 
 			}
 		});
-		lancerslabel.setIcon(new ImageIcon(Gui.class
+		lancerslabel.setIcon(new ImageIcon(GuiActivities.class
 				.getResource("/natives/lancers.png")));
 		lancerslabel.setBounds(250, 350, 70, 50);
 		lancerslabel.setName("LANCERS");
 		lancerslabel.setVisible(false);
 		container.add(lancerslabel);
+		
+		howllabel = new JLabel();
+		howllabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+				placeSoundChit(howl);
+
+			}
+		});
+		howllabel.setIcon(new ImageIcon(GuiActivities.class
+				.getResource("/natives/patrol.png")));
+		howllabel.setBounds(160, 350, 70, 50);
+		howllabel.setName("HOWL");
+		howllabel.setVisible(false);
+		container.add(howllabel);
 
 		cheatbuttons[0] = new JButton("Dwellings");
 		cheatbuttons[0].addActionListener(new ActionListener() {
@@ -1669,6 +1768,22 @@ public class GuiActivities {
 		cheatbuttons[3].setBounds(50, 300, 100, 40);
 		cheatbuttons[3].setVisible(true);
 		container.add(cheatbuttons[3]);
+		
+		cheatbuttons[4] = new JButton("Sounds");
+		cheatbuttons[4].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane
+						.showMessageDialog(null,
+								"Please select the Sounds that you would like to place on the board");
+
+				howllabel.setVisible(true);
+				
+
+			}
+		});
+		cheatbuttons[4].setBounds(50, 350, 100, 40);
+		cheatbuttons[4].setVisible(true);
+		container.add(cheatbuttons[4]);
 
 	}
 
@@ -1882,6 +1997,40 @@ public class GuiActivities {
 	
 	public void initCombatScreen() {
 		cs = new CombatScreen(this);
+		
+		cs.move.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				placeMove(getPlayer1());
+			}
+		});
+		cs.move.setBounds(50, 200, 89, 23);
+		cs.btnPanel.add(cs.move);
+		cs.move.setVisible(true);
+
+		cs.fight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				placeFight(getPlayer1());
+			}
+		});
+		cs.fight.setBounds(50, 250, 89, 23);
+		cs.btnPanel.add(cs.fight);
+		cs.fight.setVisible(true);
+		
+		cs.submitStats.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Here 2");
+				cs.updateFrame();
+				setSendToServer(true);
+				System.out.println("Here 3");
+			}
+		});
+		cs.submitStats.setBounds(50, 250, 89, 23);
+		cs.btnPanel.add(cs.submitStats);
+		cs.submitStats.setVisible(true);
+	}
+	
+	public CombatScreen getCombatScreen() {
+		return cs;
 	}
 
 	public boolean moved() {
@@ -2168,4 +2317,11 @@ public class GuiActivities {
 		this.place = place;
 	}
 
+	public int getTurn(){
+		return turn;
+	}
+
+	public void setTurn(int t){
+		this.turn = t;
+}
 }

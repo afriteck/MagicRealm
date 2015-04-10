@@ -6,11 +6,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -19,17 +14,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 import models.Armor;
 import models.Counters;
-import models.Player;
 import models.Weapons;
 
 public class CombatScreen {
+
 	private boolean inCombat;
 	public JButton fight, move, submitStats;
 	public JPanel currPlayerDetails, characterActive, characterActiveCounter,
@@ -39,6 +31,7 @@ public class CombatScreen {
 	public ArrayList<Counters> characterReadyCounters, characterFatigueCounters;
 	public ArrayList<Armor> characterArmor;
 	public ArrayList<Weapons> characterWeapons;
+	JFrame frame1;
 
 	public CombatScreen(final GuiActivities gm) {
 		characterReadyCounters = gm.getPlayer1()
@@ -150,7 +143,7 @@ public class CombatScreen {
 		
 		submitStats = new JButton("Submit");
 		
-		JFrame frame1 = new JFrame();
+		frame1 = new JFrame();
 		frame1.add(currPlayerDetails, BorderLayout.WEST);
 		frame1.add(btnPanel, BorderLayout.EAST);
 
@@ -159,4 +152,20 @@ public class CombatScreen {
 		frame1.pack();
 		frame1.setVisible(true);
 	}
+
+
+	public void updateFrame() {
+		frame1.remove(currPlayerDetails);
+		frame1.add(currPlayerDetails, BorderLayout.WEST);
+		frame1.repaint();
+		//frame1.add(btnPanel, BorderLayout.EAST);
+
+		// Display the window.
+		//frame1.setSize(new Dimension(1920, 1040));
+		//frame1.pack();
+		frame1.setVisible(true);
+	}
+
+
+
 }

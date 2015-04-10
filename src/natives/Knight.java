@@ -1,5 +1,6 @@
 package natives;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.Armor;
@@ -14,7 +15,7 @@ public class Knight extends Native {
 
 
 	private static Weapons weapon ;
-    private  LinkedList<Armor> nativeArsenal;    // the chatacters arsenal
+    private  ArrayList<Armor> nativeArsenal;    // the chatacters arsenal
     private Armor armor;
 
 	
@@ -28,7 +29,7 @@ public class Knight extends Native {
 	setWeapon(weapon);
 	armor = new BreastPlates();
 
-	nativeArsenal = new LinkedList<Armor>();
+	nativeArsenal = new ArrayList<Armor>();
 	setNativeArsenal(nativeArsenal);
 	nativeArsenal.add(armor);
 

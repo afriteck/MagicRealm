@@ -8,10 +8,9 @@ public class Dwelling {
 	
 	private String name;
 	private String fpath;
-	private Tiles homeTile;
-	private String home;
-	private Clearing currentClearing;
 	private int clearing;
+	private String tile;
+
 	private NativeGroup natives;
 
 	
@@ -46,21 +45,7 @@ public Dwelling(String name){
 		this.fpath = fpath;
 	}
 
-	public Tiles getHomeTile() {
-		return homeTile;
-	}
 
-	public void setHomeTile(Tiles homeTile) {
-		this.homeTile = homeTile;
-	}
-
-	public Clearing getCurrentClearing() {
-		return currentClearing;
-	}
-
-	public void setCurrentClearing(Clearing clearing) {
-		this.currentClearing = clearing;
-	}
 
 	public int getClearing() {
 		return clearing;
@@ -70,13 +55,6 @@ public Dwelling(String name){
 		this.clearing = clearing;
 	}
 
-	public String getHome() {
-		return home;
-	}
-
-	public void setHome(String home) {
-		this.home = home;
-	}
 
 	public NativeGroup getNatives() {
 		return natives;
@@ -85,5 +63,15 @@ public Dwelling(String name){
 	public void setNatives(NativeGroup natives) {
 		this.natives = natives;
 	}
+
+	public String getTile() {
+		return tile;
+	}
+
+	public void setTile(String tile) {
+		this.tile = tile;
+	}
+
+	
 
 }

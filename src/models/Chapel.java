@@ -1,6 +1,7 @@
 package models;
 
 import natives.Order;
+import gameLogic.Iteration1Board;
 
 public class Chapel extends Dwelling{
 

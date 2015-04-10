@@ -1,5 +1,6 @@
 package natives;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.Armor;
@@ -12,7 +13,7 @@ public class Company extends NativeGroup {
 
 	
 	
-private static LinkedList<Native> natives;   
+private static ArrayList<Native> natives;   
 private int cost;
 
     
@@ -43,7 +44,7 @@ private int cost;
 
 	public void initializeNatives(){
 		
-		natives = new LinkedList<Native>(); 
+		natives = new ArrayList<Native>(); 
 		
 		initializeCHQ();
 		initializec1();

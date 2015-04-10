@@ -1,8 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-
 import natives.NativeGroup;
 
 public class Amazon extends Things{

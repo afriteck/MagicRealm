@@ -1,5 +1,6 @@
 package natives;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import models.DamageEnum;
@@ -9,7 +10,7 @@ public class Soldiers extends NativeGroup{
 
 	
 	
-private static LinkedList<Native> natives;   
+private static ArrayList<Native> natives;   
     
 	private GreatSwordsman SHQ;
 	private Pikeman s1;
@@ -37,7 +38,7 @@ private static LinkedList<Native> natives;
 
 	public void initializeNatives(){
 		
-		natives = new LinkedList<Native>(); 
+		natives = new ArrayList<Native>(); 
 		
 		initializeSHQ();
 		initializes1();

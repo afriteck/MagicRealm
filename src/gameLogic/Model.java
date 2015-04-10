@@ -59,9 +59,9 @@ public void playGame(JTextArea txt, Container cp){
 
 
 		} if(gm.isSearch()){
-					//if(gm.requestSearch(gm.getPlayer1(), cp))
+					/*if(gm.requestSearch(gm.getPlayer1(), cp))
 					turn++;
-					gm.setSearch(false);
+					gm.setSearch(false);*/
 
 		} if(gm.isTrade()){
 			//gm.intializeTrade(cp);

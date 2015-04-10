@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.net.URL;
 import java.util.ArrayList;
 
+import models.TreasureChit;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -56,6 +58,7 @@ public class InitBoardTiles {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return bt;
 	}
 }

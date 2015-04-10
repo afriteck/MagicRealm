@@ -18,8 +18,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
-
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -79,11 +77,23 @@ public class CombatGui extends JPanel {
     private static Kryo kryo;
     static JButton btnNewButton;
     private static BoardTiles bd;
-    static JButton[] activity = new JButton[11];
+    static JButton[] activity = new JButton[12];
     static HexTiles ht;
 
     private static boolean blocked;
     private static boolean skippedturn;
+    static JLabel amazon;
+
+	static JLabel elf;
+
+	static JLabel dwarf;
+
+	static JLabel captain;
+
+	static JLabel blackKnight;
+
+	static JLabel swordsman;
+	int turn;
 
 	// JFrame frame = new JFrame("TabbedPaneDemo");
 
@@ -318,13 +328,13 @@ public class CombatGui extends JPanel {
 		
 
 		
-		img[0] = new ImageIcon(Gui.class.getResource("/dice/roll.png")); 
-		img[1] = new ImageIcon(Gui.class.getResource("/dice/1.png")); 
-		img[2] = new ImageIcon(Gui.class.getResource("/dice/2.png")); 
-		img[3] = new ImageIcon(Gui.class.getResource("/dice/3.png")); 
-		img[4] = new ImageIcon(Gui.class.getResource("/dice/4.png")); 
-		img[5] = new ImageIcon(Gui.class.getResource("/dice/5.png")); 
-		img[6] = new ImageIcon(Gui.class.getResource("/dice/6.png"));
+		img[0] = new ImageIcon(CombatGui.class.getResource("/dice/roll.png")); 
+		img[1] = new ImageIcon(CombatGui.class.getResource("/dice/1.png")); 
+		img[2] = new ImageIcon(CombatGui.class.getResource("/dice/2.png")); 
+		img[3] = new ImageIcon(CombatGui.class.getResource("/dice/3.png")); 
+		img[4] = new ImageIcon(CombatGui.class.getResource("/dice/4.png")); 
+		img[5] = new ImageIcon(CombatGui.class.getResource("/dice/5.png")); 
+		img[6] = new ImageIcon(CombatGui.class.getResource("/dice/6.png"));
 		
 		txt.setBorder(new EmptyBorder(0, 0, 0, 0));
 		txt.setForeground(Color.WHITE);
@@ -491,7 +501,6 @@ public class CombatGui extends JPanel {
 		activity[1] = new JButton("MOVE");
 		activity[1].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				//JOptionPane.showMessageDialog(null, "move!");                        	
 				//gm.getBD().getTile(gm.getPlayer1().getTile()).getClearingByNum(gm.getPlayer1().getClearing()).removePersonHere(gm.getPlayer1().getPchit());	
 
@@ -509,7 +518,7 @@ public class CombatGui extends JPanel {
 					//System.out.println(gm.getBD().getTile(gm.getPlayer1().getTile()).getClearingByNum(2).getPersonHere());	
 
 					
-				if(gm.getBD().getTile(gm.getPlayer1().getTile()).getClearingByNum(gm.getPlayer1().getClearing()).getPeopleHere().size() > 1)	
+				if(gm.getBD().getTile(gm.getPlayer1().getTile()).getClearingByNum(gm.getPlayer1().getClearing()).getPeopleHere().size() > 1 && gm.getPlayer1().getCharacter().getVisibility() == false)	
 						client.sendTCP(new Message("block me"));
 				
 					
@@ -524,7 +533,9 @@ public class CombatGui extends JPanel {
 		activity[2] = new JButton("HIDE");
 		activity[2].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				gm.setHide(true);	
+				gm.setHide(true);
+				gm.setRolled(false);
+
 	if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHire()&& !gm.isRest() && !gm.isSearch()&& !gm.isTrade()){
 
 				hiding(gm.isCheatMode());
@@ -538,7 +549,7 @@ public class CombatGui extends JPanel {
 		activity[3] = new JButton("TRADE");
 		activity[3].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-	JOptionPane.showMessageDialog(null, "Hit back button when done to continue game");
+				JOptionPane.showMessageDialog(null, "Hit back button when done to continue game");
 				gm.setTrade(true);
 if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHire()&& !gm.isRest() && !gm.isSearch()&& !gm.isHide()){
 			
@@ -567,8 +578,8 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		activity[4] = new JButton("SEARCH");
 		activity[4].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		JOptionPane.showMessageDialog(null, "Hit back button when done to continue game");
-				gm.setSearch(true);
+				JOptionPane.showMessageDialog(null, "Hit back button when done to continue game");
+		gm.setSearch(true);
 	if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHire()&& !gm.isRest() && !gm.isTrade()&& !gm.isHide()){			
 				//hhh
 				searching(gm.isCheatMode());
@@ -582,8 +593,6 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		activity[5] = new JButton("REST");
 		activity[5].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			JOptionPane.showMessageDialog(null, "Select the counter you would like to rest from the character panel ");
 				gm.setRest(true);
 	if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHire()&& !gm.isSearch() && !gm.isTrade()&& !gm.isHide()){			
 				
@@ -616,8 +625,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		activity[7] = new JButton("HIRE");
 		activity[7].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gm.setHire(true);
-				
+				gm.setHire(true);				
 	if(!gm.isEnchant() && !gm.isRest() && !gm.isFollow() && !gm.moved() && !gm.isAlert()&& !gm.isSearch() && !gm.isTrade()&& !gm.isHide()){			
 
 					
@@ -638,8 +646,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		activity[8] = new JButton("FOLLOW");
 		activity[8].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gm.setFollow(true);
-				
+				gm.setFollow(true);				
 	if(!gm.isEnchant() && !gm.isRest() && !gm.isHire() && !gm.moved() && !gm.isAlert()&& !gm.isSearch() && !gm.isTrade()&& !gm.isHide()){			
 			if(gm.getPlayer1().getCharacter().getHiredNatives().get(0) != null){
 				gm.getPlayer1().getCharacter().getHiredNatives().get(0).setTile(gm.getPlayer1().getCharacter().getTileName());
@@ -668,22 +675,48 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		panel.add(activity[9]);
 		activity[9].setVisible(true);
 
-		
-		activity[10] = new JButton("SUBMIT");
+		activity[10] = new JButton("COMBAT");
 		activity[10].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {								
+			public void actionPerformed(ActionEvent e) {
+				//gm.setCombat(true);
+				// gm.initCombatScreen();
+				System.out.println(gm.requestCombat(gm.getPlayer1()));
+				//gm.requestCombat(gm.getPlayer1());
+				if (gm.requestCombat(gm.getPlayer1()) == false) {
+					System.out.println("Here 4");
+					gm.initCombatScreen();
+					System.out.println("Here 5");
+					//gm.requestCombat(gm.getPlayer1());
+				} else {
+					System.out.println("DdDDDDD");
+					gm.initCombatScreen();
+				}
+				
+				if (gm.getSendToServer() == true) {
+					client.sendTCP(new Message("character chits sent"));
+					client.sendTCP(gm.getPlayer1());
+				}
+			}
+		});
+		activity[10].setBounds(50, 600, 89, 23);
+		panel.add(activity[10]);
+		activity[10].setVisible(true);
+
+		activity[11] = new JButton("SUBMIT");
+		activity[11].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				setsubmit(true);
 				client.sendTCP(new Message("sending game model"));
 				client.sendTCP(gm.getBD());
-		        client.sendTCP(gm.getPlayer1());
-		       for(int i = 0; i < activity.length; i++)
-		        	activity[i].setVisible(false);
+				client.sendTCP(gm.getPlayer1());
+				for (int i = 0; i < activity.length; i++)
+					activity[i].setVisible(false);
 
 			}
 		});
-		activity[10].setBounds(50, 800, 89, 23);
-		panel.add(activity[10]);
-		activity[10].setVisible(true);
+		activity[11].setBounds(50, 800, 89, 23);
+		panel.add(activity[11]);
+		activity[11].setVisible(true);
 		
 		
 		
@@ -1018,7 +1051,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		backButton.setVisible(false);
 		panel.add(backButton);
 
-		JLabel amazon = new JLabel("");
+		amazon = new JLabel("");
 		amazon.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -1035,7 +1068,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		amazon.setVisible(true);
 		panel.add(amazon);
 
-		JLabel dwarf = new JLabel("");
+		dwarf = new JLabel("");
 
 		dwarf.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1053,7 +1086,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		dwarf.setVisible(true);
 		panel.add(dwarf);
 
-		JLabel elf = new JLabel("");
+		elf = new JLabel("");
 
 		elf.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1072,7 +1105,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		elf.setVisible(true);
 		panel.add(elf);
 
-		JLabel captain = new JLabel("");
+		captain = new JLabel("");
 		captain.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -1088,7 +1121,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		captain.setVisible(true);
 		panel.add(captain);
 
-		JLabel blackKnight = new JLabel("");
+		blackKnight = new JLabel("");
 		blackKnight.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -1105,7 +1138,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		blackKnight.setVisible(true);
 		panel.add(blackKnight);
 
-		JLabel swordsman = new JLabel("");
+		swordsman = new JLabel("");
 		swordsman.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -1171,6 +1204,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 			 
 
         	client.sendTCP(new Message("selected"));
+			client.sendTCP(new Message(gm.getPlayer1().getCharacter().getName()));
 
 		
 		
@@ -1279,7 +1313,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 
                 		 panel1 = makeBoardPanel("Panel #1");
              			tabbedPane.addTab("Game Board", null, panel1, "Displays Game Board");
-            			panel2 = CharacterPanel("Panel #2");
+            			//panel2 = CharacterPanel("Panel #2");
 
 
             			
@@ -1332,28 +1366,48 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
                    
                     	}
     					else if(object.toString().contains("your turn")){
-    					JOptionPane.showMessageDialog(null, "Your turn!");
+    						if(!gm.isSelected())
+    							makeselectionpanel();
+    						else{JOptionPane.showMessageDialog(null, "Your turn!");    			
                     		for(int i = 0; i < activity.length; i++)
                     			activity[i].setVisible(true);
-                    		
-                    		/*if(isBlocked()){
-    	     					JOptionPane.showMessageDialog(null, "You were blocked for this turn!");
-                    			client.sendTCP(gm.getBD());
-                    			for(int i = 0; i < activity.length; i++)
-                        			activity[i].setVisible(false);
-                    		client.sendTCP(new Message("i was blocked"));
-                    		setSkippedturn(true);
-                    		}*/
+    						}
     					}else if(object.toString().contains("not turn")){
-    						if(!gm.isSelected())
-    						client.sendTCP(new Message("notselected"));
+    						//if(!gm.isSelected())
+        						//makeselectionpanel();
+
+    							//client.sendTCP(new Message("notselected"));
     						
     					}
                     
-                    
+    					else if(((Message) object).toString().contains("chose amazon")){
+                        amazon.setVisible(false);
+    					
+    					}
+                        
+                        else if(((Message) object).toString().contains("chose elf")){
+                        elf.setVisible(false);
+                        
+                        }
+                       
+                        else if(((Message) object).toString().contains("chose dwarf")){
+                        dwarf.setVisible(false);
+                        }
+                        else if(((Message) object).toString().contains("chose captain")){
+                        captain.setVisible(false);
+                        }
+                        
+                        else if(((Message) object).toString().contains("chose Swordsman")){
+                        	swordsman.setVisible(false);
+                        }
+                        
+                        else if(((Message) object).toString().contains("chose blackknight")){
+                        	blackKnight.setVisible(false);
+                        }
     					else if(object.toString().contains("select")){            					
-	                    	 makeselectionpanel();
-	     					JOptionPane.showMessageDialog(null, "Your turn!");
+	                    	//if(!gm.isSelected())
+    						//makeselectionpanel();
+	     				
 
     					}     
                     
@@ -1379,9 +1433,14 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
    					}     
     					else if(object.toString().contains("is connectedfalse")){            					
     						gm.setCheatMode(false);
-   					} 
-    					
-    					else if(object.toString().contains("ok")){            					
+   					}  else if (object.toString().contains("are now in combat")) {
+						JOptionPane.showMessageDialog(null,
+								"You are now in combat");
+						if (gm.requestCombat(gm.getPlayer1()) == false) {
+							gm.initCombatScreen();
+							//gm.requestCombat(gm.getPlayer1());
+						}
+					} else if(object.toString().contains("ok")){            					
         				JOptionPane.showMessageDialog(null, "Wait your turn!");                        	
 							tabbedPane.remove(panel2);
     						System.out.println(object);
@@ -1502,7 +1561,7 @@ public static void registerClasses() {
      kryo.register(gameBoard.Tiles.class);
      kryo.register(gameLogic.Dice.class);
      kryo.register(gameLogic.GuiActivities.class);
-     kryo.register(gameBoard.InitGameBoard.class);
+     kryo.register(gameLogic.Iteration1Board.class);
      kryo.register(gameLogic.Locate.class);
      kryo.register(gameLogic.LocateEnum.class);
      kryo.register(gameLogic.Loot.class);
@@ -1513,7 +1572,6 @@ public static void registerClasses() {
      kryo.register(gameLogic.PeerEnum.class);
      kryo.register(gameLogic.SearchTable.class);
      kryo.register(gui.CombatGui.class);
-     kryo.register(gui.Gui.class);
      kryo.register(gui.HexCell.class);
      kryo.register(models.Amazon.class);
      kryo.register(models.Armor.class);
@@ -1602,6 +1660,9 @@ public static void registerClasses() {
      kryo.register(models.WarningChit.Ruins.class);
      kryo.register(models.WarningChit.Stink.class);
      kryo.register(java.util.LinkedList.class);
+     kryo.register(models.SoundChit.class);
+     kryo.register(models.SoundChit.Howl.class);
+     
      //kryo.register(javax.swing.text.JTextComponent.KeymapActionMap.class);
 }
 
@@ -1684,7 +1745,6 @@ public static void toggleDie2(){
 }
 
 public static void hiding(boolean cheatmode){// performs hiding according to game mode.
-	gm.setRolled(false);
 	if(!cheatmode){
 		RollButton.setVisible(true);
 		if(gm.getRolled() == false)
@@ -1695,7 +1755,7 @@ public static void hiding(boolean cheatmode){// performs hiding according to gam
 			gm.getPlayer1().getPchit().setHidden(true);
 			gm.setRolled(false);
 			RollButton.setVisible(true);
-
+			gm.setHide(false);
 	}
 	
 	}else if(cheatmode){	
@@ -1704,7 +1764,8 @@ public static void hiding(boolean cheatmode){// performs hiding according to gam
 		if(gm.getRolled())
 			if(gm.requestHide(gm.getPlayer1(), gm.getRolled(),txt)){
 				gm.setRolled(false);
-		
+				gm.setHide(false);
+
 			}
 	}
 }
@@ -1829,4 +1890,16 @@ public static boolean isSkippedturn() {
 public static void setSkippedturn(boolean skippedturn) {
 	CombatGui.skippedturn = skippedturn;
 }
+
+/*
+public static void checkturn(){
+	if(gm.getTurn() == 4) {
+		client.sendTCP(gm.getBD());
+		client.sendTCP(gm.getPlayer1());
+	}
+		for(int i = 0; i < activity.length; i++)
+			activity[i].setVisible(false);
+
+}
+*/
 }

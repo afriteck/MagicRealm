@@ -9,8 +9,8 @@ public class Inn extends Dwelling{
 public Inn(){
 		
 		setName("INN");
-		setHome("BAD VALLEY");
-		setClearing(5);
+		//setHome("BAD VALLEY");
+		//setClearing(5);
 		setFpath("/dwellings/inn.gif");
 		setNatives(new Rogues());
 		
