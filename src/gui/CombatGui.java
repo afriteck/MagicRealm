@@ -518,7 +518,7 @@ public class CombatGui extends JPanel {
 					//System.out.println(gm.getBD().getTile(gm.getPlayer1().getTile()).getClearingByNum(2).getPersonHere());	
 
 					
-				if(gm.getBD().getTile(gm.getPlayer1().getTile()).getClearingByNum(gm.getPlayer1().getClearing()).getPeopleHere().size() > 1 && gm.getPlayer1().getCharacter().getVisibility() == false)	
+				if(gm.getBD().getTile(gm.getPlayer1().getTile()).getClearingByNum(gm.getPlayer1().getClearing()).getPeopleHere().size() > 1 && gm.getPlayer1().getCharacter().getVisibility())	
 						client.sendTCP(new Message("block me"));
 				
 					
@@ -1502,168 +1502,178 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 	
 public static void registerClasses() {
 	 kryo.register(java.util.ArrayList.class);
-     kryo.register(java.util.HashMap.class);      
-     kryo.register(java.util.HashMap.class);      
+	 kryo.register(java.util.LinkedList.class);
+    kryo.register(java.util.HashMap.class);      
+    kryo.register(java.util.HashMap.class);      
 
-     kryo.register(java.awt.BorderLayout.class);      
-     kryo.register(java.awt.Color.class);      
-     kryo.register(java.awt.Dimension.class);      
-     kryo.register(java.awt.Graphics.class);      
-     kryo.register(java.awt.GridLayout.class);      
-     kryo.register(java.awt.Image.class);      
-     kryo.register(java.awt.Toolkit.class);      
-     kryo.register(java.awt.event.ActionEvent.class);      
-     kryo.register(java.awt.event.ActionListener.class);      
-     kryo.register(java.awt.event.KeyEvent.class);      
-     kryo.register(java.awt.event.MouseAdapter.class);      
-     kryo.register(java.awt.event.MouseEvent.class);      
-     kryo.register(javax.swing.BorderFactory.class);      
-     kryo.register(javax.swing.ImageIcon.class);      
-     kryo.register(javax.swing.JButton.class);      
-     kryo.register(javax.swing.JComponent.class);      
-     kryo.register(javax.swing.JFrame.class);      
-     kryo.register(javax.swing.JLabel.class);      
-     kryo.register(javax.swing.JOptionPane.class);      
-     kryo.register(javax.swing.JPanel.class);      
-     kryo.register(javax.swing.JScrollPane.class);      
-     kryo.register(javax.swing.JTabbedPane.class);      
-     kryo.register(javax.swing.JTextArea.class);      
-     kryo.register(javax.swing.SwingUtilities.class);      
-     kryo.register(javax.swing.UIManager.class);      
-     kryo.register(javax.swing.border.EmptyBorder.class);      
-     kryo.register(javax.swing.text.DefaultCaret.class);      
-     
-     
-     kryo.register(java.io.FileReader.class);      
-     kryo.register(java.net.URL.class);      
-     kryo.register(org.json.simple.JSONObject.class);      
-     
-     
-     kryo.register(org.json.simple.JSONArray.class);      
-     kryo.register(org.json.simple.parser.JSONParser.class);      
-     
-     
-     kryo.register(javax.swing.JTextField.class);      
-     kryo.register(javax.swing.ButtonGroup.class);   
-     
-     kryo.register(java.awt.Container.class);   
-     kryo.register(java.awt.Component.class);   
-     kryo.register(javax.swing.ButtonGroup.class);   
-     kryo.register(javax.swing.ButtonGroup.class);   
-
-     
-
-
-     
-     kryo.register(gameBoard.BoardTiles.class);
-     kryo.register(gameBoard.Clearing.class);
-     kryo.register(gameBoard.InitBoardTiles.class);
-     kryo.register(gameBoard.Tiles.class);
-     kryo.register(gameLogic.Dice.class);
-     kryo.register(gameLogic.GuiActivities.class);
-     kryo.register(gameLogic.Iteration1Board.class);
-     kryo.register(gameLogic.Locate.class);
-     kryo.register(gameLogic.LocateEnum.class);
-     kryo.register(gameLogic.Loot.class);
-     kryo.register(gameLogic.LootEnum.class);
-     kryo.register(gameLogic.MagicSightEnum.class);
-     kryo.register(gameLogic.Model.class);
-     kryo.register(gameLogic.Peer.class);
-     kryo.register(gameLogic.PeerEnum.class);
-     kryo.register(gameLogic.SearchTable.class);
-     kryo.register(gui.CombatGui.class);
-     kryo.register(gui.HexCell.class);
-     kryo.register(models.Amazon.class);
-     kryo.register(models.Armor.class);
-     kryo.register(models.BlackKnight.class);
-     kryo.register(models.BreastPlates.class);
-     kryo.register(models.BroadSword.class);
-     kryo.register(models.Business.class);
-     kryo.register(models.Captain.class);
-     kryo.register(models.Chapel.class);
-     kryo.register(models.Message.class);
-
-
-     kryo.register(models.CharacterContainer.class);
-     kryo.register(models.Counters.class);
-     kryo.register(models.CrossBow.class);
-     kryo.register(models.DamageEnum.class);
-     kryo.register(models.Dwarf.class);
-     kryo.register(models.Dwelling.class);
-     kryo.register(models.Elf.class);
-     kryo.register(models.Entity.class);
-     kryo.register(models.Fight.class);
-     kryo.register(models.Follow.class);
-     kryo.register(models.GreatAxe.class);
-     kryo.register(models.GreatSword.class);
-     kryo.register(models.GuardHouse.class);
-     kryo.register(models.Helmet.class);
-     kryo.register(models.Hide.class);
-     kryo.register(models.House.class);
-     kryo.register(models.Income.class);
-     kryo.register(models.Inn.class);
-
-
-     kryo.register(models.LightBow.class);
-     kryo.register(models.Mace.class);
-     kryo.register(models.Monster.class);
-     kryo.register(models.Move.class);
-     kryo.register(models.Player.class);
-     kryo.register(models.PlayerChit.class);
-     kryo.register(models.Search.class);
-     kryo.register(models.Shields.class);
-     kryo.register(models.ShortSword.class);
-     kryo.register(models.Spear.class);
-     kryo.register(models.SuitsOfArmor.class);
-     kryo.register(models.Swordsman.class);
-     kryo.register(models.Things.class);
-     kryo.register(models.ThrustingSword.class);
-     kryo.register(models.TreasureChit.class);
-     kryo.register(models.WarningChit.class);
-     kryo.register(models.Weapons.class);
-     
-     
-     
-     
-     kryo.register(natives.Archer.class);
-     kryo.register(natives.Assasin.class);
-     kryo.register(natives.Bashkars.class);
-     kryo.register(natives.Company.class);
-     kryo.register(natives.Crossbowman.class);
-     kryo.register(natives.GreatAxeman.class);
-     kryo.register(natives.GreatSwordsman.class);
-     kryo.register(natives.Guard.class);
-     kryo.register(natives.Knight.class);
-     kryo.register(natives.Lancer.class);
-     kryo.register(natives.Lancers.class);
-     kryo.register(natives.Native.class);
-     kryo.register(natives.NativeGroup.class);
-     kryo.register(natives.Order.class);
-     kryo.register(natives.Patrol.class);
-     kryo.register(natives.Pikeman.class);
-     kryo.register(natives.Raider.class);
-     kryo.register(natives.Rogues.class);
-     kryo.register(natives.ShortSwordsman.class);
-     kryo.register(natives.Soldiers.class);
-     kryo.register(natives.Swordsman.class);
-     kryo.register(natives.Woodfolk.class);
+    kryo.register(java.awt.BorderLayout.class);      
+    kryo.register(java.awt.Color.class);      
+    kryo.register(java.awt.Dimension.class);      
+    kryo.register(java.awt.Graphics.class);      
+    kryo.register(java.awt.GridLayout.class);      
+    kryo.register(java.awt.Image.class);      
+    kryo.register(java.awt.Toolkit.class);      
+    kryo.register(java.awt.event.ActionEvent.class);      
+    kryo.register(java.awt.event.ActionListener.class);      
+    kryo.register(java.awt.event.KeyEvent.class);      
+    kryo.register(java.awt.event.MouseAdapter.class);      
+    kryo.register(java.awt.event.MouseEvent.class);      
+    kryo.register(javax.swing.BorderFactory.class);      
+    kryo.register(javax.swing.ImageIcon.class);      
+    kryo.register(javax.swing.JButton.class);      
+    kryo.register(javax.swing.JComponent.class);      
+    kryo.register(javax.swing.JFrame.class);      
+    kryo.register(javax.swing.JLabel.class);      
+    kryo.register(javax.swing.JOptionPane.class);      
+    kryo.register(javax.swing.JPanel.class);      
+    kryo.register(javax.swing.JScrollPane.class);      
+    kryo.register(javax.swing.JTabbedPane.class);      
+    kryo.register(javax.swing.JTextArea.class);      
+    kryo.register(javax.swing.SwingUtilities.class);      
+    kryo.register(javax.swing.UIManager.class);      
+    kryo.register(javax.swing.border.EmptyBorder.class);      
+    kryo.register(javax.swing.text.DefaultCaret.class);  
+    kryo.register(javax.swing.JPasswordField.class);
+    kryo.register(javax.swing.ActionMap.class);
+    kryo.register(javax.swing.text.JTextComponent.class);
+    kryo.register(String[].class);
     
-     
-     kryo.register(networking.MyServer.class);
-     kryo.register(javax.swing.JPasswordField.class);
-     kryo.register(javax.swing.ActionMap.class);
-     kryo.register(javax.swing.text.JTextComponent.class);
-     kryo.register(String[].class);
-     kryo.register(models.WarningChit.Smoke.class);
-     kryo.register(models.WarningChit.Bones.class);
-     kryo.register(models.WarningChit.Dank.class);
-     kryo.register(models.WarningChit.Ruins.class);
-     kryo.register(models.WarningChit.Stink.class);
-     kryo.register(java.util.LinkedList.class);
-     kryo.register(models.SoundChit.class);
-     kryo.register(models.SoundChit.Howl.class);
-     
-     //kryo.register(javax.swing.text.JTextComponent.KeymapActionMap.class);
+    
+    kryo.register(java.io.FileReader.class);      
+    kryo.register(java.net.URL.class);      
+    kryo.register(org.json.simple.JSONObject.class);      
+    
+    
+    kryo.register(org.json.simple.JSONArray.class);      
+    kryo.register(org.json.simple.parser.JSONParser.class);      
+    
+    
+    kryo.register(javax.swing.JTextField.class);      
+    kryo.register(javax.swing.ButtonGroup.class);   
+    
+    kryo.register(java.awt.Container.class);   
+    kryo.register(java.awt.Component.class);   
+    kryo.register(javax.swing.ButtonGroup.class);   
+    kryo.register(javax.swing.ButtonGroup.class);   
+
+    
+
+
+    
+    kryo.register(gameBoard.BoardTiles.class);
+    kryo.register(gameBoard.Clearing.class);
+    kryo.register(gameBoard.InitBoardTiles.class);
+    kryo.register(gameBoard.Tiles.class);
+    kryo.register(gameLogic.Dice.class);
+    kryo.register(gameLogic.GuiActivities.class);
+    kryo.register(gameLogic.Iteration1Board.class);
+    kryo.register(gameLogic.Locate.class);
+    kryo.register(gameLogic.LocateEnum.class);
+    kryo.register(gameLogic.Loot.class);
+    kryo.register(gameLogic.LootEnum.class);
+    kryo.register(gameLogic.MagicSightEnum.class);
+    kryo.register(gameLogic.Model.class);
+    kryo.register(gameLogic.Peer.class);
+    kryo.register(gameLogic.PeerEnum.class);
+    kryo.register(gameLogic.SearchTable.class);
+    kryo.register(gui.CombatGui.class);
+    kryo.register(gui.HexCell.class);
+    
+    kryo.register(models.Things.class);
+    kryo.register(models.Player.class);
+    
+    
+    kryo.register(models.Amazon.class);
+    kryo.register(models.Armor.class);
+    kryo.register(models.BlackKnight.class);
+    kryo.register(models.BreastPlates.class);
+    kryo.register(models.BroadSword.class);
+    kryo.register(models.Business.class);
+    kryo.register(models.Captain.class);
+    kryo.register(models.Chapel.class);
+    kryo.register(models.Message.class);
+
+
+    
+    kryo.register(models.Counters.class);
+    kryo.register(models.CrossBow.class);
+    kryo.register(models.DamageEnum.class);
+    kryo.register(models.Dwarf.class);
+    kryo.register(models.Dwelling.class);
+    kryo.register(models.Elf.class);
+    kryo.register(models.Entity.class);
+    kryo.register(models.Fight.class);
+    kryo.register(models.Follow.class);
+    kryo.register(models.GreatAxe.class);
+    kryo.register(models.GreatSword.class);
+    kryo.register(models.GuardHouse.class);
+    kryo.register(models.Helmet.class);
+    kryo.register(models.Hide.class);
+    kryo.register(models.House.class);
+    kryo.register(models.Income.class);
+    kryo.register(models.Inn.class);
+
+
+    kryo.register(models.LightBow.class);
+    kryo.register(models.Mace.class);
+    kryo.register(models.Monster.class);
+    kryo.register(models.Move.class);
+    
+    kryo.register(models.Search.class);
+    kryo.register(models.Shields.class);
+    kryo.register(models.ShortSword.class);
+    kryo.register(models.Spear.class);
+    kryo.register(models.SuitsOfArmor.class);
+    kryo.register(models.Swordsman.class);
+    
+    kryo.register(models.ThrustingSword.class);
+    
+    
+    
+    kryo.register(models.Weapons.class);
+    
+    kryo.register(natives.Native.class);
+    kryo.register(natives.NativeGroup.class);
+   
+   
+   kryo.register(natives.Archer.class);
+   kryo.register(natives.Assasin.class);
+   kryo.register(natives.Bashkars.class);
+   kryo.register(natives.Company.class);
+   kryo.register(natives.Crossbowman.class);
+   kryo.register(natives.GreatAxeman.class);
+   kryo.register(natives.GreatSwordsman.class);
+   kryo.register(natives.Guard.class);
+   kryo.register(natives.Knight.class);
+   kryo.register(natives.Lancer.class);
+   kryo.register(natives.Lancers.class);
+   
+   kryo.register(natives.Order.class);
+   kryo.register(natives.Patrol.class);
+   kryo.register(natives.Pikeman.class);
+   kryo.register(natives.Raider.class);
+   kryo.register(natives.Rogues.class);
+   kryo.register(natives.ShortSwordsman.class);
+   kryo.register(natives.Soldiers.class);
+   kryo.register(natives.Swordsman.class);
+   kryo.register(natives.Woodfolk.class);
+  
+   kryo.register(models.TreasureChit.class);
+   kryo.register(models.WarningChit.class);
+   kryo.register(models.PlayerChit.class);
+   kryo.register(models.SoundChit.class);
+   
+	kryo.register(models.WarningChit.Smoke.class);
+	kryo.register(models.WarningChit.Bones.class);
+	kryo.register(models.WarningChit.Dank.class);
+	kryo.register(models.WarningChit.Ruins.class);
+	kryo.register(models.WarningChit.Stink.class);
+	
+	
+	kryo.register(models.SoundChit.Howl.class);
+
+
+   kryo.register(networking.MyServer.class);
 }
 
 

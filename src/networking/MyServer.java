@@ -58,6 +58,7 @@ public class MyServer {
 
     public static void registerClasses() {
     	 kryo.register(java.util.ArrayList.class);
+    	 kryo.register(java.util.LinkedList.class);
          kryo.register(java.util.HashMap.class);      
          kryo.register(java.util.HashMap.class);      
 
@@ -87,7 +88,11 @@ public class MyServer {
          kryo.register(javax.swing.SwingUtilities.class);      
          kryo.register(javax.swing.UIManager.class);      
          kryo.register(javax.swing.border.EmptyBorder.class);      
-         kryo.register(javax.swing.text.DefaultCaret.class);      
+         kryo.register(javax.swing.text.DefaultCaret.class);  
+         kryo.register(javax.swing.JPasswordField.class);
+         kryo.register(javax.swing.ActionMap.class);
+         kryo.register(javax.swing.text.JTextComponent.class);
+         kryo.register(String[].class);
          
          
          kryo.register(java.io.FileReader.class);      
@@ -129,6 +134,11 @@ public class MyServer {
          kryo.register(gameLogic.SearchTable.class);
          kryo.register(gui.CombatGui.class);
          kryo.register(gui.HexCell.class);
+         
+         kryo.register(models.Things.class);
+         kryo.register(models.Player.class);
+         
+         
          kryo.register(models.Amazon.class);
          kryo.register(models.Armor.class);
          kryo.register(models.BlackKnight.class);
@@ -140,7 +150,7 @@ public class MyServer {
          kryo.register(models.Message.class);
 
 
-         kryo.register(models.CharacterContainer.class);
+         
          kryo.register(models.Counters.class);
          kryo.register(models.CrossBow.class);
          kryo.register(models.DamageEnum.class);
@@ -164,61 +174,63 @@ public class MyServer {
          kryo.register(models.Mace.class);
          kryo.register(models.Monster.class);
          kryo.register(models.Move.class);
-         kryo.register(models.Player.class);
-         kryo.register(models.PlayerChit.class);
+         
          kryo.register(models.Search.class);
          kryo.register(models.Shields.class);
          kryo.register(models.ShortSword.class);
          kryo.register(models.Spear.class);
          kryo.register(models.SuitsOfArmor.class);
          kryo.register(models.Swordsman.class);
-         kryo.register(models.Things.class);
+         
          kryo.register(models.ThrustingSword.class);
-         kryo.register(models.TreasureChit.class);
-         kryo.register(models.WarningChit.class);
+         
+         
+         
          kryo.register(models.Weapons.class);
-
-          kryo.register(models.WarningChit.Smoke.class);
-          kryo.register(models.WarningChit.Bones.class);
-          kryo.register(models.WarningChit.Dank.class);
-          kryo.register(models.WarningChit.Ruins.class);
-          kryo.register(models.WarningChit.Stink.class);
-          
-          kryo.register(models.SoundChit.class);
-          kryo.register(models.SoundChit.Howl.class);
-
-          kryo.register(java.util.LinkedList.class);
          
-         
-         kryo.register(natives.Archer.class);
-         kryo.register(natives.Assasin.class);
-         kryo.register(natives.Bashkars.class);
-         kryo.register(natives.Company.class);
-         kryo.register(natives.Crossbowman.class);
-         kryo.register(natives.GreatAxeman.class);
-         kryo.register(natives.GreatSwordsman.class);
-         kryo.register(natives.Guard.class);
-         kryo.register(natives.Knight.class);
-         kryo.register(natives.Lancer.class);
-         kryo.register(natives.Lancers.class);
          kryo.register(natives.Native.class);
          kryo.register(natives.NativeGroup.class);
-         kryo.register(natives.Order.class);
-         kryo.register(natives.Patrol.class);
-         kryo.register(natives.Pikeman.class);
-         kryo.register(natives.Raider.class);
-         kryo.register(natives.Rogues.class);
-         kryo.register(natives.ShortSwordsman.class);
-         kryo.register(natives.Soldiers.class);
-         kryo.register(natives.Swordsman.class);
-         kryo.register(natives.Woodfolk.class);
         
-         
-         kryo.register(networking.MyServer.class);
-         kryo.register(javax.swing.JPasswordField.class);
-         kryo.register(javax.swing.ActionMap.class);
-         kryo.register(javax.swing.text.JTextComponent.class);
-         kryo.register(String[].class);
+        
+        kryo.register(natives.Archer.class);
+        kryo.register(natives.Assasin.class);
+        kryo.register(natives.Bashkars.class);
+        kryo.register(natives.Company.class);
+        kryo.register(natives.Crossbowman.class);
+        kryo.register(natives.GreatAxeman.class);
+        kryo.register(natives.GreatSwordsman.class);
+        kryo.register(natives.Guard.class);
+        kryo.register(natives.Knight.class);
+        kryo.register(natives.Lancer.class);
+        kryo.register(natives.Lancers.class);
+        
+        kryo.register(natives.Order.class);
+        kryo.register(natives.Patrol.class);
+        kryo.register(natives.Pikeman.class);
+        kryo.register(natives.Raider.class);
+        kryo.register(natives.Rogues.class);
+        kryo.register(natives.ShortSwordsman.class);
+        kryo.register(natives.Soldiers.class);
+        kryo.register(natives.Swordsman.class);
+        kryo.register(natives.Woodfolk.class);
+       
+        kryo.register(models.TreasureChit.class);
+        kryo.register(models.WarningChit.class);
+        kryo.register(models.PlayerChit.class);
+        kryo.register(models.SoundChit.class);
+        
+		kryo.register(models.WarningChit.Smoke.class);
+		kryo.register(models.WarningChit.Bones.class);
+		kryo.register(models.WarningChit.Dank.class);
+		kryo.register(models.WarningChit.Ruins.class);
+		kryo.register(models.WarningChit.Stink.class);
+		
+		
+		kryo.register(models.SoundChit.Howl.class);
+
+ 
+        kryo.register(networking.MyServer.class);
+
 
     
     }
