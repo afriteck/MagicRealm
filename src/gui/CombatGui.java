@@ -534,8 +534,6 @@ public class CombatGui extends JPanel {
 		activity[2].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
 				gm.setHide(true);
-				gm.setRolled(false);
-
 	if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHire()&& !gm.isRest() && !gm.isSearch()&& !gm.isTrade()){
 
 				hiding(gm.isCheatMode());
@@ -743,7 +741,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 
 	protected static  JComponent CharacterPanel(String text) {
 		
-		JPanel panel = new JPanel(false) {
+	JPanel panel = new JPanel(false) {
 			
 
 			public void paintComponent(Graphics g) {
@@ -769,7 +767,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		});
 
 		toggleIcons(selectedCharacter);							// checks and displays the right character icon
-		selectedCharacter.setBounds(300, 150, 900, 700);
+		selectedCharacter.setBounds(800, 150, 730, 700);
 		selectedCharacter.setName(gm.getPlayer1().getCharacter().getName());
 		selectedCharacter.setVisible(true);
 		panel.add(selectedCharacter);
@@ -783,7 +781,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 
 			}
 		});
-		weapons.setBounds(1250, 150, 100, 23);
+		weapons.setBounds(1600, 150, 100, 23);
 		//backButton.setIcon(new ImageIcon(CombatGui.class
 				//.getResource("/actions/backarrow.gif")));
 		weapons.setVisible(true);
@@ -797,7 +795,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 
 			}
 		});
-		armor.setBounds(1250, 180, 100, 23);
+		armor.setBounds(1600, 180, 100, 23);
 		//backButton.setIcon(new ImageIcon(CombatGui.class
 				//.getResource("/actions/backarrow.gif")));
 		armor.setVisible(true);
@@ -806,16 +804,16 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		JButton natives = new JButton("Hired Natives");	
 		natives.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(gm.getPlayer1().getCharacter().getHiredNatives() != null){
-				for(int i = 0 ; i < gm.getPlayer1().getCharacter().getHiredNatives().size(); i++)
-					JOptionPane.showMessageDialog(null, gm.getPlayer1().getCharacter().getHiredNatives().get(i).getName() +" \n");
+				//if(gm.getPlayer1().getCharacter().getHiredNatives() != null){
+				//for(int i = 0 ; i < gm.getPlayer1().getCharacter().getHiredNatives().size(); i++)
+					//JOptionPane.showMessageDialog(null, gm.getPlayer1().getCharacter().getHiredNatives().get(i).getName() +" \n");
 				
 				
 				
-				}
+				//}
 			}
 		});
-		natives.setBounds(1250, 230, 100, 23);
+		natives.setBounds(1600, 230, 100, 23);
 		//backButton.setIcon(new ImageIcon(CombatGui.class
 				//.getResource("/actions/backarrow.gif")));
 		natives.setVisible(true);
@@ -829,7 +827,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 
 			}
 		});
-		gold.setBounds(1250, 280, 100, 23);
+		gold.setBounds(1600, 280, 100, 23);
 		//backButton.setIcon(new ImageIcon(CombatGui.class
 				//.getResource("/actions/backarrow.gif")));
 		gold.setVisible(true);
@@ -841,7 +839,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 					
 			}
 		});
-		treasures.setBounds(1250, 330, 100, 23);
+		treasures.setBounds(1600, 330, 100, 23);
 		//backButton.setIcon(new ImageIcon(CombatGui.class
 				//.getResource("/actions/backarrow.gif")));
 		treasures.setVisible(true);
@@ -857,7 +855,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 
 			}
 		});
-		notoriety.setBounds(1250, 380, 100, 23);
+		notoriety.setBounds(1600, 380, 100, 23);
 		notoriety.setVisible(true);
 		panel.add(notoriety);
 		
@@ -871,7 +869,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 				}
 			}
 		});
-		movechit.setBounds(1250, 430, 100, 23);
+		movechit.setBounds(1600, 430, 100, 23);
 		movechit.setVisible(true);
 		panel.add(movechit);
 		
@@ -887,7 +885,7 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 				}
 			}
 		});
-		fatchit.setBounds(1250, 480, 100, 23);
+		fatchit.setBounds(1600, 480, 100, 23);
 		fatchit.setVisible(true);
 		panel.add(fatchit);
 		
@@ -1762,7 +1760,6 @@ public static void hiding(boolean cheatmode){// performs hiding according to gam
 		if(gm.getRolled())
 			RollButton.setVisible(false);
 		if(gm.requestHide(gm.getPlayer1(), gm.getRolled(),txt)){
-			gm.getPlayer1().getPchit().setHidden(true);
 			gm.setRolled(false);
 			RollButton.setVisible(true);
 			gm.setHide(false);
@@ -1782,7 +1779,6 @@ public static void hiding(boolean cheatmode){// performs hiding according to gam
 
 
 public static void searching(boolean cheatmode){// performs searching according to game mode.
-	gm.setRolled(false);
 
 	if(!gm.isCheatMode() && gm.isSearch()){
 		RollButton.setVisible(true);
@@ -1804,6 +1800,7 @@ public static void searching(boolean cheatmode){// performs searching according 
 			searchpanel.setLayout(null);
 			gm.requestSearch(gm.getPlayer1(), tabbedPane, searchpanel);  		//do search
 			tabbedPane.addTab("Search Panel", null, searchpanel, "DO YOUR Searchs");
+			gm.setRolled(false);
 		
 
 		
@@ -1833,7 +1830,8 @@ public static void searching(boolean cheatmode){// performs searching according 
 			gm.requestSearch(gm.getPlayer1(), tabbedPane, searchpanel);  		//do search
 			tabbedPane.addTab("Search Panel", null, searchpanel, "DO YOUR Searchs");
 				
-		
+			gm.setRolled(false);
+
 		//gm.requestSearch(gm.getPlayer1(), tabbedPane, panel);
 			
 

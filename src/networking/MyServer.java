@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import models.Counters;
 import models.DamageEnum;
 import models.Message;
@@ -247,32 +249,16 @@ public class MyServer {
 
     public static void main(String[] args) {
     	
+    	promptPlayerName();
+    	
     	players = new ArrayList<Player>();
     	clients = new HashMap<Connection, Player>();
 
-        if (args.length == 1) {
-          try {
-            max_players = Integer.parseInt(args[0]);
-          } catch (NumberFormatException e) {
-            System.err.println("Invalid command line argument - integer required");
-            System.exit(1);
-          }
-        } else if (args.length == 2) {
-          try {
-            max_players = Integer.parseInt(args[0]);
-          } catch (NumberFormatException e) {
-            System.err.println("Invalid command line argument  - integer required");
-            System.exit(1);
-          }
-          System.out.println("Demo flag detected");
-         // demo_flag = true;
-        } else {
-          max_players = 1;
-        }
+        
 
        // markersPlaced = 0;
 
-        System.out.println("Game configured for " + max_players + " players");
+        System.out.println("Game configured for " + numPlayers + " players");
 
         // Initialize game model manager
        // game_model = new GameModel();
@@ -587,7 +573,23 @@ public void received(Connection connection, Object object) {
 		}
 	}
 
-      // private ArrayList<Integer> usedNumbers;
+      
+	
+	public static void promptPlayerName() {
+
+   		String firstPlayer = (String) JOptionPane.showInputDialog(null,
+   				"Number:", "Enter the number of players", JOptionPane.QUESTION_MESSAGE,
+   				null, null, "");
+   		if (firstPlayer == null || firstPlayer.trim().length() == 0) {
+   			System.out.println("You must enter a number");
+   			System.exit(1);
+   		}
+   		numPlayers = Integer.parseInt(firstPlayer);
+
+
+   	}
+	
+	// private ArrayList<Integer> usedNumbers;
        //private Random r;
       // private int maxNumber;
 

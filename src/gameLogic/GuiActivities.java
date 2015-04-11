@@ -578,7 +578,7 @@ public class GuiActivities {
 				public void actionPerformed(ActionEvent e) {
 					if (!rolled)
 						JOptionPane.showMessageDialog(null, "Roll a die first");
-				/*	if (rolled && p.getCharacter().getRoll() == 4) {
+					if (rolled && p.getCharacter().getRoll() == 4) {
 						for (int i = 0; i < bd.getTile(p.getTile())
 								.getClearingByNum((p.getClearing()))
 								.getTreasureChits().size(); i++)
@@ -591,7 +591,7 @@ public class GuiActivities {
 								"Treasure chits are now visible!");
 
 						System.out.println(" Treasure chits are now visible");
-					} else */ if (rolled && p.getCharacter().getRoll() == 1) {
+					} else  if (rolled && p.getCharacter().getRoll() == 1) {
 						JOptionPane.showMessageDialog(null,
 								"Which would you want to do!");
 
@@ -635,7 +635,6 @@ public class GuiActivities {
 			loot = new JButton("LOOT");
 			loot.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					setRolled(false);
 					JOptionPane.showMessageDialog(null, "Please Roll a die");
 
 				}
@@ -657,6 +656,7 @@ public class GuiActivities {
 					backButton.setVisible(false);
 					tabbedpane.remove(cp);
 					setSearch(false);
+					setRolled(false);
 					turn++;
 
 				}
@@ -697,6 +697,8 @@ public class GuiActivities {
 
 				p.getCharacter().setVisibility(false);
 				getPlayer1().getPchit().setHidden(true);
+				bd.getTile(p.getCharacter().getTileName()).getClearingByNum(p.getCharacter()
+						.getClearingLocation()).getPersonHere().setHidden(true);
 				txt.append(p.getName() + " is now hidden from every one \n");
 
 				setHide(false);
@@ -707,6 +709,9 @@ public class GuiActivities {
 
 			else if (p.getCharacter().getRoll() == 6) {
 				JOptionPane.showMessageDialog(null, "Sorry you cant hide");
+				getPlayer1().getPchit().setHidden(false);
+				bd.getTile(p.getCharacter().getTileName()).getClearingByNum(p.getCharacter()
+						.getClearingLocation()).getPersonHere().setHidden(false);
 				setHide(false);
 				turn++;
 				return true;
