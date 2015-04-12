@@ -1614,7 +1614,6 @@ public static void registerClasses() {
 
     kryo.register(models.LightBow.class);
     kryo.register(models.Mace.class);
-    kryo.register(models.Monster.class);
     kryo.register(models.Move.class);
     
     kryo.register(models.Search.class);
@@ -1629,6 +1628,11 @@ public static void registerClasses() {
     
     
     kryo.register(models.Weapons.class);
+    
+    kryo.register(monsters.Monster.class);
+    kryo.register(monsters.Ghost.class);
+    kryo.register(monsters.Giant.class);
+    kryo.register(monsters.Goblin_Spear.class);
     
     kryo.register(natives.Native.class);
     kryo.register(natives.NativeGroup.class);

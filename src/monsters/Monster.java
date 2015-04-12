@@ -19,6 +19,7 @@ public abstract class Monster implements Move, Hide {
 	private int notoriety;
 	private int fame;
 	private Weapons weapon;
+	private boolean visible = false;
 
 	private String size;
 	private int alertedAttackSpeed;
@@ -148,6 +149,14 @@ public abstract class Monster implements Move, Hide {
 	@Override
 	public void moveTo(String tile, int clearing) {
 
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 }

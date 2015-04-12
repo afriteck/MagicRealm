@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import natives.NativeGroup;
 
 import models.Dwelling;
-import models.Monster;
 import models.PlayerChit;
 import models.SoundChit;
 import models.TreasureChit;
+import monsters.Monster;
 
 /**
  * @author joshwhite

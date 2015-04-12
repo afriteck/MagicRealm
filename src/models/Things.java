@@ -24,6 +24,7 @@ public abstract class Things implements Move, Business, Search, Hide{
 
 	private static String name;
 	private int gold;
+	private int fame;
 	private static String url;
 	//private PlayerChit pchit;
 	private Weapons myweapon;
@@ -525,6 +526,14 @@ public int getNotoriety() {
 
 public void setNotoriety(int notoriety) {
 	this.notoriety = notoriety;
+}
+
+public int getFame() {
+	return fame;
+}
+
+public void setFame(int fame) {
+	this.fame = fame;
 }
 
 

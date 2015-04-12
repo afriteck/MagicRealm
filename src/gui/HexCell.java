@@ -182,8 +182,8 @@ public class HexCell {
 						}
 					}
 					if (tilehex.getClearings().get(i).getSound().size() > 0) {
-						URL url = InitBoardTiles.class.getResource("/monsters/"
-								+ tilehex.getClearings().get(i)
+						URL url = InitBoardTiles.class.getResource(
+								tilehex.getClearings().get(i)
 										.getSound().get(0)
 										.getFpath());
 						try {
@@ -206,7 +206,7 @@ public class HexCell {
 						URL url = InitBoardTiles.class.getResource("/monsters/"
 								+ tilehex.getClearings().get(i)
 										.getMonsterChits().get(0)
-										.getImgFilePath());
+										.getFilePath());
 						try {
 							chitimg = ImageIO.read(new File(url.getPath()));
 							saveAt.setTransform(at);
@@ -359,7 +359,7 @@ public class HexCell {
 							(tilehex.getClearings().get(i).getYposition() - 40),
 							80, 80));
 					if (tilehex.getClearings().get(i).getDwelling() != null) {
-						int offx = 20;
+						int offx = 25;
 						int offy = -40;
 						URL url = InitBoardTiles.class
 								.getResource(tilehex.getClearings().get(i)
@@ -387,7 +387,7 @@ public class HexCell {
 							URL url = InitBoardTiles.class.getResource("/monsters/"
 									+ tilehex.getClearings().get(i)
 											.getMonsterChits().get(y)
-											.getImgFilePath());
+											.getFilePath());
 							try {
 								chitimg = ImageIO.read(new File(url.getPath()));
 								saveAt.setTransform(at);
@@ -425,6 +425,29 @@ public class HexCell {
 									cl.getBounds().height/3, null);
 							at.setTransform(saveAt);
 							offx += 25;
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if (tilehex.getClearings().get(i).getSound().size() > 0) {
+						int offx = 0;
+						int offy = -40;
+						URL url = InitBoardTiles.class.getResource(
+								tilehex.getClearings().get(i)
+										.getSound().get(0)
+										.getFpath());
+						try {
+							chitimg = ImageIO.read(new File(url.getPath()));
+							saveAt.setTransform(at);
+							at.translate((w / 2), (h / 2));
+							at.rotate(Math.toRadians(-angle));
+							at.translate((-w / 2), (-h / 2));
+							g2d.setTransform(at);
+							g2d.drawImage(chitimg, cl.getBounds().x + offx,
+									cl.getBounds().y + offy, cl.getBounds().width/3,
+									cl.getBounds().height/3, null);
+							at.setTransform(saveAt);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

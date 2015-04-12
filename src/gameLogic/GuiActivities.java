@@ -21,13 +21,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import models.Amazon;
-import models.Armor;
 import models.BlackKnight;
 import models.BreastPlates;
 import models.BroadSword;
@@ -50,11 +48,14 @@ import models.PlayerChit;
 import models.Shields;
 import models.ShortSword;
 import models.SoundChit;
+import models.SoundChit.Flutter;
 import models.SoundChit.Howl;
+import models.SoundChit.Patter;
+import models.SoundChit.Roar;
+import models.SoundChit.Slither;
 import models.Spear;
 import models.SuitsOfArmor;
 import models.Swordsman;
-import models.Things;
 import models.ThrustingSword;
 import models.WarningChit;
 import models.WarningChit.Bones;
@@ -62,6 +63,7 @@ import models.WarningChit.Dank;
 import models.WarningChit.Ruins;
 import models.WarningChit.Smoke;
 import models.WarningChit.Stink;
+import monsters.Monster;
 import natives.Bashkars;
 import natives.Company;
 import natives.Lancers;
@@ -128,6 +130,10 @@ public class GuiActivities {
 	private Woodfolk woodfolk;
 	
 	private Howl howl;
+	private Roar roar;
+	private Slither slither;
+	private Flutter flutter;
+	private Patter patter;
 
 	private Chapel chapel;
 	private GuardHouse guardhouse;
@@ -171,6 +177,12 @@ public class GuiActivities {
 		stink = new Stink();
 		
 		howl = new Howl();
+		roar = new Roar();
+		slither = new Slither();
+		flutter = new Flutter();
+		patter = new Patter();
+
+		
 
 		ng.add(bashkars);
 		ng.add(company);
@@ -479,7 +491,24 @@ public class GuiActivities {
 
 		} else
 			return false;
+	}
+	
+	public boolean placeMonsterChit(Monster d) {
+		int option = JOptionPane.showConfirmDialog(null, message, "Place!",
+				JOptionPane.OK_CANCEL_OPTION);
 
+		if (option == JOptionPane.OK_OPTION) {
+			String input = TileName.getText().toString().trim();
+			bd.getTile(input);
+			moveTiles.add(bd.getTile(input));
+			System.out.println(bd.getTile(input).getName());
+
+			bd.getTile(TileName.getText().toUpperCase())
+					.getClearingByNum(Integer.parseInt(Clearing.getText()))
+					.addMonster(d);
+			return true;
+		} else
+			return false;
 	}
 
 	public boolean placePlayer1(Player p) {
@@ -596,10 +625,18 @@ public class GuiActivities {
 								"Which would you want to do!");
 
 					} else if (rolled && p.getCharacter().getRoll() == 2) {
+						for (int i = 0; i < bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getSound().size(); i++)
+							bd.getTile(p.getTile())
+									.getClearingByNum((p.getClearing()))
+									.getSound().get(i)
+									.setHidden(false);
 						JOptionPane.showMessageDialog(null,
-								"you have located hidden clues");
+								"you have located hidden clues and paths!");
 
 					} else if (rolled && p.getCharacter().getRoll() == 3) {
+						
 						JOptionPane.showMessageDialog(null,
 								"you have located hidden Passages");
 
@@ -623,7 +660,67 @@ public class GuiActivities {
 			peer = new JButton("PEER");
 			peer.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if (!rolled)
+						JOptionPane.showMessageDialog(null, "Roll a die first");
+					if (rolled && p.getCharacter().getRoll() == 4) {
+						for (int i = 0; i < bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getMonsterChits().size(); i++)
+							bd.getTile(p.getTile())
+									.getClearingByNum((p.getClearing()))
+									.getMonsterChits().get(i)
+									.setVisible(true);
 
+						JOptionPane.showMessageDialog(null,
+								"Enemies are now visible!");
+
+						System.out.println(" Enemies are now visible!");
+					} else  if (rolled && p.getCharacter().getRoll() == 1) {
+						JOptionPane.showMessageDialog(null,
+								"Which would you want to do!");
+
+					} else if (rolled && p.getCharacter().getRoll() == 2) {
+						for (int i = 0; i < bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getSound().size(); i++)
+							bd.getTile(p.getTile())
+									.getClearingByNum((p.getClearing()))
+									.getSound().get(i)
+									.setHidden(false);
+						JOptionPane.showMessageDialog(null,
+								"you have located hidden clues and paths!");
+
+					} else if (rolled && p.getCharacter().getRoll() == 3) {
+						for (int i = 0; i < bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getMonsterChits().size(); i++)
+							bd.getTile(p.getTile())
+									.getClearingByNum((p.getClearing()))
+									.getMonsterChits().get(i)
+									.setVisible(true);
+						JOptionPane.showMessageDialog(null,
+								"you have located hidden enemies and paths!");
+
+					}
+					else if (rolled && p.getCharacter().getRoll() == 5) {
+						for (int i = 0; i < bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getSound().size(); i++)
+							bd.getTile(p.getTile())
+									.getClearingByNum((p.getClearing()))
+									.getSound().get(i)
+									.setHidden(false);
+						JOptionPane.showMessageDialog(null,
+								"You discovered clues!");
+
+					}
+					else if (rolled && p.getCharacter().getRoll() > 5) {
+						JOptionPane.showMessageDialog(null,
+								"You discovered nothing");
+
+					}
+					rolled = false;
+					// isSearch = false;
 				}
 			});
 			peer.setBounds(1430, 295, 109, 30);
@@ -636,7 +733,98 @@ public class GuiActivities {
 			loot.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					JOptionPane.showMessageDialog(null, "Please Roll a die");
+					if (!rolled)
+						JOptionPane.showMessageDialog(null, "Roll a die first");
+					if (rolled && p.getCharacter().getRoll() == 4) {
+						if(bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getTreasureChits().get(3) != null){
+							p.getCharacter().setGold(p.getCharacter().getGold() + 
+									bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().get(3).getGold());
+							bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().remove(3);
+							JOptionPane.showMessageDialog(null,
+									"You got Treasure!");
+						}else{
+						JOptionPane.showMessageDialog(null,
+								"Sorry! No Treasure there!");
+						}
 
+						System.out.println(" Treasure chits are now visible");
+					} else  if (rolled && p.getCharacter().getRoll() == 1) {
+						if(bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getTreasureChits().get(0) != null){
+							p.getCharacter().setGold(p.getCharacter().getGold() + 
+									bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().get(0).getGold());
+							bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().remove(0);
+							JOptionPane.showMessageDialog(null,
+									"You got Treasure!");
+						}else{
+						JOptionPane.showMessageDialog(null,
+								"Sorry! No Treasure there!");
+						}
+
+					} else if (rolled && p.getCharacter().getRoll() == 2) {
+						if(bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getTreasureChits().get(1) != null){
+							p.getCharacter().setGold(p.getCharacter().getGold() + 
+									bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().get(1).getGold());
+							bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().remove(1);
+							JOptionPane.showMessageDialog(null,
+									"You got Treasure!");
+						}else{
+						JOptionPane.showMessageDialog(null,
+								"Sorry! No Treasure there!");
+						}
+
+					} else if (rolled && p.getCharacter().getRoll() == 3) {
+						
+						if(bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getTreasureChits().get(2) != null){
+							p.getCharacter().setGold(p.getCharacter().getGold() + 
+									bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().get(2).getGold());
+							bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().remove(2);
+							JOptionPane.showMessageDialog(null,
+									"You got Treasure!");
+						}else{
+						JOptionPane.showMessageDialog(null,
+								"Sorry! No Treasure there!");
+						}
+					}
+					else if (rolled && p.getCharacter().getRoll() == 5) {
+						if(bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getTreasureChits().get(4) != null){
+							p.getCharacter().setGold(p.getCharacter().getGold() + 
+									bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().get(4).getGold());
+							bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().remove(4);
+							JOptionPane.showMessageDialog(null,
+									"You got Treasure!");
+						}else{
+						JOptionPane.showMessageDialog(null,
+								"Sorry! No Treasure there!");
+						}
+
+					}
+					else if (rolled && p.getCharacter().getRoll() == 6) {
+						if(bd.getTile(p.getTile())
+								.getClearingByNum((p.getClearing()))
+								.getTreasureChits().get(5) != null){
+							p.getCharacter().setGold(p.getCharacter().getGold() + 
+									bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().get(5).getGold());
+							bd.getTile(p.getTile()).getClearingByNum((p.getClearing())).getTreasureChits().remove(5);
+							JOptionPane.showMessageDialog(null,
+									"You got Treasure!");
+						}else{
+						JOptionPane.showMessageDialog(null,
+								"Sorry! No Treasure there!");
+						}
+
+					}
+					rolled = false;
+					// isSearch = false;
 				}
 			});
 			loot.setBounds(1430, 261, 109, 30);
@@ -1336,6 +1524,10 @@ public class GuiActivities {
 		final JLabel companylabel;
 		
 		final JLabel howllabel;
+		final JLabel roarlabel;
+		final JLabel slitherlabel;
+		final JLabel flutterlabel;
+		final JLabel patterlabel;
 
 		//final ArrayList<Dwelling> dwellings = new ArrayList<Dwelling>();
 		//final ArrayList<WarningChit> warningchits = new ArrayList<WarningChit>();
@@ -1677,11 +1869,75 @@ public class GuiActivities {
 			}
 		});
 		howllabel.setIcon(new ImageIcon(GuiActivities.class
-				.getResource("/natives/patrol.png")));
-		howllabel.setBounds(160, 350, 70, 50);
+				.getResource(howl.getFpath())));
+		howllabel.setBounds(550, 350, 75, 75);
 		howllabel.setName("HOWL");
 		howllabel.setVisible(false);
 		container.add(howllabel);
+		
+		roarlabel = new JLabel();
+		roarlabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+				placeSoundChit(roar);
+
+			}
+		});
+		roarlabel.setIcon(new ImageIcon(GuiActivities.class
+				.getResource(roar.getFpath())));
+		roarlabel.setBounds(450, 350, 75, 75);
+		roarlabel.setName("ROAR");
+		roarlabel.setVisible(false);
+		container.add(roarlabel);
+		
+		slitherlabel = new JLabel();
+		slitherlabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+				placeSoundChit(slither);
+
+			}
+		});
+		slitherlabel.setIcon(new ImageIcon(GuiActivities.class
+				.getResource(slither.getFpath())));
+		slitherlabel.setBounds(350, 350, 75, 75);
+		slitherlabel.setName("SLITHER");
+		slitherlabel.setVisible(false);
+		container.add(slitherlabel);
+		
+		flutterlabel = new JLabel();
+		flutterlabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+				placeSoundChit(flutter);
+
+			}
+		});
+		flutterlabel.setIcon(new ImageIcon(GuiActivities.class
+				.getResource(flutter.getFpath())));
+		flutterlabel.setBounds(250, 350, 75, 75);
+		flutterlabel.setName("FLUTTER");
+		flutterlabel.setVisible(false);
+		container.add(flutterlabel);
+		
+		patterlabel = new JLabel();
+		patterlabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+
+				placeSoundChit(patter);
+
+			}
+		});
+		patterlabel.setIcon(new ImageIcon(GuiActivities.class
+				.getResource(patter.getFpath())));
+		patterlabel.setBounds(150, 350, 75, 75);
+		patterlabel.setName("PATTER");
+		patterlabel.setVisible(false);
+		container.add(patterlabel);
 
 		cheatbuttons[0] = new JButton("Dwellings");
 		cheatbuttons[0].addActionListener(new ActionListener() {
@@ -1782,6 +2038,10 @@ public class GuiActivities {
 								"Please select the Sounds that you would like to place on the board");
 
 				howllabel.setVisible(true);
+				roarlabel.setVisible(true);
+				flutterlabel.setVisible(true);
+				slitherlabel.setVisible(true);
+				patterlabel.setVisible(true);
 				
 
 			}
