@@ -1,6 +1,8 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+
 import natives.NativeGroup;
 
 public class Amazon extends Things{
@@ -59,6 +61,7 @@ public class Amazon extends Things{
 		addArmor(myArmor2);
 		addArmor(myArmor3);
 		myweapons.add(weapon);
+		setVuln(DamageEnum.MEDIUM);
 		setVisibility(true);
 		
 		readyCounter.add(new Counters("MOVE", DamageEnum.MEDIUM, 4, 0));

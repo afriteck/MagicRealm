@@ -49,6 +49,7 @@ public class Elf extends Things{
 	
 		setPlayerArmoury(myArsenal);
 		myweapons.add(weapon);
+		setVuln(DamageEnum.LIGHT);
 
 		setVisibility(true);
 

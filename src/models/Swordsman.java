@@ -44,6 +44,7 @@ public class Swordsman extends Things {
 		setAlert(false);
 
 		myweapons.add(weapon);
+		setVuln(DamageEnum.LIGHT);
 
 		setVisibility(true);
 

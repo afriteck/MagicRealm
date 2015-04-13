@@ -432,7 +432,7 @@ public class HexCell {
 					}
 					if (tilehex.getClearings().get(i).getSound().size() > 0) {
 						int offx = 0;
-						int offy = -40;
+						int offy = -25;
 						URL url = InitBoardTiles.class.getResource(
 								tilehex.getClearings().get(i)
 										.getSound().get(0)

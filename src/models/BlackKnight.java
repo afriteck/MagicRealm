@@ -54,6 +54,7 @@ public class BlackKnight extends Things {
 		addArmor(myArmor1);
 		addArmor(myArmor2);
 		myweapons.add(weapon);
+		setVuln(DamageEnum.MEDIUM);
 
 		setVisibility(true);
 

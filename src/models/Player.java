@@ -18,6 +18,7 @@ public class Player implements Move{
 	    private Dice playerDie;
 	    private boolean dieBool = false;
 		private PlayerChit pchit;
+		private boolean combat;
 
 	    
 	    private String tile;
@@ -73,6 +74,14 @@ public class Player implements Move{
 	     
 	    public Income getIncome() {
 	        return income;
+	    }
+	    
+	    public void setCombat(boolean combat) {
+	    	this.combat = combat;
+	    }
+	    
+	    public boolean isCombat() {
+	    	return combat;
 	    }
 	     
 	    public void setIncome(Income income) {

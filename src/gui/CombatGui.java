@@ -674,31 +674,27 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 		activity[9].setVisible(true);
 
 		activity[10] = new JButton("COMBAT");
-		activity[10].addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//gm.setCombat(true);
-				// gm.initCombatScreen();
-				System.out.println(gm.requestCombat(gm.getPlayer1()));
-				//gm.requestCombat(gm.getPlayer1());
-				if (gm.requestCombat(gm.getPlayer1()) == false) {
-					System.out.println("Here 4");
-					gm.initCombatScreen();
-					System.out.println("Here 5");
-					//gm.requestCombat(gm.getPlayer1());
-				} else {
-					System.out.println("DdDDDDD");
-					gm.initCombatScreen();
-				}
-				
-				if (gm.getSendToServer() == true) {
-					client.sendTCP(new Message("character chits sent"));
-					client.sendTCP(gm.getPlayer1());
-				}
-			}
-		});
-		activity[10].setBounds(50, 600, 89, 23);
-		panel.add(activity[10]);
-		activity[10].setVisible(true);
+        activity[10].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (gm.getBD().getTile(gm.getPlayer1().getTile())
+                        .getClearingByNum(gm.getPlayer1().getClearing())
+                        .getPeopleHere().size() >= 2) {
+                    if (gm.requestCombat(gm.getPlayer1()) == false) {
+                        gm.initCombatScreen();
+                        // gm.requestCombat(gm.getPlayer1());
+                    } else {
+                        System.out.println("DdDDDDD");
+                        //gm.initCombatScreen();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No other entity to combat");
+                }
+
+            }
+        });
+        activity[10].setBounds(50, 600, 89, 23);
+        panel.add(activity[10]);
+        activity[10].setVisible(true);
 
 		activity[11] = new JButton("SUBMIT");
 		activity[11].addActionListener(new ActionListener() {
@@ -707,6 +703,17 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
 				client.sendTCP(new Message("sending game model"));
 				client.sendTCP(gm.getBD());
 				client.sendTCP(gm.getPlayer1());
+				
+				System.out.println("Player 2" + gm.getSendToServer2());
+                if (gm.getSendToServer() == true) {
+                    System.out.println("Sending chits");
+                    client.sendTCP(new Message("character chits sent"));
+                    client.sendTCP(gm.getPlayer1());
+                } else if(gm.getSendToServer2() == true) {
+                    System.out.println("Sending chits 2");
+                    client.sendTCP(new Message("player 2 sent their chits"));
+                }
+				
 				for (int i = 0; i < activity.length; i++)
 					activity[i].setVisible(false);
 
@@ -1432,12 +1439,13 @@ if(!gm.isEnchant() && !gm.isAlert() && !gm.isFollow() && !gm.moved() && !gm.isHi
     					else if(object.toString().contains("is connectedfalse")){            					
     						gm.setCheatMode(false);
    					}  else if (object.toString().contains("are now in combat")) {
-						JOptionPane.showMessageDialog(null,
-								"You are now in combat");
-						if (gm.requestCombat(gm.getPlayer1()) == false) {
-							gm.initCombatScreen();
-							//gm.requestCombat(gm.getPlayer1());
-						}
+                        JOptionPane.showMessageDialog(null,
+                                "You are now in combat");
+                        if (gm.requestCombat(gm.getPlayer1()) == false && gm.getPlayer1().isCombat() == false) {
+                            gm.getPlayer1().setCombat(true);
+                            gm.initCombatScreen();
+                            // gm.requestCombat(gm.getPlayer1());
+                        }
 					} else if(object.toString().contains("ok")){            					
         				JOptionPane.showMessageDialog(null, "Wait your turn!");                        	
 							tabbedPane.remove(panel2);
@@ -1673,7 +1681,10 @@ public static void registerClasses() {
 	
 	
 	kryo.register(models.SoundChit.Howl.class);
-
+	kryo.register(models.SoundChit.Roar.class);
+	kryo.register(models.SoundChit.Slither.class);
+	kryo.register(models.SoundChit.Flutter.class);
+	kryo.register(models.SoundChit.Patter.class);
 
    kryo.register(networking.MyServer.class);
 }

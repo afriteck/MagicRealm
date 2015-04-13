@@ -1,22 +1,12 @@
 package models;
 
-import gameBoard.Clearing;
 import gameBoard.Tiles;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
-import natives.Bashkars;
-import natives.Company;
-import natives.Lancers;
-import natives.Native;
 import natives.NativeGroup;
-import natives.Rogues;
-
-import models.WarningChit.Smoke;
 
 public abstract class Things implements Move, Business, Search, Hide{
 
@@ -24,7 +14,6 @@ public abstract class Things implements Move, Business, Search, Hide{
 
 	private static String name;
 	private int gold;
-	private int fame;
 	private static String url;
 	//private PlayerChit pchit;
 	private Weapons myweapon;
@@ -52,6 +41,7 @@ public abstract class Things implements Move, Business, Search, Hide{
   
   private static  Tiles mytiles;
   private boolean alert;
+  private DamageEnum vuln;
   
   
   	public static void setUrl(String url) {
@@ -173,6 +163,14 @@ public void setPlayerArmoury(ArrayList<Armor> characterArsenal) {
     this.myArsenal = characterArsenal;
 }
 
+public DamageEnum getVuln() {
+	return vuln;
+}
+
+public void setVuln(DamageEnum vuln) {
+	this.vuln = vuln;
+}
+
 public int getSpeed(){
 	return speed;
 }
@@ -220,7 +218,7 @@ public void setMytiles(Tiles mytiles) {
 public void searchLocation(Tiles tile) {
 	
 
-	System.out.println(tile.getWarnings().get(clearingLocation).getName());
+	System.out.println(tile.getWarnings().get(0).getName());
 
 
 
@@ -526,14 +524,6 @@ public int getNotoriety() {
 
 public void setNotoriety(int notoriety) {
 	this.notoriety = notoriety;
-}
-
-public int getFame() {
-	return fame;
-}
-
-public void setFame(int fame) {
-	this.fame = fame;
 }
 
 

@@ -103,6 +103,7 @@ public class GuiActivities {
 	private boolean enchant;
 	private boolean combat;
 	private boolean sendToServer = false;
+	private boolean sendToServer2 = false;
 
 	private Chapel chapell = new Chapel();
 	private GuardHouse guardhousee = new GuardHouse();
@@ -608,13 +609,15 @@ public class GuiActivities {
 					if (!rolled)
 						JOptionPane.showMessageDialog(null, "Roll a die first");
 					if (rolled && p.getCharacter().getRoll() == 4) {
-						for (int i = 0; i < bd.getTile(p.getTile())
-								.getClearingByNum((p.getClearing()))
-								.getTreasureChits().size(); i++)
-							bd.getTile(p.getTile())
-									.getClearingByNum((p.getClearing()))
-									.getTreasureChits().get(i)
-									.setVisisble(true);
+						for(int y = 0; y < bd.getTile(p.getTile()).getClearings().size(); y++){
+							for (int i = 0; i < bd.getTile(p.getTile())
+									.getClearings().get(y)
+									.getTreasureChits().size(); i++)
+								bd.getTile(p.getTile())
+										.getClearings().get(y)
+										.getTreasureChits().get(i)
+										.setVisisble(true);
+						}
 
 						JOptionPane.showMessageDialog(null,
 								"Treasure chits are now visible!");
@@ -625,13 +628,15 @@ public class GuiActivities {
 								"Which would you want to do!");
 
 					} else if (rolled && p.getCharacter().getRoll() == 2) {
-						for (int i = 0; i < bd.getTile(p.getTile())
-								.getClearingByNum((p.getClearing()))
-								.getSound().size(); i++)
-							bd.getTile(p.getTile())
-									.getClearingByNum((p.getClearing()))
-									.getSound().get(i)
-									.setHidden(false);
+						for(int y = 0; y < bd.getTile(p.getTile()).getClearings().size(); y++){
+							for (int i = 0; i < bd.getTile(p.getTile())
+									.getClearings().get(y)
+									.getSound().size(); i++)
+								bd.getTile(p.getTile())
+										.getClearings().get(y)
+										.getSound().get(i)
+										.setHidden(false);
+						}
 						JOptionPane.showMessageDialog(null,
 								"you have located hidden clues and paths!");
 
@@ -663,14 +668,15 @@ public class GuiActivities {
 					if (!rolled)
 						JOptionPane.showMessageDialog(null, "Roll a die first");
 					if (rolled && p.getCharacter().getRoll() == 4) {
-						for (int i = 0; i < bd.getTile(p.getTile())
-								.getClearingByNum((p.getClearing()))
-								.getMonsterChits().size(); i++)
-							bd.getTile(p.getTile())
-									.getClearingByNum((p.getClearing()))
-									.getMonsterChits().get(i)
-									.setVisible(true);
-
+						for(int y = 0; y < bd.getTile(p.getTile()).getClearings().size(); y++){
+							for (int i = 0; i < bd.getTile(p.getTile())
+									.getClearings().get(y)
+									.getMonsterChits().size(); i++)
+								bd.getTile(p.getTile())
+										.getClearings().get(y)
+										.getMonsterChits().get(i)
+										.setVisible(true);
+						}
 						JOptionPane.showMessageDialog(null,
 								"Enemies are now visible!");
 
@@ -680,36 +686,42 @@ public class GuiActivities {
 								"Which would you want to do!");
 
 					} else if (rolled && p.getCharacter().getRoll() == 2) {
-						for (int i = 0; i < bd.getTile(p.getTile())
-								.getClearingByNum((p.getClearing()))
-								.getSound().size(); i++)
-							bd.getTile(p.getTile())
-									.getClearingByNum((p.getClearing()))
-									.getSound().get(i)
-									.setHidden(false);
+						for(int y = 0; y < bd.getTile(p.getTile()).getClearings().size(); y++){
+							for (int i = 0; i < bd.getTile(p.getTile())
+									.getClearings().get(y)
+									.getSound().size(); i++)
+								bd.getTile(p.getTile())
+										.getClearings().get(y)
+										.getSound().get(i)
+										.setHidden(false);
+						}
 						JOptionPane.showMessageDialog(null,
 								"you have located hidden clues and paths!");
 
 					} else if (rolled && p.getCharacter().getRoll() == 3) {
-						for (int i = 0; i < bd.getTile(p.getTile())
-								.getClearingByNum((p.getClearing()))
-								.getMonsterChits().size(); i++)
-							bd.getTile(p.getTile())
-									.getClearingByNum((p.getClearing()))
-									.getMonsterChits().get(i)
-									.setVisible(true);
+						for(int y = 0; y < bd.getTile(p.getTile()).getClearings().size(); y++){
+							for (int i = 0; i < bd.getTile(p.getTile())
+									.getClearings().get(y)
+									.getMonsterChits().size(); i++)
+								bd.getTile(p.getTile())
+										.getClearings().get(y)
+										.getMonsterChits().get(i)
+										.setVisible(true);
+						}
 						JOptionPane.showMessageDialog(null,
 								"you have located hidden enemies and paths!");
 
 					}
 					else if (rolled && p.getCharacter().getRoll() == 5) {
-						for (int i = 0; i < bd.getTile(p.getTile())
-								.getClearingByNum((p.getClearing()))
-								.getSound().size(); i++)
-							bd.getTile(p.getTile())
-									.getClearingByNum((p.getClearing()))
-									.getSound().get(i)
-									.setHidden(false);
+						for(int y = 0; y < bd.getTile(p.getTile()).getClearings().size(); y++){
+							for (int i = 0; i < bd.getTile(p.getTile())
+									.getClearings().get(y)
+									.getSound().size(); i++)
+								bd.getTile(p.getTile())
+										.getClearings().get(y)
+										.getSound().get(i)
+										.setHidden(false);
+						}
 						JOptionPane.showMessageDialog(null,
 								"You discovered clues!");
 
@@ -1869,8 +1881,8 @@ public class GuiActivities {
 			}
 		});
 		howllabel.setIcon(new ImageIcon(GuiActivities.class
-				.getResource(howl.getFpath())));
-		howllabel.setBounds(550, 350, 75, 75);
+				.getResource("/sound/howl-alert.png")));
+		howllabel.setBounds(550, 450, 75, 75);
 		howllabel.setName("HOWL");
 		howllabel.setVisible(false);
 		container.add(howllabel);
@@ -1885,8 +1897,8 @@ public class GuiActivities {
 			}
 		});
 		roarlabel.setIcon(new ImageIcon(GuiActivities.class
-				.getResource(roar.getFpath())));
-		roarlabel.setBounds(450, 350, 75, 75);
+				.getResource("/sound/roar-alert.jpg")));
+		roarlabel.setBounds(450, 450, 75, 75);
 		roarlabel.setName("ROAR");
 		roarlabel.setVisible(false);
 		container.add(roarlabel);
@@ -1901,8 +1913,8 @@ public class GuiActivities {
 			}
 		});
 		slitherlabel.setIcon(new ImageIcon(GuiActivities.class
-				.getResource(slither.getFpath())));
-		slitherlabel.setBounds(350, 350, 75, 75);
+				.getResource("/sound/slither-alert.png")));
+		slitherlabel.setBounds(350, 450, 75, 75);
 		slitherlabel.setName("SLITHER");
 		slitherlabel.setVisible(false);
 		container.add(slitherlabel);
@@ -1917,8 +1929,8 @@ public class GuiActivities {
 			}
 		});
 		flutterlabel.setIcon(new ImageIcon(GuiActivities.class
-				.getResource(flutter.getFpath())));
-		flutterlabel.setBounds(250, 350, 75, 75);
+				.getResource("/sound/flutter-alert.png")));
+		flutterlabel.setBounds(250, 450, 75, 75);
 		flutterlabel.setName("FLUTTER");
 		flutterlabel.setVisible(false);
 		container.add(flutterlabel);
@@ -1933,8 +1945,8 @@ public class GuiActivities {
 			}
 		});
 		patterlabel.setIcon(new ImageIcon(GuiActivities.class
-				.getResource(patter.getFpath())));
-		patterlabel.setBounds(150, 350, 75, 75);
+				.getResource("/sound/patter-alert.png")));
+		patterlabel.setBounds(150, 450, 75, 75);
 		patterlabel.setName("PATTER");
 		patterlabel.setVisible(false);
 		container.add(patterlabel);
@@ -2259,39 +2271,43 @@ public class GuiActivities {
 	public BoardTiles getBD() {
 		return bd;
 	}
+
 	
 	public void initCombatScreen() {
-		cs = new CombatScreen(this);
-		
-		cs.move.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				placeMove(getPlayer1());
-			}
-		});
-		cs.move.setBounds(50, 200, 89, 23);
-		cs.btnPanel.add(cs.move);
-		cs.move.setVisible(true);
+        cs = new CombatScreen(this);
 
-		cs.fight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				placeFight(getPlayer1());
-			}
-		});
-		cs.fight.setBounds(50, 250, 89, 23);
-		cs.btnPanel.add(cs.fight);
-		cs.fight.setVisible(true);
-		
-		cs.submitStats.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Here 2");
-				cs.updateFrame();
-				setSendToServer(true);
-				System.out.println("Here 3");
-			}
-		});
-		cs.submitStats.setBounds(50, 250, 89, 23);
-		cs.btnPanel.add(cs.submitStats);
-		cs.submitStats.setVisible(true);
+        cs.move.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                placeMove(getPlayer1());
+            }
+        });
+        cs.move.setBounds(50, 200, 89, 23);
+        cs.btnPanel.add(cs.move);
+        cs.move.setVisible(true);
+
+        cs.fight.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                placeFight(getPlayer1());
+            }
+        });
+        cs.fight.setBounds(50, 250, 89, 23);
+        cs.btnPanel.add(cs.fight);
+        cs.fight.setVisible(true);
+
+        cs.submitStats.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(isCombat());
+                if(getPlayer1().isCombat() == true) {
+                    setSendToServer2(true);
+                    System.out.println("Hellooooo");
+                } else {
+                    setSendToServer(true);
+                }
+            }
+        });
+        cs.submitStats.setBounds(50, 250, 89, 23);
+        cs.btnPanel.add(cs.submitStats);
+        cs.submitStats.setVisible(true);
 	}
 	
 	public CombatScreen getCombatScreen() {
@@ -2473,6 +2489,14 @@ public class GuiActivities {
 	public void setSendToServer(boolean sendToServer) {
 		this.sendToServer = sendToServer;
 	}
+	
+	 public boolean getSendToServer2() {
+	        return sendToServer2;
+	    }
+
+	    public void setSendToServer2(boolean sendToServer2) {
+	        this.sendToServer2 = sendToServer2;
+	    }
 
 	public Chapel getChapell() {
 		return chapell;

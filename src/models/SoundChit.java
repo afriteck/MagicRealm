@@ -11,7 +11,7 @@ public class SoundChit {
 	private String fpath;
 	private String hiddenfpath;
 	private String name;
-	private boolean hidden = false;
+	private boolean hidden = true;
 	private int clearing;
 	private String tile;
 	
@@ -61,9 +61,9 @@ public class SoundChit {
 		
 		public Howl(){
 			setFpath("/sound/howl-alert.png");
-			setHiddenFpath("/sound/howl-nonalert.png");
+			setHiddenFpath("/sound/sound-general.png");
 			setName("HOWL");
-			setHidden(false);
+			setHidden(true);
 		}
 	}
 	
@@ -71,9 +71,9 @@ public class SoundChit {
 			
 			public Roar(){
 				setFpath("/sound/roar-alert.jpg");
-				setHiddenFpath("/sound/roar-nonalert.png");
+				setHiddenFpath("/sound/sound-general.png");
 				setName("ROAR");
-				setHidden(false);
+				setHidden(true);
 			}
 		}
 	
@@ -81,9 +81,9 @@ public class SoundChit {
 		
 		public Slither(){
 			setFpath("/sound/slither-alert.png");
-			setHiddenFpath("/sound/slither-nonalert.jpg");
+			setHiddenFpath("/sound/sound-general.png");
 			setName("SLITHER");
-			setHidden(false);
+			setHidden(true);
 		}
 	}
 	
@@ -91,9 +91,9 @@ public class SoundChit {
 		
 		public Flutter(){
 			setFpath("/sound/flutter-alert.png");
-			setHiddenFpath("/sound/flutter-nonalert.png");
+			setHiddenFpath("/sound/sound-general.png");
 			setName("FLUTTER");
-			setHidden(false);
+			setHidden(true);
 		}
 	}
 	
@@ -101,9 +101,9 @@ public class SoundChit {
 		
 		public Patter(){
 			setFpath("/sound/patter-alert.png");
-			setHiddenFpath("/sound/patter-nonalert.png");
+			setHiddenFpath("/sound/sound-general.png");
 			setName("PATTER");
-			setHidden(false);
+			setHidden(true);
 		}
 	}
 	

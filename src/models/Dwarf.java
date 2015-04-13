@@ -51,6 +51,7 @@ public class Dwarf extends Things{
 	
 		addArmor(myArmor1);
 		myweapons.add(weapon);
+		setVuln(DamageEnum.HEAVY);
 
 		setVisibility(true);
 

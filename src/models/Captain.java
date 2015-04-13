@@ -56,14 +56,13 @@ public class Captain extends Things {
 		addArmor(myArmor2);
 		addArmor(myArmor3);
 		myweapons.add(weapon);
-
+		setVuln(DamageEnum.MEDIUM);
 		setVisibility(true);
 
 		
 		readyCounter.add(new Counters("MOVE", DamageEnum.MEDIUM, 4, 1));
 		readyCounter.add(new Counters("MOVE", DamageEnum.MEDIUM, 5, 0));
 		readyCounter.add(new Counters("FIGHT", DamageEnum.HEAVY, 5, 1));
-		
 		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 5, 0));
 		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 3, 2));
 		readyCounter.add(new Counters("MOVE", DamageEnum.MEDIUM, 3, 2));
@@ -74,14 +73,15 @@ public class Captain extends Things {
 		readyCounter.add(new Counters("FIGHT", DamageEnum.HEAVY, 6, 0));
 		readyCounter.add(new Counters("FIGHT", DamageEnum.MEDIUM, 4, 1));
 		
-	
+		setReadyCounter(readyCounter);
+	    setFatiguedCounter(fatiguedCounter);
 	}
 
-public static void main(String[] args){
+/*public static void main(String[] args){
 		
 		Things sm = new Captain();
 		System.out.println(sm.getWeapons().getName() + sm.getGold() + sm.getSpeed() + sm.getWeapons().getSharpness()+ sm.getWeapons().getSpeed());
-	}
+	}*/
 
 
 }
